@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body{
+    background-color: thistle;
+}
+
 .nav-bg{
     background-color: #8C61D6;
 }
