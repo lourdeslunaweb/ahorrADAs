@@ -3,29 +3,29 @@
 
 
 type Balance = {
-    ganancias: number,
-    gastos: number,
+    profits: number,
+    expenses: number,
     total: number,
 }
 
 type Category = {
-    nombre: string,
+    name: string,
     slug: string,
 }
 type Operation = {
-    descripcion: string,
-    categoria: Category,
-    fecha: Date,
-    monto: number,
-    tipo ?: 'Gasto' | 'Ganancia',
-    acciones ?: 'Editar' | 'Eliminar',
+    description: string,
+    category: Category,
+    date: Date,
+    amount: number,
+    type ?: 'Gasto' | 'Ganancia',
+    actions ?: 'Editar' | 'Eliminar',
 }
 type Filter = {
     display: boolean,
-    tipo: 'Todos' | 'Gastos' |'Ganancias',
-    categoria : Category,
-    desde: string,
-    ordenar: 'Más reciente' | 'Menos reciente' |'Mayor monto' | 'Menor monto' | 'A-Z' |'Z-A',
+    type: 'Todos' | 'Gastos' |'Ganancias',
+    category : Category,
+    since: string,
+    sortby: 'Más reciente' | 'Menos reciente' |'Mayor monto' | 'Menor monto' | 'A-Z' |'Z-A',
 }
 
 
