@@ -10,12 +10,12 @@ type Balance = {
 
 type Category = {
     name: string,
-    slug: string,
+    slug ?: string,
 }
 type Operation = {
     description: string,
     category: Category,
-    date: Date,
+    date: string,
     amount: number,
     type ?: 'Gasto' | 'Ganancia',
     actions ?: 'Editar' | 'Eliminar',
