@@ -2,22 +2,22 @@
 //     name:'',
 //     slug:'',
 // }
-let storage = getStorage()
 
-const newCategory = (e) => {
-    e.preventDefault();
 
-    const form = e.target;
+// const newCategory = (e) => {
+//     e.preventDefault();
 
-    const newCategoryName: string = form.name.value;
+//     const form = e.target;
 
-    const newCategory: Category = {
-        name: newCategoryName,
-        slug: slugify(newCategoryName)
-    }
+//     const newCategoryName: string = form.name.value;
 
-    storage.categories.push(newCategory);
+//     const newCategory: Category = {
+//         name: newCategoryName,
+//         slug: slugify(newCategoryName)
+//     }
 
-    localStorage.setItem('todo-storage', JSON.stringify(storage));
+//     storage.categories.push(newCategory);
 
-}
+//     localStorage.setItem('todo-storage', JSON.stringify(storage));
+
+// }

@@ -1,5 +1,16 @@
-// const fecha = document.getElementById('filter-date');
-// console.log(fecha);
+var getStorage = function () {
+    var storage = JSON.parse(localStorage.getItem('to-storage'));
+    if (!storage) {
+        storage = {
+            categories: [],
+            operations: [],
+            balance: []
+        };
+    }
+    console.log(storage);
+    return storage;
+};
+localStorage.setItem('fb-session-token', "klsañjñlkjviodafjlkñaksjdlkvmñlsdilaidslf");
 // const filter: Filter = {
 //     display:true,
 //     tipo: 'Todos',

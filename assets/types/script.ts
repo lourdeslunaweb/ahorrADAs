@@ -31,19 +31,20 @@ type Filter = {
     since: string,
     sortby: 'Más reciente' | 'Menos reciente' |'Mayor monto' | 'Menor monto' | 'A-Z' |'Z-A',
 }
-const getStorage = (): LocalStorage => {
-    let storage: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
 
-    if(!storage) {
-    storage = {
+const getStorage = (): LocalStorage => {    
+    let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
+
+    if(!locStor) {
+    locStor = {
         categories: [],
         operations: [],
         balance: []
     } 
     }
-
-    return storage;
+    return locStor;
 }
+
 
 // const filter: Filter = {
 //     display:true,
