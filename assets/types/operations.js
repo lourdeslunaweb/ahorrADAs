@@ -23,6 +23,7 @@ var newOpAmount = document.getElementById("newOp-amount");
 var newOpType = document.getElementById("newOp-type");
 var newOpCategory = document.getElementById("newOp-category");
 var newOpDate = document.getElementById("newOp-date");
+var storage = getStorage();
 newOpForm.addEventListener('submit', function (e) {
     e.preventDefault();
     newOperation.description = newOpDescription.value;
@@ -30,11 +31,8 @@ newOpForm.addEventListener('submit', function (e) {
     newOperation.type = newOpType.value;
     newOperation.category = newOpCategory.value;
     newOperation.date = newOpDate.value;
-    // console.log(newOpDescription.value)
-    // console.log(newOpAmount.value)
-    // console.log(newOpType.value)
-    // console.log(newOpCategory.value)
-    // console.log(newOpDate.value)
+    storage.operations.push(newOperation);
+    localStorage.setItem('to-storage', JSON.stringify(storage));
     console.log(newOperation);
     return newOperation;
 });

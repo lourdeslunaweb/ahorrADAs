@@ -27,24 +27,26 @@ const newOpType = document.getElementById ("newOp-type");
 const newOpCategory = document.getElementById ("newOp-category");
 const newOpDate = document.getElementById ("newOp-date");
 
+let storage = getStorage();
 
 newOpForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     newOperation.description= newOpDescription.value;
     newOperation.amount = newOpAmount.value;
     newOperation.type = newOpType.value; 
     newOperation.category = newOpCategory.value;
     newOperation.date = newOpDate.value;
+
+    storage.operations.push(newOperation)
+    localStorage.setItem('to-storage', JSON.stringify(storage))
     
-    // console.log(newOpDescription.value)
-    // console.log(newOpAmount.value)
-    // console.log(newOpType.value)
-    // console.log(newOpCategory.value)
-    // console.log(newOpDate.value)
     console.log(newOperation)
+    
     return newOperation
 }
 )
+
 // newOpDescription.addEventListener('focusout',(e) => {
 //     const form = e.target;
 //     const newCategoryName: string = form.value;
