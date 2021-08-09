@@ -1,6 +1,10 @@
 // const fecha = document.getElementById('filter-date');
 // console.log(fecha);
-
+type LocalStorage ={
+    categories: Category[],
+    operations: Operation[],
+    balance: Balance[],
+}
 
 type Balance = {
     profits: number,
@@ -27,12 +31,19 @@ type Filter = {
     since: string,
     sortby: 'Más reciente' | 'Menos reciente' |'Mayor monto' | 'Menor monto' | 'A-Z' |'Z-A',
 }
+const getStorage = (): LocalStorage => {
+    let storage: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
 
+    if(!storage) {
+    storage = {
+        categories: [],
+        operations: [],
+        balance: []
+    } 
+    }
 
-
-
-
-
+    return storage;
+}
 
 // const filter: Filter = {
 //     display:true,
