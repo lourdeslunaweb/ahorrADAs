@@ -9,18 +9,59 @@ const categories : Category = {
 // Create new category
 // Ver como crear los divs de create category
 
-const divNewCat = document.createElement("div");
-locStor.categories
+
+const categoryCont = document.getElementById("cont-category");
+const categoryList = ["comida","servicios","salidas","educacion","transporte","trabajo"];
+
+const createCategoryRow = (inputCat) => {
+    
+    let categoryText = document.createTextNode(inputCat.value);
+    const categoryDiv = document.createElement("div");
+    const divNewCat = document.createElement("div");
+    const divActions = document.createElement("div");
+    const editCat = document.createElement("a");
+    const removeCat = document.createElement("a");
+    const editLink = document.createTextNode("Editar");
+    const removeLink = document.createTextNode("Eliminar");
+
+    categoryCont.appendChild(categoryDiv);
+    categoryDiv.classList.add("row");
+    categoryDiv.classList.add("mt-5");
+    categoryDiv.appendChild(divNewCat);
+    categoryDiv.appendChild(divActions);
+    divNewCat.appendChild(categoryText);
+    divNewCat.classList.add("fw-bold");
+    divNewCat.classList.add("col-8");
+    divActions.appendChild(editCat);
+    divActions.appendChild(removeCat);
+    divActions.classList.add("col-4");
+    divActions.classList.add("d-flex");
+    divActions.classList.add("justify-content-around");
+    editCat.appendChild(editLink);
+    editCat.setAttribute("href","./edit_cat.html");
+    editCat.classList.add("text-success");
+    removeCat.appendChild(removeLink);
+    removeCat.setAttribute("href","#"); // Hacer despues funcion que remueva
+    removeCat.classList.add("text-danger");
+
+}
+
+// Crear la función que muestre las categorías por defecto
+
 
 newCatForm.addEventListener('submit',(e) => {
 
     e.preventDefault();
-
-    categories.name = inputCat.value
-    categories.slug = slugify(inputCat.value)
-
+          
+    categories.name = inputCat.value;
+    categories.slug = slugify(inputCat.value);
+    
     storage.categories.push(categories);
     localStorage.setItem('to-storage', JSON.stringify(storage));
+
+    createCategoryRow(inputCat);
+
+    newCatForm.reset();
 
     return categories;
 

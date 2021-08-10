@@ -8,6 +8,10 @@ body{
     background-color: thistle;
 }
 
+a {
+    text-decoration: none;
+}
+
 .nav-bg{
     background-color: #8C61D6;
 }
