@@ -1,16 +1,31 @@
+var locStor = JSON.parse(localStorage.getItem('to-storage'));
+// Generate randoms IDs
+var generateId = function (length) {
+    var id = '';
+    var charts = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < length; i++) {
+        id += charts.charAt(Math.floor(Math.random() * charts.length));
+    }
+    return id;
+};
 var getStorage = function () {
-    var storage = JSON.parse(localStorage.getItem('to-storage'));
-    if (!storage) {
-        storage = {
-            categories: [],
+    // let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
+    if (!locStor) {
+        locStor = {
+            categories: [
+                {
+                    name: 'comida',
+                    slug: 'comida',
+                    id: generateId(20)
+                }
+            ],
             operations: [],
             balance: []
         };
     }
-    console.log(storage);
-    return storage;
+    return locStor;
 };
-localStorage.setItem('fb-session-token', "klsañjñlkjviodafjlkñaksjdlkvmñlsdilaidslf");
+var storage = getStorage();
 // const filter: Filter = {
 //     display:true,
 //     tipo: 'Todos',

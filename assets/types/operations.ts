@@ -8,11 +8,7 @@
 //     actions ?: 'Editar' | 'Eliminar',
 // }
 
-const categories : Category = {
-    name:'',
-    slug:'',
-}
-const newOperation: Operation ={
+const newOperation: Operation = {
     description: '',
     amount: 0,
     type: 'Gasto',
@@ -27,8 +23,6 @@ const newOpType = document.getElementById ("newOp-type");
 const newOpCategory = document.getElementById ("newOp-category");
 const newOpDate = document.getElementById ("newOp-date");
 
-let storage = getStorage();
-
 newOpForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -41,11 +35,8 @@ newOpForm.addEventListener('submit', (e) => {
     storage.operations.push(newOperation)
     localStorage.setItem('to-storage', JSON.stringify(storage))
     
-    console.log(newOperation)
-    
     return newOperation
-}
-)
+})
 
 // newOpDescription.addEventListener('focusout',(e) => {
 //     const form = e.target;

@@ -15,7 +15,9 @@ type Balance = {
 type Category = {
     name: string,
     slug ?: string,
+    id: string,
 }
+
 type Operation = {
     description: string,
     category: Category,
@@ -24,6 +26,7 @@ type Operation = {
     type ?: 'Gasto' | 'Ganancia',
     actions ?: 'Editar' | 'Eliminar',
 }
+
 type Filter = {
     display: boolean,
     type: 'Todos' | 'Gastos' |'Ganancias',
@@ -32,18 +35,42 @@ type Filter = {
     sortby: 'Más reciente' | 'Menos reciente' |'Mayor monto' | 'Menor monto' | 'A-Z' |'Z-A',
 }
 
+let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
+
+// Generate randoms IDs
+
+const generateId = (length:number):string => {
+
+    let id = '';
+    const charts = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < length; i++) {
+        id += charts.charAt(Math.floor(Math.random() * charts.length))
+    }
+
+    return id;
+}
+
 const getStorage = (): LocalStorage => {    
-    let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
+    // let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
 
     if(!locStor) {
-    locStor = {
-        categories: [],
-        operations: [],
-        balance: []
-    } 
+        locStor = {
+            categories: [
+                {
+                    name:'comida',
+                    slug:'comida',
+                    id: generateId(20),
+                }],
+            operations: [],
+            balance: []
+        } 
     }
     return locStor;
 }
+
+let storage = getStorage();
+
 
 
 // const filter: Filter = {

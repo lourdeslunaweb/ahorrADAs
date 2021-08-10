@@ -1,23 +1,30 @@
-// const categories : Category = {
-//     name:'',
-//     slug:'',
-// }
+const newCatForm = document.getElementById ("newcat-form");
+const inputCat = document.getElementById ("input-cat");
 
+const categories : Category = {
+    name:'',
+    slug:'',
+}
 
-// const newCategory = (e) => {
-//     e.preventDefault();
+// Create new category
+// Ver como crear los divs de create category
 
-//     const form = e.target;
+const divNewCat = document.createElement("div");
+locStor.categories
 
-//     const newCategoryName: string = form.name.value;
+newCatForm.addEventListener('submit',(e) => {
 
-//     const newCategory: Category = {
-//         name: newCategoryName,
-//         slug: slugify(newCategoryName)
-//     }
+    e.preventDefault();
 
-//     storage.categories.push(newCategory);
+    categories.name = inputCat.value
+    categories.slug = slugify(inputCat.value)
 
-//     localStorage.setItem('todo-storage', JSON.stringify(storage));
+    storage.categories.push(categories);
+    localStorage.setItem('to-storage', JSON.stringify(storage));
 
-// }
+    return categories;
+
+})
+
+// EDIT CATEGORIES
+

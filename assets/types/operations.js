@@ -33,7 +33,6 @@ newOpForm.addEventListener('submit', function (e) {
     newOperation.date = newOpDate.value;
     storage.operations.push(newOperation);
     localStorage.setItem('to-storage', JSON.stringify(storage));
-    console.log(newOperation);
     return newOperation;
 });
 // newOpDescription.addEventListener('focusout',(e) => {
