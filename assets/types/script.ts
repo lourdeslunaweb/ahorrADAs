@@ -15,7 +15,6 @@ type Balance = {
 type Category = {
     name: string,
     slug ?: string,
-    id: string,
 }
 
 type Operation = {
@@ -38,16 +37,17 @@ type Filter = {
 // Generate randoms IDs
 
 const generateId = (length:number):string => {
-
+    
     let id = '';
     const charts = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (let i = 0; i < length; i++) {
         id += charts.charAt(Math.floor(Math.random() * charts.length))
     }
-
     return id;
 }
+
+// Get the Local Storage
 
 const getStorage = (): LocalStorage => {   
      
@@ -58,16 +58,38 @@ const getStorage = (): LocalStorage => {
         locStor = {
             categories: [
                 {
-                    name:'comida',
+                    name:'Comida',
                     slug:'comida',
-                    id: generateId(20),
-                }],
+                },
+                {
+                    name:'Servicios',
+                    slug:'servicios',
+                },
+                {
+                    name:'Salidas',
+                    slug:'salidas',
+                },
+                {
+                    name:'Transporte',
+                    slug:'transporte',
+                },
+                {
+                    name:'Educación',
+                    slug:'educacion',
+                },
+                {
+                    name:'Trabajo',
+                    slug:'trabajo',
+                }
+            ],
             operations: [],
             balance: []
         } 
     }
     return locStor;
 }
+
+
 
 // let storage = getStorage();
 
