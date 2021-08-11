@@ -49,7 +49,8 @@ const generateId = (length:number):string => {
     return id;
 }
 
-const getStorage = (): LocalStorage => {    
+const getStorage = (): LocalStorage => {   
+     
     let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
 
     if(!locStor) {
