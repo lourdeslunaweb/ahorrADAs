@@ -8,8 +8,8 @@ var categories = {
 // Ver como crear los divs de create category
 var categoryCont = document.getElementById("cont-category");
 var categoryList = ["comida", "servicios", "salidas", "educacion", "transporte", "trabajo"];
-var createCategoryRow = function (inputCat) {
-    var categoryText = document.createTextNode(inputCat.value);
+var createCategoryRow = function (name) {
+    var categoryText = document.createTextNode(name);
     var categoryDiv = document.createElement("div");
     var divNewCat = document.createElement("div");
     var divActions = document.createElement("div");
@@ -42,10 +42,19 @@ newCatForm.addEventListener('submit', function (e) {
     e.preventDefault();
     categories.name = inputCat.value;
     categories.slug = slugify(inputCat.value);
+    var storage = getStorage();
     storage.categories.push(categories);
     localStorage.setItem('to-storage', JSON.stringify(storage));
-    createCategoryRow(inputCat);
+    createCategoryRow(categories.name);
     newCatForm.reset();
     return categories;
 });
+var init = function () {
+    var storage = getStorage();
+    for (var _i = 0, _a = storage.categories; _i < _a.length; _i++) {
+        var category = _a[_i];
+        createCategoryRow(category.name);
+    }
+};
+init();
 // EDIT CATEGORIES

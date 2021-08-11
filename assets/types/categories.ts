@@ -9,13 +9,12 @@ const categories : Category = {
 // Create new category
 // Ver como crear los divs de create category
 
-
 const categoryCont = document.getElementById("cont-category");
 const categoryList = ["comida","servicios","salidas","educacion","transporte","trabajo"];
 
-const createCategoryRow = (inputCat) => {
+const createCategoryRow = (name) => {
     
-    let categoryText = document.createTextNode(inputCat.value);
+    let categoryText = document.createTextNode(name);
     const categoryDiv = document.createElement("div");
     const divNewCat = document.createElement("div");
     const divActions = document.createElement("div");
@@ -43,11 +42,9 @@ const createCategoryRow = (inputCat) => {
     removeCat.appendChild(removeLink);
     removeCat.setAttribute("href","#"); // Hacer despues funcion que remueva
     removeCat.classList.add("text-danger");
-
 }
 
 // Crear la función que muestre las categorías por defecto
-
 
 newCatForm.addEventListener('submit',(e) => {
 
@@ -56,16 +53,26 @@ newCatForm.addEventListener('submit',(e) => {
     categories.name = inputCat.value;
     categories.slug = slugify(inputCat.value);
     
+    const storage = getStorage();
+
     storage.categories.push(categories);
     localStorage.setItem('to-storage', JSON.stringify(storage));
-
-    createCategoryRow(inputCat);
-
+    createCategoryRow(categories.name);
     newCatForm.reset();
 
     return categories;
-
 })
+
+const init = () => {
+
+    const storage = getStorage();
+
+    for(const category of storage.categories) {
+        createCategoryRow(category.name)
+    }
+}
+
+init()
 
 // EDIT CATEGORIES
 
