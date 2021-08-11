@@ -35,8 +35,6 @@ type Filter = {
     sortby: 'Más reciente' | 'Menos reciente' |'Mayor monto' | 'Menor monto' | 'A-Z' |'Z-A',
 }
 
-let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
-
 // Generate randoms IDs
 
 const generateId = (length:number):string => {
@@ -52,9 +50,10 @@ const generateId = (length:number):string => {
 }
 
 const getStorage = (): LocalStorage => {    
-    // let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
+    let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
 
     if(!locStor) {
+
         locStor = {
             categories: [
                 {
@@ -69,7 +68,7 @@ const getStorage = (): LocalStorage => {
     return locStor;
 }
 
-let storage = getStorage();
+// let storage = getStorage();
 
 
 

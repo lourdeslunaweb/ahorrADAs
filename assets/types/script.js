@@ -1,4 +1,3 @@
-var locStor = JSON.parse(localStorage.getItem('to-storage'));
 // Generate randoms IDs
 var generateId = function (length) {
     var id = '';
@@ -9,7 +8,7 @@ var generateId = function (length) {
     return id;
 };
 var getStorage = function () {
-    // let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
+    var locStor = JSON.parse(localStorage.getItem('to-storage'));
     if (!locStor) {
         locStor = {
             categories: [
@@ -25,7 +24,7 @@ var getStorage = function () {
     }
     return locStor;
 };
-var storage = getStorage();
+// let storage = getStorage();
 // const filter: Filter = {
 //     display:true,
 //     tipo: 'Todos',
