@@ -1,5 +1,9 @@
 const newCatForm = document.getElementById ("newcat-form");
 const inputCat = document.getElementById ("input-cat");
+const removeBtns = document.getElementsByClassName ("remove-cat");
+console.log(removeBtns)
+
+// Object "categories"
 
 const categories : Category = {
     name:'',
@@ -7,7 +11,6 @@ const categories : Category = {
 }
 
 // Create new category
-// Ver como crear los divs de create category
 
 const categoryCont = document.getElementById("cont-category");
 const categoryList = ["comida","servicios","salidas","educacion","transporte","trabajo"];
@@ -25,9 +28,10 @@ const createCategoryRow = (name) => {
 
     categoryCont.appendChild(categoryDiv);
     categoryDiv.classList.add("row");
-    categoryDiv.classList.add("mt-5");
+    categoryDiv.classList.add("mt-3");
     categoryDiv.appendChild(divNewCat);
     categoryDiv.appendChild(divActions);
+    categoryDiv.setAttribute("id",generateId(10));
     divNewCat.appendChild(categoryText);
     divNewCat.classList.add("fw-bold");
     divNewCat.classList.add("col-8");
@@ -41,38 +45,67 @@ const createCategoryRow = (name) => {
     editCat.classList.add("text-success");
     removeCat.appendChild(removeLink);
     removeCat.setAttribute("href","#"); // Hacer despues funcion que remueva
-    removeCat.classList.add("text-danger");
+    removeCat.setAttribute("class","text-danger remove-cat"); 
 }
 
-// Crear la función que muestre las categorías por defecto
+// Show new categories on screen / Set Local Storage new data:
 
 newCatForm.addEventListener('submit',(e) => {
+
+    const storage = getStorage();
 
     e.preventDefault();
           
     categories.name = inputCat.value;
     categories.slug = slugify(inputCat.value);
-    
-    const storage = getStorage();
 
     storage.categories.push(categories);
     localStorage.setItem('to-storage', JSON.stringify(storage));
+
     createCategoryRow(categories.name);
+
     newCatForm.reset();
 
     return categories;
 })
 
+// Local Storage init function:
+
 const init = () => {
-
     const storage = getStorage();
-
     for(const category of storage.categories) {
         createCategoryRow(category.name)
     }
 }
 
 init()
+
+
+// Remove categories from screen:
+
+const removeFunction = removeBtns => {
+    for(let button of removeBtns) {
+
+        let divButton = button.parentElement;
+        let divRow = divButton.parentElement;
+
+        button.addEventListener("click", e => {            
+            divButton.remove();
+            divRow.remove();
+            // localStorage.removeItem('categories');
+
+        }
+    }
+}
+
+removeFunction(removeBtns)
+
+// Remove categories from Local Storage:
+// to-storage
+
+
+
+
 
 // EDIT CATEGORIES
 

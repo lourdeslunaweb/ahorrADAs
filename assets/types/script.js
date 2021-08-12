@@ -7,15 +7,35 @@ var generateId = function (length) {
     }
     return id;
 };
+// Get the Local Storage
 var getStorage = function () {
     var locStor = JSON.parse(localStorage.getItem('to-storage'));
     if (!locStor) {
         locStor = {
             categories: [
                 {
-                    name: 'comida',
-                    slug: 'comida',
-                    id: generateId(20)
+                    name: 'Comida',
+                    slug: 'comida'
+                },
+                {
+                    name: 'Servicios',
+                    slug: 'servicios'
+                },
+                {
+                    name: 'Salidas',
+                    slug: 'salidas'
+                },
+                {
+                    name: 'Transporte',
+                    slug: 'transporte'
+                },
+                {
+                    name: 'Educación',
+                    slug: 'educacion'
+                },
+                {
+                    name: 'Trabajo',
+                    slug: 'trabajo'
                 }
             ],
             operations: [],

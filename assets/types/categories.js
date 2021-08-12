@@ -1,11 +1,13 @@
 var newCatForm = document.getElementById("newcat-form");
 var inputCat = document.getElementById("input-cat");
+var removeBtns = document.getElementsByClassName("remove-cat");
+console.log(removeBtns);
+// Object "categories"
 var categories = {
     name: '',
     slug: ''
 };
 // Create new category
-// Ver como crear los divs de create category
 var categoryCont = document.getElementById("cont-category");
 var categoryList = ["comida", "servicios", "salidas", "educacion", "transporte", "trabajo"];
 var createCategoryRow = function (name) {
@@ -19,9 +21,10 @@ var createCategoryRow = function (name) {
     var removeLink = document.createTextNode("Eliminar");
     categoryCont.appendChild(categoryDiv);
     categoryDiv.classList.add("row");
-    categoryDiv.classList.add("mt-5");
+    categoryDiv.classList.add("mt-3");
     categoryDiv.appendChild(divNewCat);
     categoryDiv.appendChild(divActions);
+    categoryDiv.setAttribute("id", generateId(10));
     divNewCat.appendChild(categoryText);
     divNewCat.classList.add("fw-bold");
     divNewCat.classList.add("col-8");
@@ -35,20 +38,21 @@ var createCategoryRow = function (name) {
     editCat.classList.add("text-success");
     removeCat.appendChild(removeLink);
     removeCat.setAttribute("href", "#"); // Hacer despues funcion que remueva
-    removeCat.classList.add("text-danger");
+    removeCat.setAttribute("class", "text-danger remove-cat");
 };
-// Crear la función que muestre las categorías por defecto
+// Show new categories on screen / Set Local Storage new data:
 newCatForm.addEventListener('submit', function (e) {
+    var storage = getStorage();
     e.preventDefault();
     categories.name = inputCat.value;
     categories.slug = slugify(inputCat.value);
-    var storage = getStorage();
     storage.categories.push(categories);
     localStorage.setItem('to-storage', JSON.stringify(storage));
     createCategoryRow(categories.name);
     newCatForm.reset();
     return categories;
 });
+// Local Storage init function:
 var init = function () {
     var storage = getStorage();
     for (var _i = 0, _a = storage.categories; _i < _a.length; _i++) {
@@ -57,4 +61,23 @@ var init = function () {
     }
 };
 init();
+// Remove categories from screen:
+var removeFunction = function (removeBtns) {
+    var _loop_1 = function (button) {
+        var divButton = button.parentElement;
+        var divRow = divButton.parentElement;
+        button.addEventListener("click", function (e) {
+            divButton.remove();
+            divRow.remove();
+            // localStorage.removeItem('categories');
+        });
+    };
+    for (var _i = 0, removeBtns_1 = removeBtns; _i < removeBtns_1.length; _i++) {
+        var button = removeBtns_1[_i];
+        _loop_1(button);
+    }
+};
+removeFunction(removeBtns);
+// Remove categories from Local Storage:
+// to-storage
 // EDIT CATEGORIES
