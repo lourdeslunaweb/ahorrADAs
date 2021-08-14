@@ -1,16 +1,26 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var newCatForm = document.getElementById("newcat-form");
 var inputCat = document.getElementById("input-cat");
 var removeBtns = document.getElementsByClassName("remove-cat");
-console.log(removeBtns);
 // Object "categories"
 var categories = {
     name: '',
     slug: ''
 };
 // Create new category
-var categoryCont = document.getElementById("cont-category");
-var categoryList = ["comida", "servicios", "salidas", "educacion", "transporte", "trabajo"];
+var categoriesGrid = document.getElementById("categories-grid");
 var createCategoryRow = function (name) {
+    categoriesGrid.innerHTML = " "; //QUEDA PENDIENTE! 
     var categoryText = document.createTextNode(name);
     var categoryDiv = document.createElement("div");
     var divNewCat = document.createElement("div");
@@ -19,13 +29,14 @@ var createCategoryRow = function (name) {
     var removeCat = document.createElement("a");
     var editLink = document.createTextNode("Editar");
     var removeLink = document.createTextNode("Eliminar");
-    categoryCont.appendChild(categoryDiv);
+    categoriesGrid.appendChild(categoryDiv);
     categoryDiv.classList.add("row");
     categoryDiv.classList.add("mt-3");
     categoryDiv.appendChild(divNewCat);
     categoryDiv.appendChild(divActions);
     categoryDiv.setAttribute("id", generateId(10));
     divNewCat.appendChild(categoryText);
+    divNewCat.dataset.name = name;
     divNewCat.classList.add("fw-bold");
     divNewCat.classList.add("col-8");
     divActions.appendChild(editCat);
@@ -39,16 +50,18 @@ var createCategoryRow = function (name) {
     removeCat.appendChild(removeLink);
     removeCat.setAttribute("href", "#"); // Hacer despues funcion que remueva
     removeCat.setAttribute("class", "text-danger remove-cat");
+    console.log("funciona");
+    var storage = getStorage();
 };
 // Show new categories on screen / Set Local Storage new data:
 newCatForm.addEventListener('submit', function (e) {
-    var storage = getStorage();
     e.preventDefault();
+    var storage = getStorage();
     categories.name = inputCat.value;
     categories.slug = slugify(inputCat.value);
     storage.categories.push(categories);
-    localStorage.setItem('to-storage', JSON.stringify(storage));
     createCategoryRow(categories.name);
+    localStorage.setItem('to-storage', JSON.stringify(storage));
     newCatForm.reset();
     return categories;
 });
@@ -66,10 +79,17 @@ var removeFunction = function (removeBtns) {
     var _loop_1 = function (button) {
         var divButton = button.parentElement;
         var divRow = divButton.parentElement;
+        var targetName = divRow.firstChild;
+        var dataName = targetName.getAttribute("data-name");
         button.addEventListener("click", function (e) {
-            divButton.remove();
-            divRow.remove();
-            // localStorage.removeItem('categories');
+            var storage = getStorage();
+            var categories = storage.categories;
+            var categoriesUpdate = categories.filter(function (category) { return dataName !== category.name; });
+            for (var _i = 0, categories_1 = categories; _i < categories_1.length; _i++) {
+                var category = categories_1[_i];
+                createCategoryRow(category.name);
+            }
+            localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { categories: categoriesUpdate })));
         });
     };
     for (var _i = 0, removeBtns_1 = removeBtns; _i < removeBtns_1.length; _i++) {
@@ -78,6 +98,7 @@ var removeFunction = function (removeBtns) {
     }
 };
 removeFunction(removeBtns);
+// localStorage.removeItem('categories');
 // Remove categories from Local Storage:
 // to-storage
 // EDIT CATEGORIES
