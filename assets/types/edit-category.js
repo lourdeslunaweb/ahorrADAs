@@ -4,7 +4,6 @@ var catToEdit = document.getElementById("cat-to-edit");
 var catToEditName = params.get("catName");
 catToEdit.value = "" + catToEditName;
 var oldCatName = catToEdit.value;
-console.log(oldCatName);
 var editCatBtn = document.getElementById("edit-cat-btn");
 editCatBtn.addEventListener("click", function (e) {
     var storage = getStorage();
@@ -19,5 +18,3 @@ editCatBtn.addEventListener("click", function (e) {
     localStorage.setItem('to-storage', JSON.stringify(storage));
     refreshCategoryTable();
 });
-// console.log(newCatName)
-//REVISAR DONDE GENERAMOS IDs! CREO QUE ESTAMOS GENERANDO DOBLEMENTE
