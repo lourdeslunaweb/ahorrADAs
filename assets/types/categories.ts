@@ -1,23 +1,16 @@
 const newCatForm = document.getElementById ("newcat-form");
-const inputCat = document.getElementById ("input-cat");
+let inputCat = document.getElementById ("input-cat");
 const removeBtns = document.getElementsByClassName ("remove-cat");
 
-// Remove categories from screen:
+// Remove categories from Local Storage:
 
 const removeCategory = (e) => {   
-
     const idCategory = e.target.dataset.id;
-
     const storage = getStorage();
-
     const {categories} = storage;      
-
     const categoriesUpdate = categories.filter(category => idCategory !== category.id)
-
     localStorage.setItem('to-storage', JSON.stringify({...storage, categories: categoriesUpdate}));
-
     refreshCategoryTable()
-
 }
 
 // Create new category
@@ -25,13 +18,10 @@ const removeCategory = (e) => {
 const categoriesGrid = document.getElementById("categories-grid");
 
 const refreshCategoryTable = () => {
-    
-    categoriesGrid.innerHTML = " "; //QUEDA PENDIENTE! 
-
+    categoriesGrid.innerHTML = " "; 
     const storage = getStorage();
 
     for (const category of storage.categories) {
-
         let categoryText = document.createTextNode(category.name);
         const categoryDiv = document.createElement("div");
         const divNewCat = document.createElement("div");
@@ -61,38 +51,31 @@ const refreshCategoryTable = () => {
         divActions.classList.add("justify-content-around");
     
         editCat.appendChild(editLink);
-        editCat.setAttribute("href","./edit_cat.html");
+        editCat.setAttribute("href",`./edit_cat.html?catName=${category.name}`);
         editCat.classList.add("text-success");
-    
+        
         removeCat.appendChild(removeLink);
         removeCat.addEventListener("click",removeCategory)
-        removeCat.setAttribute("href","#"); // Hacer despues funcion que remueva
+        removeCat.setAttribute("href","#"); 
         removeCat.setAttribute("class","text-danger remove-cat"); 
         removeCat.dataset.id = `${category.id}`;
-    }
-
+    }   
 }
 
 // Show new categories on screen / Set Local Storage new data:
 
 newCatForm.addEventListener('submit',(e) => {
-
     e.preventDefault();
-
     const storage = getStorage();
-    
     storage.categories.push({
         name: inputCat.value,
         slug: slugify(inputCat.value),
-        id: storage.categories[storage.categories.length - 1].id + 1
+        id: generateId(10),
+        // id: storage.categories[storage.categories.length - 1].id + 1
     });
-    
     localStorage.setItem('to-storage', JSON.stringify(storage));
-
     refreshCategoryTable();
-    
     newCatForm.reset();
-
 })
 
 // Local Storage init function:
@@ -100,21 +83,10 @@ newCatForm.addEventListener('submit',(e) => {
 const init = () => {
     getStorage();
     refreshCategoryTable()
-    
 }
 
 init()
 
 
 
-
-// localStorage.removeItem('categories');
-
-
-// Remove categories from Local Storage:
-// to-storage
-
-
-
-// EDIT CATEGORIES
 
