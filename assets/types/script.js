@@ -15,27 +15,33 @@ var getStorage = function () {
             categories: [
                 {
                     name: 'Comida',
-                    slug: 'comida'
+                    slug: 'comida',
+                    id: generateId(10)
                 },
                 {
                     name: 'Servicios',
-                    slug: 'servicios'
+                    slug: 'servicios',
+                    id: generateId(10)
                 },
                 {
                     name: 'Salidas',
-                    slug: 'salidas'
+                    slug: 'salidas',
+                    id: generateId(10)
                 },
                 {
                     name: 'Transporte',
-                    slug: 'transporte'
+                    slug: 'transporte',
+                    id: generateId(10)
                 },
                 {
                     name: 'Educación',
-                    slug: 'educacion'
+                    slug: 'educacion',
+                    id: generateId(10)
                 },
                 {
                     name: 'Trabajo',
-                    slug: 'trabajo'
+                    slug: 'trabajo',
+                    id: generateId(10)
                 }
             ],
             operations: [],
