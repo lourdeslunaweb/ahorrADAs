@@ -14,10 +14,6 @@ var inputCat = document.getElementById("input-cat");
 var removeBtns = document.getElementsByClassName("remove-cat");
 // Remove categories from screen:
 var removeCategory = function (e) {
-    // let divButton = button.parentElement;
-    // let divRow = divButton.parentElement;
-    // const targetName = divRow.firstChild;
-    // let dataName = targetName.getAttribute("data-name");
     var idCategory = e.target.dataset.id;
     var storage = getStorage();
     var categories = storage.categories;
