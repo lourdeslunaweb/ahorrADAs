@@ -12,10 +12,23 @@ var __assign = (this && this.__assign) || function () {
 var newCatForm = document.getElementById("newcat-form");
 var inputCat = document.getElementById("input-cat");
 var removeBtns = document.getElementsByClassName("remove-cat");
-// Object "categories"
+// Remove categories from screen:
+var removeCategory = function (e) {
+    // let divButton = button.parentElement;
+    // let divRow = divButton.parentElement;
+    // const targetName = divRow.firstChild;
+    // let dataName = targetName.getAttribute("data-name");
+    var idCategory = e.target.dataset.id;
+    var storage = getStorage();
+    var categories = storage.categories;
+    var categoriesUpdate = categories.filter(function (category) { return idCategory !== category.id; });
+    localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { categories: categoriesUpdate })));
+    refreshCategoryTable();
+};
 // Create new category
 var categoriesGrid = document.getElementById("categories-grid");
 var refreshCategoryTable = function () {
+    categoriesGrid.innerHTML = " "; //QUEDA PENDIENTE! 
     var storage = getStorage();
     for (var _i = 0, _a = storage.categories; _i < _a.length; _i++) {
         var category = _a[_i];
@@ -46,11 +59,11 @@ var refreshCategoryTable = function () {
         editCat.setAttribute("href", "./edit_cat.html");
         editCat.classList.add("text-success");
         removeCat.appendChild(removeLink);
+        removeCat.addEventListener("click", removeCategory);
         removeCat.setAttribute("href", "#"); // Hacer despues funcion que remueva
         removeCat.setAttribute("class", "text-danger remove-cat");
+        removeCat.dataset.id = "" + category.id;
     }
-    removeCategory(removeBtns);
-    // categoriesGrid.innerHTML = " "; //QUEDA PENDIENTE! 
 };
 // Show new categories on screen / Set Local Storage new data:
 newCatForm.addEventListener('submit', function (e) {
@@ -67,30 +80,10 @@ newCatForm.addEventListener('submit', function (e) {
 });
 // Local Storage init function:
 var init = function () {
-    var storage = getStorage();
-    for (var _i = 0, _a = storage.categories; _i < _a.length; _i++) {
-        var category = _a[_i];
-        createCategoryRow(category.name);
-    }
+    getStorage();
+    refreshCategoryTable();
 };
 init();
-// Remove categories from screen:
-var removeCategory = function (removeBtns) {
-    for (var _i = 0, removeBtns_1 = removeBtns; _i < removeBtns_1.length; _i++) {
-        var button = removeBtns_1[_i];
-        // let divButton = button.parentElement;
-        // let divRow = divButton.parentElement;
-        // const targetName = divRow.firstChild;
-        // let dataName = targetName.getAttribute("data-name");
-        button.addEventListener("click", function () {
-            var storage = getStorage();
-            var categories = storage.categories;
-            var categoriesUpdate = categories.filter(function (category) { return dataName !== category.name; });
-            localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { categories: categoriesUpdate })));
-            refreshCategoryTable();
-        });
-    }
-};
 // localStorage.removeItem('categories');
 // Remove categories from Local Storage:
 // to-storage

@@ -2,8 +2,27 @@ const newCatForm = document.getElementById ("newcat-form");
 const inputCat = document.getElementById ("input-cat");
 const removeBtns = document.getElementsByClassName ("remove-cat");
 
-// Object "categories"
+// Remove categories from screen:
 
+const removeCategory = (e) => {   
+
+        // let divButton = button.parentElement;
+        // let divRow = divButton.parentElement;
+        // const targetName = divRow.firstChild;
+        // let dataName = targetName.getAttribute("data-name");
+        const idCategory = e.target.dataset.id;
+
+        const storage = getStorage();
+
+        const {categories} = storage;      
+
+        const categoriesUpdate = categories.filter(category => idCategory !== category.id)
+
+        localStorage.setItem('to-storage', JSON.stringify({...storage, categories: categoriesUpdate}));
+
+        refreshCategoryTable()
+
+}
 
 // Create new category
 
@@ -11,6 +30,8 @@ const categoriesGrid = document.getElementById("categories-grid");
 
 const refreshCategoryTable = () => {
     
+    categoriesGrid.innerHTML = " "; //QUEDA PENDIENTE! 
+
     const storage = getStorage();
 
     for (const category of storage.categories) {
@@ -48,12 +69,11 @@ const refreshCategoryTable = () => {
         editCat.classList.add("text-success");
     
         removeCat.appendChild(removeLink);
+        removeCat.addEventListener("click",removeCategory)
         removeCat.setAttribute("href","#"); // Hacer despues funcion que remueva
         removeCat.setAttribute("class","text-danger remove-cat"); 
+        removeCat.dataset.id = `${category.id}`;
     }
-    
-    removeCategory(removeBtns)
-    // categoriesGrid.innerHTML = " "; //QUEDA PENDIENTE! 
 
 }
 
@@ -82,39 +102,13 @@ newCatForm.addEventListener('submit',(e) => {
 // Local Storage init function:
 
 const init = () => {
-    const storage = getStorage();
-    for(const category of storage.categories) {
-        createCategoryRow(category.name)
-    }
+    getStorage();
+    refreshCategoryTable()
+    
 }
 
 init()
 
-// Remove categories from screen:
-
-const removeCategory = removeBtns => {   
-    for(let button of removeBtns) {
-
-        // let divButton = button.parentElement;
-        // let divRow = divButton.parentElement;
-        // const targetName = divRow.firstChild;
-        // let dataName = targetName.getAttribute("data-name");
-
-        button.addEventListener("click", () => {  
-
-            const storage = getStorage();
-
-            const {categories} = storage;      
-
-            const categoriesUpdate = categories.filter(category => dataName !== category.name)
-
-            localStorage.setItem('to-storage', JSON.stringify({...storage, categories: categoriesUpdate}));
-
-            refreshCategoryTable()
-            
-        })
-    }
-}
 
 
 
