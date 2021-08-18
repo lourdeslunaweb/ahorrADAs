@@ -12,7 +12,7 @@ var __assign = (this && this.__assign) || function () {
 var newCatForm = document.getElementById("newcat-form");
 var inputCat = document.getElementById("input-cat");
 var removeBtns = document.getElementsByClassName("remove-cat");
-// Remove categories from screen:
+// Remove categories from Local Storage:
 var removeCategory = function (e) {
     var idCategory = e.target.dataset.id;
     var storage = getStorage();
@@ -24,7 +24,7 @@ var removeCategory = function (e) {
 // Create new category
 var categoriesGrid = document.getElementById("categories-grid");
 var refreshCategoryTable = function () {
-    categoriesGrid.innerHTML = " "; //QUEDA PENDIENTE! 
+    categoriesGrid.innerHTML = " ";
     var storage = getStorage();
     for (var _i = 0, _a = storage.categories; _i < _a.length; _i++) {
         var category = _a[_i];
@@ -52,11 +52,11 @@ var refreshCategoryTable = function () {
         divActions.classList.add("d-flex");
         divActions.classList.add("justify-content-around");
         editCat.appendChild(editLink);
-        editCat.setAttribute("href", "./edit_cat.html");
+        editCat.setAttribute("href", "./edit_cat.html?catName=" + category.name);
         editCat.classList.add("text-success");
         removeCat.appendChild(removeLink);
         removeCat.addEventListener("click", removeCategory);
-        removeCat.setAttribute("href", "#"); // Hacer despues funcion que remueva
+        removeCat.setAttribute("href", "#");
         removeCat.setAttribute("class", "text-danger remove-cat");
         removeCat.dataset.id = "" + category.id;
     }
@@ -68,7 +68,7 @@ newCatForm.addEventListener('submit', function (e) {
     storage.categories.push({
         name: inputCat.value,
         slug: slugify(inputCat.value),
-        id: storage.categories[storage.categories.length - 1].id + 1
+        id: generateId(10)
     });
     localStorage.setItem('to-storage', JSON.stringify(storage));
     refreshCategoryTable();
@@ -80,7 +80,3 @@ var init = function () {
     refreshCategoryTable();
 };
 init();
-// localStorage.removeItem('categories');
-// Remove categories from Local Storage:
-// to-storage
-// EDIT CATEGORIES
