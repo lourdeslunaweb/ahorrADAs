@@ -6,21 +6,17 @@ const removeBtns = document.getElementsByClassName ("remove-cat");
 
 const removeCategory = (e) => {   
 
-        // let divButton = button.parentElement;
-        // let divRow = divButton.parentElement;
-        // const targetName = divRow.firstChild;
-        // let dataName = targetName.getAttribute("data-name");
-        const idCategory = e.target.dataset.id;
+    const idCategory = e.target.dataset.id;
 
-        const storage = getStorage();
+    const storage = getStorage();
 
-        const {categories} = storage;      
+    const {categories} = storage;      
 
-        const categoriesUpdate = categories.filter(category => idCategory !== category.id)
+    const categoriesUpdate = categories.filter(category => idCategory !== category.id)
 
-        localStorage.setItem('to-storage', JSON.stringify({...storage, categories: categoriesUpdate}));
+    localStorage.setItem('to-storage', JSON.stringify({...storage, categories: categoriesUpdate}));
 
-        refreshCategoryTable()
+    refreshCategoryTable()
 
 }
 
