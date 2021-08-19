@@ -1,6 +1,8 @@
 const newCatForm = document.getElementById ("newcat-form");
 let inputCat = document.getElementById ("input-cat");
 const removeBtns = document.getElementsByClassName ("remove-cat");
+const newOpCategory = document.getElementById("newOp-category");
+console.log(newOpCategory);
 
 // Remove categories from Local Storage:
 
@@ -13,6 +15,7 @@ const removeCategory = (e) => {
     refreshCategoryTable()
 }
 
+
 // Create new category
 
 const categoriesGrid = document.getElementById("categories-grid");
@@ -20,7 +23,6 @@ const categoriesGrid = document.getElementById("categories-grid");
 const refreshCategoryTable = () => {
     categoriesGrid.innerHTML = " "; 
     const storage = getStorage();
-
     for (const category of storage.categories) {
         let categoryText = document.createTextNode(category.name);
         const categoryDiv = document.createElement("div");
@@ -40,7 +42,7 @@ const refreshCategoryTable = () => {
         categoryDiv.setAttribute("id",generateId(10));
     
         divNewCat.appendChild(categoryText);
-        divNewCat.dataset.name = name;
+        // divNewCat.dataset.name = name; ver acá 
         divNewCat.classList.add("fw-bold");
         divNewCat.classList.add("col-8");
     
@@ -60,7 +62,9 @@ const refreshCategoryTable = () => {
         removeCat.setAttribute("class","text-danger remove-cat"); 
         removeCat.dataset.id = `${category.id}`;
     }   
+    
 }
+
 
 // Show new categories on screen / Set Local Storage new data:
 
@@ -80,12 +84,12 @@ newCatForm.addEventListener('submit',(e) => {
 
 // Local Storage init function:
 
-const init = () => {
+const initCategories = () => {
     getStorage();
-    refreshCategoryTable()
+    refreshCategoryTable();
 }
 
-init()
+initCategories()
 
 
 
