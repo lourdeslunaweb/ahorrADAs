@@ -30,7 +30,7 @@
                                 class="fas fa-chart-line me-2"></i>Balance</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fs-5" href="category.html"><i
+                        <a class="nav-link text-white fs-5" href="categories.html"><i
                                 class="fas fa-tag me-2"></i>Categorías</a>
                     </li>
                     <li class="nav-item">
@@ -69,11 +69,12 @@
             <div class="mt-3">
                 <label class="label fw-bold"> Categoria:</label>
                 <select id="newOp-category" required class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <option value="Servicios">Servicios</option>
+<!--                <option value="Servicios">Servicios</option>
                     <option value="Salidas">Salidas</option>
                     <option value="Educacion">Educación</option>
                     <option value="Transporte">Transporte</option>
                     <option value="Trabajo">Trabajo</option>
+-->
                 </select>
             </div>
             <div class="mt-3">
@@ -81,8 +82,8 @@
                 <input id="newOp-date" required type="date" class="input-group form-control">
             </div>
             <div class= "mt-5 mb-3 d-flex justify-content-end">
-                <button id="newOp-cancelbtn" type="button" class="btn btn-bg-color-two me-3">Cancelar</button>
-                <button id="newOp-submitbtn" type="submit" class="btn btn-bg-color fw-bold">Agregar</button>
+                <a href="index.html"><button id="newOp-cancelbtn" type="button" class="btn btn-bg-color-two me-3">Cancelar</button></a>
+                <button type="submit" class="btn btn-bg-color fw-bold">Agregar</button>
             </div>
         </form>
         </div>
@@ -91,6 +92,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="./assets/types/script.js"></script>
+    <script src="./assets/types/categories.js"></script>
     <script src="./assets/types/operations.js"></script>
 </body>
 </html>

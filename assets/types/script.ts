@@ -20,7 +20,7 @@ type Category = {
 
 type Operation = {
     description: string,
-    category: Category,
+    category: string,
     date: string,
     amount: number,
     type ?: 'Gasto' | 'Ganancia',

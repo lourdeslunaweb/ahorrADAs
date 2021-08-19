@@ -12,31 +12,78 @@ const newOperation: Operation = {
     description: '',
     amount: 0,
     type: 'Gasto',
-    category: categories,
+    category: '',
     date: '',
 }
 
-const newOpForm = document.getElementById ("newOp-form");
+const newOpForm = document.getElementById("newOp-form");
 const newOpDescription = document.getElementById('newOp-description');
 const newOpAmount = document.getElementById("newOp-amount");
-const newOpType = document.getElementById ("newOp-type");
-const newOpCategory = document.getElementById ("newOp-category");
-const newOpDate = document.getElementById ("newOp-date");
+const newOpType = document.getElementById("newOp-type");
+const newOpDate = document.getElementById("newOp-date");
+const emptyOps = document.getElementById("empty-ops");
+const loadedOps = document.getElementById("loaded-ops");
+
+
+// Update categories in new_op.html
+
+const upDateCatOps = () =>{
+    const storage = getStorage();
+    for (let category of storage.categories){
+        const optionCat = document.createElement("option");
+        optionCat.setAttribute('value', `${category.name}`);
+        const optionCatText = document.createTextNode(`${category.name}`);
+        optionCat.appendChild(optionCatText);
+        newOpCategory.appendChild(optionCat)
+    }
+    // localStorage.setItem('to-storage', JSON.stringify(storage))
+}
+
 
 newOpForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    newOperation.description= newOpDescription.value;
+    const storage = getStorage();
+
+    newOperation.description = newOpDescription.value;
     newOperation.amount = newOpAmount.value;
-    newOperation.type = newOpType.value; 
+    newOperation.type = newOpType.value;
     newOperation.category = newOpCategory.value;
     newOperation.date = newOpDate.value;
 
     storage.operations.push(newOperation)
     localStorage.setItem('to-storage', JSON.stringify(storage))
-    
+
+    checkOps()
+
+    newOpForm.reset()
+
     return newOperation
 })
+
+
+
+const initOperations = () =>{
+    getStorage();
+    upDateCatOps();
+}
+
+initOperations()
+
+
+// const checkOps = () => {
+//     const storage = getStorage();
+//     const {operations} = storage;
+//     console.log(operations.length);
+//     operations.length === 0? emptyOps.classList.remove("d-none") : emptyOps.classList.add("d-none");
+//    operations.length === 0? loadedOps.classList.add("d-none") : loadedOps.classList.remove("d-none");
+    
+// }
+// checkOps()
+
+
+
+
 
 // newOpDescription.addEventListener('focusout',(e) => {
 //     const form = e.target;
