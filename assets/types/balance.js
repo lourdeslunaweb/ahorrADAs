@@ -1,5 +1,7 @@
+// Set Variables of balance
 var emptyOps = document.getElementById("empty-ops");
 var loadedOps = document.getElementById("loaded-ops");
+// Initial function of balance
 var initBalance = function () {
     var storage = getStorage();
     var operations = storage.operations;

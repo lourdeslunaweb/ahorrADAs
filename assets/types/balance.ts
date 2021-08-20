@@ -1,9 +1,10 @@
-
+// Set Variables of balance
 const emptyOps = document.getElementById("empty-ops");
 const loadedOps = document.getElementById("loaded-ops");
 
 
 
+// Initial function of balance
 const initBalance = () =>{
     const storage = getStorage();
     const {operations} = storage;
@@ -18,5 +19,4 @@ const initBalance = () =>{
 
     
 }
-
 initBalance()

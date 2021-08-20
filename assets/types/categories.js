@@ -9,11 +9,12 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+// Set Variables of Categories
 var newCatForm = document.getElementById("newcat-form");
 var inputCat = document.getElementById("input-cat");
 var removeBtns = document.getElementsByClassName("remove-cat");
 var newOpCategory = document.getElementById("newOp-category");
-console.log(newOpCategory);
+var categoriesGrid = document.getElementById("categories-grid");
 // Remove categories from Local Storage:
 var removeCategory = function (e) {
     var idCategory = e.target.dataset.id;
@@ -24,7 +25,6 @@ var removeCategory = function (e) {
     refreshCategoryTable();
 };
 // Create new category
-var categoriesGrid = document.getElementById("categories-grid");
 var refreshCategoryTable = function () {
     categoriesGrid.innerHTML = " ";
     var storage = getStorage();
@@ -45,7 +45,6 @@ var refreshCategoryTable = function () {
         categoryDiv.appendChild(divActions);
         categoryDiv.setAttribute("id", generateId(10));
         divNewCat.appendChild(categoryText);
-        // divNewCat.dataset.name = name; ver acá 
         divNewCat.classList.add("fw-bold");
         divNewCat.classList.add("col-8");
         divActions.appendChild(editCat);

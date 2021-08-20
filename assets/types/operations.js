@@ -1,11 +1,4 @@
-// type Operation = {
-//     description: string,
-//     category: Category,
-//     date: Date,
-//     amount: number,
-//     type ?: 'Gasto' | 'Ganancia',
-//     actions ?: 'Editar' | 'Eliminar',
-// }
+// Set Variables of Operations
 var newOperation = {
     description: '',
     amount: 0,
@@ -30,8 +23,8 @@ var upDateCatOps = function () {
         optionCat.appendChild(optionCatText);
         newOpCategory.appendChild(optionCat);
     }
-    // localStorage.setItem('to-storage', JSON.stringify(storage))
 };
+// Create new operation
 newOpForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var storage = getStorage();
@@ -44,25 +37,10 @@ newOpForm.addEventListener('submit', function (e) {
     localStorage.setItem('to-storage', JSON.stringify(storage));
     newOpForm.reset();
     window.location.href = "./index.html";
-    // checkOps()
 });
+// Initial function of operations
 var initOperations = function () {
     getStorage();
     upDateCatOps();
 };
 initOperations();
-// const checkOps = () => {
-//     const storage = getStorage();
-//     const {operations} = storage;
-//     console.log(operations.length);
-//     operations.length === 0? emptyOps.classList.remove("d-none") : emptyOps.classList.add("d-none");
-//    operations.length === 0? loadedOps.classList.add("d-none") : loadedOps.classList.remove("d-none");
-// }
-// checkOps()
-// newOpDescription.addEventListener('focusout',(e) => {
-//     const form = e.target;
-//     const newCategoryName: string = form.value;
-//     console.log(newCategoryName)
-//     newOperation.description = newCategoryName
-// }
-// )

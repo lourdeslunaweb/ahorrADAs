@@ -1,10 +1,11 @@
-// EDIT CATEGORIES
+// Set variables of edit categories
 var params = new URLSearchParams(window.location.search);
 var catToEdit = document.getElementById("cat-to-edit");
 var catToEditName = params.get("catName");
 catToEdit.value = "" + catToEditName;
 var oldCatName = catToEdit.value;
 var editCatBtn = document.getElementById("edit-cat-btn");
+// Edit category name event
 editCatBtn.addEventListener("click", function (e) {
     var storage = getStorage();
     var categories = storage.categories;
