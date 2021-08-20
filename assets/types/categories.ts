@@ -2,7 +2,7 @@ const newCatForm = document.getElementById ("newcat-form");
 let inputCat = document.getElementById ("input-cat");
 const removeBtns = document.getElementsByClassName ("remove-cat");
 const newOpCategory = document.getElementById("newOp-category");
-console.log(newOpCategory);
+
 
 // Remove categories from Local Storage:
 
