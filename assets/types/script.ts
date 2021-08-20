@@ -1,6 +1,5 @@
-// const fecha = document.getElementById('filter-date');
-// console.log(fecha);
-type LocalStorage ={
+//Set Type
+type LocalStorage = {
     categories: Category[],
     operations: Operation[],
     balance: Balance[],
@@ -14,7 +13,7 @@ type Balance = {
 
 type Category = {
     name: string,
-    slug ?: string,
+    slug?: string,
     id: string,
 }
 
@@ -23,25 +22,22 @@ type Operation = {
     category: string,
     date: string,
     amount: number,
-    type ?: 'Gasto' | 'Ganancia',
-    actions ?: 'Editar' | 'Eliminar',
+    type?: 'Gasto' | 'Ganancia',
+    actions?: 'Editar' | 'Eliminar',
 }
 
 type Filter = {
     display: boolean,
-    type: 'Todos' | 'Gastos' |'Ganancias',
-    category : Category,
+    type: 'Todos' | 'Gastos' | 'Ganancias',
+    category: Category,
     since: string,
-    sortby: 'Más reciente' | 'Menos reciente' |'Mayor monto' | 'Menor monto' | 'A-Z' |'Z-A',
+    sortby: 'Más reciente' | 'Menos reciente' | 'Mayor monto' | 'Menor monto' | 'A-Z' | 'Z-A',
 }
 
 // Generate randoms IDs
-
-const generateId = (length:number):string => {
-    
+const generateId = (length: number): string => {
     let id = '';
     const charts = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
     for (let i = 0; i < length; i++) {
         id += charts.charAt(Math.floor(Math.random() * charts.length))
     }
@@ -49,51 +45,45 @@ const generateId = (length:number):string => {
 }
 
 // Get the Local Storage
-
-const getStorage = (): LocalStorage => {   
-     
+const getStorage = (): LocalStorage => {
     let locStor: LocalStorage = JSON.parse(localStorage.getItem('to-storage'));
-
-    if(!locStor) {
-
+    if (!locStor) {
         locStor = {
             categories: [
                 {
-                    name:'Comida',
-                    slug:'comida',
+                    name: 'Comida',
+                    slug: 'comida',
                     id: generateId(10),
                 },
                 {
-                    name:'Servicios',
-                    slug:'servicios',
-                    id: generateId(10),
-
-                },
-                {
-                    name:'Salidas',
-                    slug:'salidas',
-                    id: generateId(10),
-
-                },
-                {
-                    name:'Transporte',
-                    slug:'transporte',
+                    name: 'Servicios',
+                    slug: 'servicios',
                     id: generateId(10),
                 },
                 {
-                    name:'Educación',
-                    slug:'educacion',
+                    name: 'Salidas',
+                    slug: 'salidas',
                     id: generateId(10),
                 },
                 {
-                    name:'Trabajo',
-                    slug:'trabajo',
+                    name: 'Transporte',
+                    slug: 'transporte',
+                    id: generateId(10),
+                },
+                {
+                    name: 'Educación',
+                    slug: 'educacion',
+                    id: generateId(10),
+                },
+                {
+                    name: 'Trabajo',
+                    slug: 'trabajo',
                     id: generateId(10),
                 }
             ],
             operations: [],
             balance: []
-        } 
+        }
     }
     return locStor;
 }
@@ -101,9 +91,6 @@ const getStorage = (): LocalStorage => {
 
 
 // let storage = getStorage();
-
-
-
 // const filter: Filter = {
 //     display:true,
 //     tipo: 'Todos',

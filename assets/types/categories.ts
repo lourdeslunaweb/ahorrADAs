@@ -1,11 +1,12 @@
+// Set Variables of Categories
 const newCatForm = document.getElementById ("newcat-form");
 let inputCat = document.getElementById ("input-cat");
 const removeBtns = document.getElementsByClassName ("remove-cat");
 const newOpCategory = document.getElementById("newOp-category");
-console.log(newOpCategory);
+const categoriesGrid = document.getElementById("categories-grid");
+
 
 // Remove categories from Local Storage:
-
 const removeCategory = (e) => {   
     const idCategory = e.target.dataset.id;
     const storage = getStorage();
@@ -17,9 +18,6 @@ const removeCategory = (e) => {
 
 
 // Create new category
-
-const categoriesGrid = document.getElementById("categories-grid");
-
 const refreshCategoryTable = () => {
     categoriesGrid.innerHTML = " "; 
     const storage = getStorage();
@@ -42,7 +40,6 @@ const refreshCategoryTable = () => {
         categoryDiv.setAttribute("id",generateId(10));
     
         divNewCat.appendChild(categoryText);
-        // divNewCat.dataset.name = name; ver acá 
         divNewCat.classList.add("fw-bold");
         divNewCat.classList.add("col-8");
     
@@ -67,7 +64,6 @@ const refreshCategoryTable = () => {
 
 
 // Show new categories on screen / Set Local Storage new data:
-
 newCatForm.addEventListener('submit',(e) => {
     e.preventDefault();
     const storage = getStorage();
@@ -75,7 +71,6 @@ newCatForm.addEventListener('submit',(e) => {
         name: inputCat.value,
         slug: slugify(inputCat.value),
         id: generateId(10),
-        // id: storage.categories[storage.categories.length - 1].id + 1
     });
     localStorage.setItem('to-storage', JSON.stringify(storage));
     refreshCategoryTable();
@@ -83,12 +78,10 @@ newCatForm.addEventListener('submit',(e) => {
 })
 
 // Local Storage init function:
-
 const initCategories = () => {
     getStorage();
     refreshCategoryTable();
 }
-
 initCategories()
 
 
