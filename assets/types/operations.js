@@ -18,8 +18,7 @@ var newOpDescription = document.getElementById('newOp-description');
 var newOpAmount = document.getElementById("newOp-amount");
 var newOpType = document.getElementById("newOp-type");
 var newOpDate = document.getElementById("newOp-date");
-var emptyOps = document.getElementById("empty-ops");
-var loadedOps = document.getElementById("loaded-ops");
+var submitNewOp = document.getElementById("submit-newOp");
 // Update categories in new_op.html
 var upDateCatOps = function () {
     var storage = getStorage();
@@ -43,9 +42,9 @@ newOpForm.addEventListener('submit', function (e) {
     newOperation.date = newOpDate.value;
     storage.operations.push(newOperation);
     localStorage.setItem('to-storage', JSON.stringify(storage));
-    checkOps();
     newOpForm.reset();
-    return newOperation;
+    window.location.href = "./index.html";
+    // checkOps()
 });
 var initOperations = function () {
     getStorage();

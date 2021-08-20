@@ -21,8 +21,7 @@ const newOpDescription = document.getElementById('newOp-description');
 const newOpAmount = document.getElementById("newOp-amount");
 const newOpType = document.getElementById("newOp-type");
 const newOpDate = document.getElementById("newOp-date");
-const emptyOps = document.getElementById("empty-ops");
-const loadedOps = document.getElementById("loaded-ops");
+const submitNewOp = document.getElementById("submit-newOp");
 
 
 // Update categories in new_op.html
@@ -39,7 +38,6 @@ const upDateCatOps = () =>{
     // localStorage.setItem('to-storage', JSON.stringify(storage))
 }
 
-
 newOpForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -53,14 +51,11 @@ newOpForm.addEventListener('submit', (e) => {
 
     storage.operations.push(newOperation)
     localStorage.setItem('to-storage', JSON.stringify(storage))
-
-    checkOps()
-
     newOpForm.reset()
-
-    return newOperation
+    window.location.href = "./index.html"
+    
+    // checkOps()
 })
-
 
 
 const initOperations = () =>{
