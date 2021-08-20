@@ -10,39 +10,43 @@ const createOpRow = () => {
         // Create row div and set class
         const rowOpDiv = document.createElement("div");
         rowOpDiv.className = "row mt-1";
-        // Create description column as first col, its text node and set class
-        const firstCol = document.createElement("div");
-        firstCol.className = "col-2";
-        const descriptionOp = document.createTextNode("Va descripcion");
-        // Create category column as second col, its text node and set class
-        const secondCol = document.createElement("div");
-        secondCol.className = "col-2";
-        const categoryOp = document.createTextNode("Va categoria");
-        // Create date column as third col, its text node and set class
-        const thirdCol = document.createElement("div");
-        thirdCol.className = "col-2";
-        const dateOp = document.createTextNode("Va fecha");
-        // Create amount column as fourth col, its text node and set class
-        const fourthCol = document.createElement("div");
-        fourthCol.className = "col-2";
-        const amountOp = document.createTextNode("Va monto");
-        // Create action column as fifth col, its text node and set class
-        const fifthCol = document.createElement("div");
-        fifthCol.className = "col-2";
-        const actionOp = document.createTextNode("Va acciones");
-
+        // Create description column, its text node and set class
+        const descriptionCol = document.createElement("div");
+        descriptionCol.className = "col-2";
+        const descriptionOp = document.createTextNode(operation.description);
+        // Create category column, its text node and set class
+        const categoryCol = document.createElement("div");
+        categoryCol.className = "col-2";
+        const categoryOp = document.createTextNode(operation.category);
+        // Create date column, its text node and set class
+        const dateCol = document.createElement("div");
+        dateCol.className = "col-2";
+        const dateOp = document.createTextNode(operation.date);
+        // Create amount column, its text node and set class
+        const amountCol = document.createElement("div");
+        amountCol.className = "col-2";
+        const amountOp = document.createTextNode(operation.amount);
+        // Create action column,  two text node (edit and remove) and set class
+        const actionCol = document.createElement("div");
+        actionCol.className = "col-4 flex-row fs-6 text";
+        const editOp = document.createTextNode("Editar");
+        editOp.className = "text-success me-3";
+        const removeOp = document.createTextNode("Eiminar");
+        removeOp.className = "text-danger";
         // Append child node text into columns
-        firstCol.appendChild(descriptionOp);
-        secondCol.appendChild(categoryOp);
-        thirdCol.appendChild(dateOp);
-        fourthCol.appendChild(amountOp);
-        fifthCol.appendChild(actionOp);
-        // Append child columns into row operation div
-        rowOpDiv.appendChild(firstCol);
-        rowOpDiv.appendChild(secondCol);
-        rowOpDiv.appendChild(thirdCol);
-        rowOpDiv.appendChild(fourthCol);
-        rowOpDiv.appendChild(fifthCol);
+        descriptionCol.appendChild(descriptionOp);
+        categoryCol.appendChild(categoryOp);
+        dateCol.appendChild(dateOp);
+        amountCol.appendChild(amountOp);
+        actionCol.appendChild(editOp);
+        actionCol.appendChild(removeOp);
+        // Append child columns into row
+        rowOpDiv.appendChild(descriptionCol);
+        rowOpDiv.appendChild(categoryCol);
+        rowOpDiv.appendChild(dateCol);
+        rowOpDiv.appendChild(amountCol);
+        rowOpDiv.appendChild(actionCol);
+        // Append child row into Row Operation Div
         operationRow.appendChild(rowOpDiv)
     }
 }
@@ -61,8 +65,5 @@ const initBalance = () => {
         emptyOps.classList.remove("d-none");
         loadedOps.classList.add("d-none");
     }
-
-
-
 }
 initBalance()
