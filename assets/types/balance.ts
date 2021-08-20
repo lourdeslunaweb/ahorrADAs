@@ -20,7 +20,7 @@ const createOpRow = () => {
         const categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
         const dateCol = document.createElement("div");
-        dateCol.className = "col-2";
+        dateCol.className = "col-3";
         const dateOp = document.createTextNode(operation.date);
         // Create amount column, its text node and set class
         const amountCol = document.createElement("div");
@@ -28,18 +28,23 @@ const createOpRow = () => {
         const amountOp = document.createTextNode(operation.amount);
         // Create action column,  two text node (edit and remove) and set class
         const actionCol = document.createElement("div");
-        actionCol.className = "col-4 flex-row fs-6 text";
-        const editOp = document.createTextNode("Editar");
-        editOp.className = "text-success me-3";
-        const removeOp = document.createTextNode("Eiminar");
-        removeOp.className = "text-danger";
+        actionCol.className = "col-3 d-flex";
+        const editOpDiv = document.createElement("div");
+        editOpDiv.className = "text-success me-3";
+        const editOpText = document.createTextNode("Editar");
+        const removeOpDiv = document.createElement("div");
+        removeOpDiv.className = "text-danger";
+        const removeOpText = document.createTextNode("Eiminar");
+        // Append child text node edit and remove into their divs
+        editOpDiv.appendChild(editOpText)
+        removeOpDiv.appendChild(removeOpText)
         // Append child node text into columns
         descriptionCol.appendChild(descriptionOp);
         categoryCol.appendChild(categoryOp);
         dateCol.appendChild(dateOp);
         amountCol.appendChild(amountOp);
-        actionCol.appendChild(editOp);
-        actionCol.appendChild(removeOp);
+        actionCol.appendChild(editOpDiv);
+        actionCol.appendChild(removeOpDiv);
         // Append child columns into row
         rowOpDiv.appendChild(descriptionCol);
         rowOpDiv.appendChild(categoryCol);
