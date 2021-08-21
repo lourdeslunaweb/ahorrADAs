@@ -5,6 +5,7 @@ const newOperation: Operation = {
     type: 'Gasto',
     category: '',
     date: '',
+    id: '',
 }
 const newOpForm = document.getElementById("newOp-form");
 const newOpDescription = document.getElementById('newOp-description');
@@ -35,6 +36,7 @@ newOpForm.addEventListener('submit', (e) => {
     newOperation.type = newOpType.value;
     newOperation.category = newOpCategory.value;
     newOperation.date = newOpDate.value;
+    newOperation.id = generateId(10);
     storage.operations.push(newOperation)
     localStorage.setItem('to-storage', JSON.stringify(storage))
     newOpForm.reset()

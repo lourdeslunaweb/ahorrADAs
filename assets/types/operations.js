@@ -4,7 +4,8 @@ var newOperation = {
     amount: 0,
     type: 'Gasto',
     category: '',
-    date: ''
+    date: '',
+    id: ''
 };
 var newOpForm = document.getElementById("newOp-form");
 var newOpDescription = document.getElementById('newOp-description');
@@ -33,6 +34,7 @@ newOpForm.addEventListener('submit', function (e) {
     newOperation.type = newOpType.value;
     newOperation.category = newOpCategory.value;
     newOperation.date = newOpDate.value;
+    newOperation.id = generateId(10);
     storage.operations.push(newOperation);
     localStorage.setItem('to-storage', JSON.stringify(storage));
     newOpForm.reset();
