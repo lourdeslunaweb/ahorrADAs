@@ -1,7 +1,27 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 // Set Variables of balance
 var emptyOps = document.getElementById("empty-ops");
 var loadedOps = document.getElementById("loaded-ops");
 var operationRowGrid = document.getElementById("operation-row-grid");
+//Remove Operation
+var removeOperation = function (e) {
+    var idOperation = e.target.dataset.id;
+    var storage = getStorage();
+    var operations = storage.operations;
+    var operationsUpdate = operations.filter(function (operation) { return idOperation !== operation.id; });
+    localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { operations: operationsUpdate })));
+    refreshOperationTable();
+};
 //Create New Operation Row
 var refreshOperationTable = function () {
     operationRowGrid.innerHTML = " ";
@@ -11,6 +31,7 @@ var refreshOperationTable = function () {
         // Create row div and set class
         var rowOpDiv = document.createElement("div");
         rowOpDiv.className = "row mt-1";
+        rowOpDiv.setAttribute("id", generateId(10));
         // Create description column, its text node and set class
         var descriptionCol = document.createElement("div");
         descriptionCol.className = "col-2";
@@ -31,16 +52,13 @@ var refreshOperationTable = function () {
         var actionCol = document.createElement("div");
         actionCol.className = "col-3 d-flex";
         var editOpDiv = document.createElement("div");
-        editOpDiv.className = "text-success me-3 edit-op-btn";
-        var editOpText = document.createTextNode("Editar");
+        var editOpLink = document.createTextNode("Editar");
+        var editOp = document.createElement("a");
+        editOp.className = "text-success me-3 edit-op-btn";
         var removeOpDiv = document.createElement("div");
-        removeOpDiv.className = "text-danger remove-op-btn";
-        var removeOpText = document.createTextNode("Eiminar");
-        // Set id to remove div 
-        removeOpDiv.dataset.id = "" + operation.id;
-        // Append child text node edit and remove into their divs
-        editOpDiv.appendChild(editOpText);
-        removeOpDiv.appendChild(removeOpText);
+        var removeOpLink = document.createTextNode("Eliminar");
+        var removeOp = document.createElement("a");
+        removeOp.className = "text-danger remove-op-btn";
         // Append child node text into columns
         descriptionCol.appendChild(descriptionOp);
         categoryCol.appendChild(categoryOp);
@@ -56,9 +74,19 @@ var refreshOperationTable = function () {
         rowOpDiv.appendChild(actionCol);
         // Append child row into Row Operation Div
         operationRowGrid.appendChild(rowOpDiv);
+        operationRowGrid.setAttribute("id", generateId(10));
+        // Set id to remove div 
+        // Append child text node edit and remove into their divs
+        removeOpDiv.appendChild(removeOp);
+        removeOp.appendChild(removeOpLink);
+        removeOp.setAttribute("href", "#");
+        removeOp.addEventListener('click', removeOperation);
+        removeOp.dataset.id = "" + operation.id;
+        editOpDiv.appendChild(editOp);
+        editOp.appendChild(editOpLink);
+        editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount);
     }
 };
-refreshOperationTable();
 // Initial function of balance
 var initBalance = function () {
     var storage = getStorage();
@@ -71,5 +99,6 @@ var initBalance = function () {
         emptyOps.classList.remove("d-none");
         loadedOps.classList.add("d-none");
     }
+    refreshOperationTable();
 };
 initBalance();
