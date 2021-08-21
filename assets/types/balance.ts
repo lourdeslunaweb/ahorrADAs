@@ -8,9 +8,10 @@ const removeOperation = (e) => {
     const idOperation = e.target.dataset.id;
     const storage = getStorage();
     const {operations} = storage;      
-    const operationsUpdate = operations.filter(operation => idOperation !== operation.id)
+    const operationsUpdate = operations.filter(operation => idOperation !== operation.id);
     localStorage.setItem('to-storage', JSON.stringify({...storage, operations: operationsUpdate}));
-    refreshOperationTable()
+    refreshOperationTable();
+    initBalance();
 }
 
 
@@ -82,11 +83,10 @@ const refreshOperationTable = () => {
     }
 }
 
-// Initial function of balance
-const initBalance = () => {
+// Check if there's operations or not
+const changeIndexImg = () => {
     const storage = getStorage();
     const { operations } = storage;
-    
     if (operations.length > 0) {
         emptyOps.classList.add("d-none");
         loadedOps.classList.remove("d-none");
@@ -94,7 +94,16 @@ const initBalance = () => {
         emptyOps.classList.remove("d-none");
         loadedOps.classList.add("d-none");
     }
-    
-    refreshOperationTable()
 }
+
+// changeIndexImg();
+
+
+// Initial function of balance
+const initBalance = () => {
+    getStorage();
+    changeIndexImg();
+    refreshOperationTable();
+}
+
 initBalance()

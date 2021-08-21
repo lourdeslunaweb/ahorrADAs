@@ -8,6 +8,7 @@ amountToEdit.value = "" + amountToEditValue;
 var oldDescName = descToEdit.value;
 var oldAmount = amountToEdit.value;
 var editOpBtn = document.getElementById("edit-op-btn");
+upDateCatOps();
 editOpBtn.addEventListener("click", function (e) {
     var storage = getStorage();
     var operations = storage.operations;

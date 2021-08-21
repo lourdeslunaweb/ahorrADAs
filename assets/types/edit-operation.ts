@@ -9,6 +9,7 @@ let oldDescName = descToEdit.value;
 let oldAmount = amountToEdit.value;
 const editOpBtn = document.getElementById("edit-op-btn");
 
+upDateCatOps()
 
 editOpBtn.addEventListener("click", e => {
     const storage = getStorage();
