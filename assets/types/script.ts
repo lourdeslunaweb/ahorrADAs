@@ -24,6 +24,7 @@ type Operation = {
     amount: number,
     type?: 'Gasto' | 'Ganancia',
     actions?: 'Editar' | 'Eliminar',
+    id: string,
 }
 
 type Filter = {

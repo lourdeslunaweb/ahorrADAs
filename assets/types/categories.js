@@ -12,7 +12,6 @@ var __assign = (this && this.__assign) || function () {
 // Set Variables of Categories
 var newCatForm = document.getElementById("newcat-form");
 var inputCat = document.getElementById("input-cat");
-var removeBtns = document.getElementsByClassName("remove-cat");
 var newOpCategory = document.getElementById("newOp-category");
 var categoriesGrid = document.getElementById("categories-grid");
 // Remove categories from Local Storage:

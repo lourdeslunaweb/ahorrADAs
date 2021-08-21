@@ -1,10 +1,11 @@
 // Set Variables of balance
 const emptyOps = document.getElementById("empty-ops");
 const loadedOps = document.getElementById("loaded-ops");
-const operationRow = document.getElementById("operation-row");
+const operationRowGrid = document.getElementById("operation-row-grid");
 
-//Create Operation Row
-const createOpRow = () => {
+//Create New Operation Row
+const refreshOperationTable = () => {
+    operationRowGrid.innerHTML = " "; 
     const storage = getStorage();
     for (let operation of storage.operations) {
         // Create row div and set class
@@ -30,11 +31,13 @@ const createOpRow = () => {
         const actionCol = document.createElement("div");
         actionCol.className = "col-3 d-flex";
         const editOpDiv = document.createElement("div");
-        editOpDiv.className = "text-success me-3";
+        editOpDiv.className = "text-success me-3 edit-op-btn";
         const editOpText = document.createTextNode("Editar");
         const removeOpDiv = document.createElement("div");
-        removeOpDiv.className = "text-danger";
+        removeOpDiv.className = "text-danger remove-op-btn";
         const removeOpText = document.createTextNode("Eiminar");
+        // Set id to remove div 
+        removeOpDiv.dataset.id = `${operation.id}`;
         // Append child text node edit and remove into their divs
         editOpDiv.appendChild(editOpText)
         removeOpDiv.appendChild(removeOpText)
@@ -52,11 +55,12 @@ const createOpRow = () => {
         rowOpDiv.appendChild(amountCol);
         rowOpDiv.appendChild(actionCol);
         // Append child row into Row Operation Div
-        operationRow.appendChild(rowOpDiv)
+        operationRowGrid.appendChild(rowOpDiv)
+        
     }
 }
 
-createOpRow()
+refreshOperationTable()
 
 // Initial function of balance
 const initBalance = () => {

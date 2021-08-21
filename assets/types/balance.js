@@ -1,9 +1,10 @@
 // Set Variables of balance
 var emptyOps = document.getElementById("empty-ops");
 var loadedOps = document.getElementById("loaded-ops");
-var operationRow = document.getElementById("operation-row");
-//Create Operation Row
-var createOpRow = function () {
+var operationRowGrid = document.getElementById("operation-row-grid");
+//Create New Operation Row
+var refreshOperationTable = function () {
+    operationRowGrid.innerHTML = " ";
     var storage = getStorage();
     for (var _i = 0, _a = storage.operations; _i < _a.length; _i++) {
         var operation = _a[_i];
@@ -30,11 +31,13 @@ var createOpRow = function () {
         var actionCol = document.createElement("div");
         actionCol.className = "col-3 d-flex";
         var editOpDiv = document.createElement("div");
-        editOpDiv.className = "text-success me-3";
+        editOpDiv.className = "text-success me-3 edit-op-btn";
         var editOpText = document.createTextNode("Editar");
         var removeOpDiv = document.createElement("div");
-        removeOpDiv.className = "text-danger";
+        removeOpDiv.className = "text-danger remove-op-btn";
         var removeOpText = document.createTextNode("Eiminar");
+        // Set id to remove div 
+        removeOpDiv.dataset.id = "" + operation.id;
         // Append child text node edit and remove into their divs
         editOpDiv.appendChild(editOpText);
         removeOpDiv.appendChild(removeOpText);
@@ -52,10 +55,10 @@ var createOpRow = function () {
         rowOpDiv.appendChild(amountCol);
         rowOpDiv.appendChild(actionCol);
         // Append child row into Row Operation Div
-        operationRow.appendChild(rowOpDiv);
+        operationRowGrid.appendChild(rowOpDiv);
     }
 };
-createOpRow();
+refreshOperationTable();
 // Initial function of balance
 var initBalance = function () {
     var storage = getStorage();
