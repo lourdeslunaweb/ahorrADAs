@@ -1,7 +1,6 @@
 // Set Variables of Categories
 const newCatForm = document.getElementById ("newcat-form");
 let inputCat = document.getElementById ("input-cat");
-const newOpCategory = document.getElementById("newOp-category");
 const categoriesGrid = document.getElementById("categories-grid");
 
 

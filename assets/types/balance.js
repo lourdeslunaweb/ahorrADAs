@@ -21,6 +21,7 @@ var removeOperation = function (e) {
     var operationsUpdate = operations.filter(function (operation) { return idOperation !== operation.id; });
     localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { operations: operationsUpdate })));
     refreshOperationTable();
+    initBalance();
 };
 //Create New Operation Row
 var refreshOperationTable = function () {
@@ -87,8 +88,8 @@ var refreshOperationTable = function () {
         editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount);
     }
 };
-// Initial function of balance
-var initBalance = function () {
+// Check if there's operations or not
+var changeIndexImg = function () {
     var storage = getStorage();
     var operations = storage.operations;
     if (operations.length > 0) {
@@ -99,6 +100,12 @@ var initBalance = function () {
         emptyOps.classList.remove("d-none");
         loadedOps.classList.add("d-none");
     }
+};
+// changeIndexImg();
+// Initial function of balance
+var initBalance = function () {
+    getStorage();
+    changeIndexImg();
     refreshOperationTable();
 };
 initBalance();
