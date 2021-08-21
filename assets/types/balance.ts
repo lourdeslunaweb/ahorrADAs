@@ -3,6 +3,17 @@ const emptyOps = document.getElementById("empty-ops");
 const loadedOps = document.getElementById("loaded-ops");
 const operationRowGrid = document.getElementById("operation-row-grid");
 
+//Remove Operation
+const removeOperation = (e) => {   
+    const idOperation = e.target.dataset.id;
+    const storage = getStorage();
+    const {operations} = storage;      
+    const operationsUpdate = operations.filter(operation => idOperation !== operation.id)
+    localStorage.setItem('to-storage', JSON.stringify({...storage, operations: operationsUpdate}));
+    refreshOperationTable()
+}
+
+
 //Create New Operation Row
 const refreshOperationTable = () => {
     operationRowGrid.innerHTML = " "; 
@@ -11,6 +22,7 @@ const refreshOperationTable = () => {
         // Create row div and set class
         const rowOpDiv = document.createElement("div");
         rowOpDiv.className = "row mt-1";
+        rowOpDiv.setAttribute("id",generateId(10));
         // Create description column, its text node and set class
         const descriptionCol = document.createElement("div");
         descriptionCol.className = "col-2";
@@ -31,16 +43,14 @@ const refreshOperationTable = () => {
         const actionCol = document.createElement("div");
         actionCol.className = "col-3 d-flex";
         const editOpDiv = document.createElement("div");
-        editOpDiv.className = "text-success me-3 edit-op-btn";
-        const editOpText = document.createTextNode("Editar");
+        const editOpLink = document.createTextNode("Editar");
+        const editOp = document.createElement("a")
+        editOp.className = "text-success me-3 edit-op-btn";
         const removeOpDiv = document.createElement("div");
-        removeOpDiv.className = "text-danger remove-op-btn";
-        const removeOpText = document.createTextNode("Eiminar");
-        // Set id to remove div 
-        removeOpDiv.dataset.id = `${operation.id}`;
-        // Append child text node edit and remove into their divs
-        editOpDiv.appendChild(editOpText)
-        removeOpDiv.appendChild(removeOpText)
+        const removeOpLink = document.createTextNode("Eliminar");
+        const removeOp = document.createElement("a")
+        removeOp.className = "text-danger remove-op-btn";
+        
         // Append child node text into columns
         descriptionCol.appendChild(descriptionOp);
         categoryCol.appendChild(categoryOp);
@@ -55,18 +65,28 @@ const refreshOperationTable = () => {
         rowOpDiv.appendChild(amountCol);
         rowOpDiv.appendChild(actionCol);
         // Append child row into Row Operation Div
-        operationRowGrid.appendChild(rowOpDiv)
+        operationRowGrid.appendChild(rowOpDiv);
+        operationRowGrid.setAttribute("id",generateId(10));
         
+        // Set id to remove div 
+        // Append child text node edit and remove into their divs
+        removeOpDiv.appendChild(removeOp);
+        removeOp.appendChild(removeOpLink);
+        removeOp.setAttribute("href","#"); 
+        removeOp.addEventListener('click', removeOperation)
+        removeOp.dataset.id = `${operation.id}`;
+
+        editOpDiv.appendChild(editOp);
+        editOp.appendChild(editOpLink);
+        editOp.setAttribute("href",`./edit_op.html?descriptionOp=${operation.description}&amountOp=${operation.amount}`);
     }
 }
-
-refreshOperationTable()
 
 // Initial function of balance
 const initBalance = () => {
     const storage = getStorage();
     const { operations } = storage;
-
+    
     if (operations.length > 0) {
         emptyOps.classList.add("d-none");
         loadedOps.classList.remove("d-none");
@@ -74,5 +94,7 @@ const initBalance = () => {
         emptyOps.classList.remove("d-none");
         loadedOps.classList.add("d-none");
     }
+    
+    refreshOperationTable()
 }
 initBalance()
