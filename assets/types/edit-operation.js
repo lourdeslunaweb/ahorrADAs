@@ -3,6 +3,8 @@
 var params = new URLSearchParams(window.location.search);
 var descToEditValue = params.get("descriptionOp");
 var amountToEditValue = params.get("amountOp");
+var amountToEditValue = params.get("amountOp");
+var amountToEditValue = params.get("amountOp");
 var typeToEditValue = params.get("typeOp");
 var categoryToEditValue = params.get("categoryOp");
 var dateToEditValue = params.get("dateOp");
