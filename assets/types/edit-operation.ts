@@ -1,6 +1,9 @@
 const params = new URLSearchParams(window.location.search);
 const descToEditName = params.get("descriptionOp");
 const amountToEditValue = params.get("amountOp");
+const amountToEditValue = params.get("amountOp");
+const amountToEditValue = params.get("amountOp");
+
 const descToEdit = document.getElementById("desc-to-edit");
 const amountToEdit = document.getElementById("amount-to-edit")
 descToEdit.value = `${descToEditName}`;

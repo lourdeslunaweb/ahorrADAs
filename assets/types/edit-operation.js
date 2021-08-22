@@ -1,6 +1,8 @@
 var params = new URLSearchParams(window.location.search);
 var descToEditName = params.get("descriptionOp");
 var amountToEditValue = params.get("amountOp");
+var amountToEditValue = params.get("amountOp");
+var amountToEditValue = params.get("amountOp");
 var descToEdit = document.getElementById("desc-to-edit");
 var amountToEdit = document.getElementById("amount-to-edit");
 descToEdit.value = "" + descToEditName;
