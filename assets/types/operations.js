@@ -13,6 +13,7 @@ var newOpAmount = document.getElementById("newOp-amount");
 var newOpType = document.getElementById("newOp-type");
 var newOpDate = document.getElementById("newOp-date");
 var submitNewOp = document.getElementById("submit-newOp");
+var newOpCategory = document.getElementById("newOp-category");
 // Update categories in new_op.html
 var upDateCatOps = function () {
     var storage = getStorage();

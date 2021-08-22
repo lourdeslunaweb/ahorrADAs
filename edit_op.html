@@ -42,7 +42,7 @@
             </div>
         </div>
     </nav>
-    <section id="newOp" class="">
+    <section class="">
         <div class="container col-lg-6 col-11 bg-light border border-3 rounded-3 mt-5">
             <h2 class="mt-3">Editar Operación</h2>
             <div class="my-3">
@@ -61,27 +61,28 @@
             </div>
             <div class="mt-3">
                 <label class="label fw-bold"> Tipo:</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <option value="1">Gastos</option>
-                    <option value="2">Ganancias</option>
+                <select  id="type-to-edit" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option value="Gastos">Gastos</option>
+                    <option value="Ganancias">Ganancias</option>
                 </select>
             </div>
             <div class="mt-3">
                 <label class="label fw-bold"> Categoria:</label>
-                <select id="newOp-category" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <!-- <option value="1">Servicios</option>
-                    <option value="2">Salidas</option>
-                    <option value="3">Educación</option>
-                    <option value="4">Transporte</option>
-                    <option value="5">Trabajo</option> -->
+                <select id="category-to-edit" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option value="Comida">Comida</option>
+                    <option value="Servicios">Servicios</option>
+                    <option value="Salidas">Salidas</option>
+                    <option value="Educación">Educación</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Trabajo">Trabajo</option>
                 </select>
             </div>
             <div class="mt-3">
                 <label class="label fw-bold"> Fecha:</label>
-                <input type="date" class="input-group form-control">
+                <input id="date-to-edit" type="date" class="input-group form-control">
             </div>
             <div class="mt-5 mb-3 d-flex justify-content-end">
-                <button type="button" class="btn btn-bg-color-light me-3">Cancelar</button>
+                <a href="index.html"><button type="button" class="btn btn-bg-color-light me-3">Cancelar</button></a>
                 <button type="button" id="edit-op-btn" class="btn btn-bg-color fw-bold">Editar</button>
             </div>
         </div>
@@ -91,6 +92,7 @@
         crossorigin="anonymous"></script>
     <script src="./assets/types/script.js"></script>
     <script src="./assets/types/operations.js"></script>
+    <script src="./assets/types/balance.js"></script>
     <script src="./assets/types/edit-operation.js"></script>
 </body>
 

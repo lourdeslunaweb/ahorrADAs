@@ -76,16 +76,20 @@ var refreshOperationTable = function () {
         // Append child row into Row Operation Div
         operationRowGrid.appendChild(rowOpDiv);
         operationRowGrid.setAttribute("id", generateId(10));
-        // Set id to remove div 
         // Append child text node edit and remove into their divs
         removeOpDiv.appendChild(removeOp);
         removeOp.appendChild(removeOpLink);
         removeOp.setAttribute("href", "#");
         removeOp.addEventListener('click', removeOperation);
+        // Set id to remove div 
         removeOp.dataset.id = "" + operation.id;
+        // Final append child
         editOpDiv.appendChild(editOp);
         editOp.appendChild(editOpLink);
-        editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount);
+        // Operation type to set in href
+        var typeOp = document.createTextNode(operation.type);
+        //   Set href to pass values to params
+        editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount + "&typeOp=" + operation.type + "&categoryOp=" + operation.category + "&dateOp=" + operation.date);
     }
 };
 // Check if there's operations or not
@@ -101,7 +105,6 @@ var changeIndexImg = function () {
         loadedOps.classList.add("d-none");
     }
 };
-// changeIndexImg();
 // Initial function of balance
 var initBalance = function () {
     getStorage();
