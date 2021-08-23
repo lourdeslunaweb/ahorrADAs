@@ -2,17 +2,18 @@
 const emptyReport = document.getElementById("empty-report-interface");
 const loadedReport = document.getElementById("loaded-report-interface");
 const reportResumDiv = document.getElementById("report-resume-div");
+const totalPerCatDiv = document.getElementById("total-per-category")
 
 // Search category with higher gain, higher expense and its corresponding month
 const categoryGainExpenseMonth = () => {
     const storage = getStorage();
     const { operations } = storage;
     let higherGain = 0;
-    let gainCatName;
+    let gainCatName: string;
     let higherExpense = 0;
-    let expenseCatName;
-    let gainCatMonth;
-    let expenseCatMonth;
+    let expenseCatName: string;
+    let gainCatMonth: string;
+    let expenseCatMonth: string;
     for (let operation of operations) {
         if (operation.type === "Ganancia") {
             let operationAmountNumber = Number(operation.amount);
@@ -22,13 +23,13 @@ const categoryGainExpenseMonth = () => {
                 gainCatMonth = operation.date;
             }
         } else if (operation.type === "Gasto") {
-                let operationAmountNumber = Number(operation.amount);
-                if (operationAmountNumber > higherExpense) {
-                    higherExpense = operation.amount;
-                    expenseCatName = operation.category;
-                    expenseCatMonth = operation.date;
-                }
+            let operationAmountNumber = Number(operation.amount);
+            if (operationAmountNumber > higherExpense) {
+                higherExpense = operation.amount;
+                expenseCatName = operation.category;
+                expenseCatMonth = operation.date;
             }
+        }
     }
     return [gainCatName, higherGain, expenseCatName, higherExpense, gainCatMonth, expenseCatMonth]
 }
@@ -39,10 +40,9 @@ const categoryExpenseName = categoryGainArray[2];
 const categoryExpenseAmount = categoryGainArray[3];
 const categoryGainMonth = categoryGainArray[4];
 const categoryExpenseMonth = categoryGainArray[5];
-const options = {month: 'long'}
+const options = { month: 'long' }
 const gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
 const expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
-
 
 
 // Report Resum
@@ -169,8 +169,44 @@ const reportResum = () => {
     reportResumDiv.appendChild(row5);
 }
 
-
-// Total Category
+// Totals Per Category
+const totalPerCategory = () => {
+    const storage = getStorage();
+    const { categories } = storage;
+    for (let category of categories) {
+        // Row of each category
+        const rowCat = document.createElement("div");
+        rowCat.className = "row mt-1";
+        // Categiry Name column
+        const colName = document.createElement("div");
+        colName.className = "col-3"
+        const colNameText = document.createTextNode(`${category.name}`);
+        // Category Gain column
+        const colGain = document.createElement("div");
+        colGain.className = "col-3 text-success";
+        const colGainText = document.createTextNode("xGanx");
+        // Category Expense column
+        const colExpense = document.createElement("div");
+        colExpense.className = "col-3 text-danger";
+        const colExpenseText = document.createTextNode("xGastx");
+        // Category Balance colum
+        const colBalance = document.createElement("div");
+        colBalance.className = "col-3";
+        const colBalanceText = document.createTextNode("xBalx");
+        //Append child text into div
+        colName.appendChild(colNameText);
+        colGain.appendChild(colGainText);
+        colExpense.appendChild(colExpenseText);
+        colBalance.appendChild(colBalanceText);
+        //Append child columns into row
+        rowCat.appendChild(colName)
+        rowCat.appendChild(colGain)
+        rowCat.appendChild(colExpense)
+        rowCat.appendChild(colBalance)
+        // Append child into Total per Category Div
+        totalPerCatDiv.appendChild(rowCat)
+    }
+}
 
 // Total Date
 
@@ -192,5 +228,6 @@ const initReport = () => {
     getStorage();
     changeReportImg();
     reportResum();
+    totalPerCategory();
 }
 initReport()

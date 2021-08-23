@@ -2,6 +2,7 @@
 var emptyReport = document.getElementById("empty-report-interface");
 var loadedReport = document.getElementById("loaded-report-interface");
 var reportResumDiv = document.getElementById("report-resume-div");
+var totalPerCatDiv = document.getElementById("total-per-category");
 // Search category with higher gain, higher expense and its corresponding month
 var categoryGainExpenseMonth = function () {
     var storage = getStorage();
@@ -166,7 +167,45 @@ var reportResum = function () {
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
 };
-// Total Category
+// Totals Per Category
+var totalPerCategory = function () {
+    var storage = getStorage();
+    var categories = storage.categories;
+    for (var _i = 0, categories_1 = categories; _i < categories_1.length; _i++) {
+        var category = categories_1[_i];
+        // Row of each category
+        var rowCat = document.createElement("div");
+        rowCat.className = "row mt-1";
+        // Categiry Name column
+        var colName = document.createElement("div");
+        colName.className = "col-3";
+        var colNameText = document.createTextNode("" + category.name);
+        // Category Gain column
+        var colGain = document.createElement("div");
+        colGain.className = "col-3 text-success";
+        var colGainText = document.createTextNode("xGanx");
+        // Category Expense column
+        var colExpense = document.createElement("div");
+        colExpense.className = "col-3 text-danger";
+        var colExpenseText = document.createTextNode("xGastx");
+        // Category Balance colum
+        var colBalance = document.createElement("div");
+        colBalance.className = "col-3";
+        var colBalanceText = document.createTextNode("xBalx");
+        //Append child text into div
+        colName.appendChild(colNameText);
+        colGain.appendChild(colGainText);
+        colExpense.appendChild(colExpenseText);
+        colBalance.appendChild(colBalanceText);
+        //Append child columns into row
+        rowCat.appendChild(colName);
+        rowCat.appendChild(colGain);
+        rowCat.appendChild(colExpense);
+        rowCat.appendChild(colBalance);
+        // Append child into Total per Category Div
+        totalPerCatDiv.appendChild(rowCat);
+    }
+};
 // Total Date
 // Check if there's operations or not
 var changeReportImg = function () {
@@ -186,5 +225,6 @@ var initReport = function () {
     getStorage();
     changeReportImg();
     reportResum();
+    totalPerCategory();
 };
 initReport();
