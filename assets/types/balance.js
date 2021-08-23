@@ -13,6 +13,12 @@ var __assign = (this && this.__assign) || function () {
 var emptyOps = document.getElementById("empty-ops");
 var loadedOps = document.getElementById("loaded-ops");
 var operationRowGrid = document.getElementById("operation-row-grid");
+var gainCounter = document.getElementById("gain-counter");
+var lossCounter = document.getElementById("loss-counter");
+var finalAmount = document.getElementById("final-amount");
+//Balance values
+var finalGain = 0;
+var finalLoss = 0;
 //Remove Operation
 var removeOperation = function (e) {
     var idOperation = e.target.dataset.id;
@@ -114,10 +120,33 @@ var changeIndexImg = function () {
         loadedOps.classList.add("d-none");
     }
 };
+// Balance
+var balanceCounter = function () {
+    var storage = getStorage();
+    for (var _i = 0, _a = storage.operations; _i < _a.length; _i++) {
+        var operation = _a[_i];
+        var value = parseInt("" + operation.amount);
+        console.log(operation.type);
+        if (operation.type === 'Ganancias') {
+            finalGain += value;
+        }
+        else if (operation.type === 'Gastos') {
+            finalLoss -= value;
+        }
+    }
+    gainCounter.innerHTML = "$ " + finalGain;
+    lossCounter.innerHTML = "$ " + finalLoss;
+    var total = finalLoss + finalGain;
+    finalAmount.innerHTML = "$ " + total;
+    finalGain = 0;
+    finalLoss = 0;
+    localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { operations: storage.operations })));
+};
 // Initial function of balance
 var initBalance = function () {
     getStorage();
     changeIndexImg();
     refreshOperationTable();
+    balanceCounter();
 };
 initBalance();
