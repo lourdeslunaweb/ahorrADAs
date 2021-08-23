@@ -45,21 +45,6 @@ const expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", 
 
 
 
-
-
-// var fecha = new Date(1995, 11, 17);
-// var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-// console.log(
-//   fecha.toLocaleDateString("es-ES", options)
-// );
-
-// fecha = new Date("2017-08-21");
-// console.log(
-//   fecha.toLocaleDateString("es-ES", options)
-// );
-
-
 // Report Resum
 const reportResum = () => {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns

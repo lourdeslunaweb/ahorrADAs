@@ -42,9 +42,10 @@ var refreshOperationTable = function () {
         categoryCol.className = "col-2";
         var categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
+        var options = { month: 'long' };
         var dateCol = document.createElement("div");
         dateCol.className = "col-3";
-        var dateOp = document.createTextNode(operation.date);
+        var dateOp = document.createTextNode(new Date(operation.date).toLocaleDateString("es-ES", options.month));
         // Create amount column, its text node and set class
         var amountCol = document.createElement("div");
         amountCol.className = "col-2";
