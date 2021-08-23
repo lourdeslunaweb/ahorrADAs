@@ -2,6 +2,12 @@
 const emptyOps = document.getElementById("empty-ops");
 const loadedOps = document.getElementById("loaded-ops");
 const operationRowGrid = document.getElementById("operation-row-grid");
+const gainCounter = document.getElementById("gain-counter");
+const lossCounter = document.getElementById("loss-counter");
+const finalAmount = document.getElementById("final-amount");
+//Balance values
+let finalGain = 0
+let finalLoss = 0
 
 //Remove Operation
 const removeOperation = (e) => {
@@ -104,11 +110,38 @@ const changeIndexImg = () => {
         loadedOps.classList.add("d-none");
     }
 }
+// Balance
+const balanceCounter = () => {
+    const storage = getStorage();    
+    for(let operation of storage.operations){
+        let value = parseInt(`${operation.amount}`);
+        console.log(operation.type)
+        if(operation.type === 'Ganancias'){    
+            finalGain += value            
+        }
+        else if(operation.type === 'Gastos'){
+            finalLoss -= value            
+        }
+    }
+    gainCounter.innerHTML = `$ ${finalGain}`;
+    lossCounter.innerHTML = `$ ${finalLoss}`; 
+    let total = finalLoss + finalGain;
+    finalAmount.innerHTML = `$ ${total}`;  
+    finalGain = 0
+    finalLoss = 0
+
+    localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: storage.operations }));    
+    
+}
+
+
+
 
 // Initial function of balance
 const initBalance = () => {
     getStorage();
     changeIndexImg();
     refreshOperationTable();
+    balanceCounter()
 }
 initBalance()
