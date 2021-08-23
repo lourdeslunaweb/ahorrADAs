@@ -29,7 +29,7 @@ type Operation = {
 
 type Filter = {
     display: boolean,
-    type: 'Todos' | 'Gastos' | 'Ganancias',
+    type: 'Todos' | 'Gasto' | 'Ganancia',
     category: Category,
     since: string,
     sortby: 'Más reciente' | 'Menos reciente' | 'Mayor monto' | 'Menor monto' | 'A-Z' | 'Z-A',

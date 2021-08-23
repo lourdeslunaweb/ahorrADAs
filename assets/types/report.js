@@ -1,29 +1,28 @@
 // Set variables of report
-const emptyReport = document.getElementById("empty-report-interface");
-const loadedReport = document.getElementById("loaded-report-interface");
-const reportResumDiv = document.getElementById("report-resume-div");
-
+var emptyReport = document.getElementById("empty-report-interface");
+var loadedReport = document.getElementById("loaded-report-interface");
+var reportResumDiv = document.getElementById("report-resume-div");
 // Search category with higher gain
-const categoryGain = () => {
-    const storage = getStorage();
-    const { operations } = storage;
-    let higherGain = 0;
-    let gainCatName;
-    for (let operation of operations) {
+var categoryGain = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    var higherGain = 0;
+    var gainCatName;
+    for (var _i = 0, operations_1 = operations; _i < operations_1.length; _i++) {
+        var operation = operations_1[_i];
         if (operation.type === "Ganancia") {
-            let operationAmountNumber = Number(operation.amount);
+            var operationAmountNumber = Number(operation.amount);
             if (operationAmountNumber > higherGain) {
                 higherGain = operation.amount;
                 gainCatName = operation.category;
             }
         }
     }
-    return [gainCatName, higherGain]
-}
-const categoryGainArray = categoryGain();
-const categoryGainName = categoryGainArray[0];
-const categoryGainAmount = categoryGainArray[1]; 
-
+    return [gainCatName, higherGain];
+};
+var categoryGainArray = categoryGain();
+var categoryGainName = categoryGainArray[0];
+var categoryGainAmount = categoryGainArray[1];
 // const getCategoryGainName = (array)=>{
 //     console.log(categoryGainArray);
 //     // const categoryGainName = categoryGainArray[0]
@@ -31,11 +30,8 @@ const categoryGainAmount = categoryGainArray[1];
 //     // return categoryGainName
 //     return categoryGainArray
 // } 
-
 // let categoryGainArray = 9999
 // getCategoryGainName(categoryGainArray);
-
-
 // let higherExpense = 0;
 // let expenseCatName;
 // else if (operation.type === "Gasto") {
@@ -48,163 +44,151 @@ const categoryGainAmount = categoryGainArray[1];
 //         console.log(expenseCatName);
 //     }
 // }
-
-const categoryGainValue = (): string => {
-    return "categoryGainValue"
-}
-
-
-
+var categoryGainValue = function () {
+    return "categoryGainValue";
+};
 // Report Resum
-const reportResum = () => {
+var reportResum = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
-    const row1 = document.createElement("div");
+    var row1 = document.createElement("div");
     row1.className = "row mt-3";
     // Row 1 Col 1
-    const row1Col1 = document.createElement("div");
+    var row1Col1 = document.createElement("div");
     row1Col1.className = "col-5 col-sm-6";
-    const row1Col1Text = document.createTextNode("Categoría con mayor ganancia");
+    var row1Col1Text = document.createTextNode("Categoría con mayor ganancia");
     row1Col1.appendChild(row1Col1Text);
     row1.appendChild(row1Col1);
     reportResumDiv.appendChild(row1);
     // Row 1 Col 2
-    const row1Col2 = document.createElement("div");
+    var row1Col2 = document.createElement("div");
     row1Col2.className = "col-4 col-sm-3 text-success";
-    const row1Col2Text = document.createTextNode(`${categoryGainName}`);
+    var row1Col2Text = document.createTextNode("" + categoryGainName);
     row1Col2.appendChild(row1Col2Text);
     row1.appendChild(row1Col2);
     reportResumDiv.appendChild(row1);
     // Row 1 Col 3
-    const row1Col3 = document.createElement("div");
+    var row1Col3 = document.createElement("div");
     row1Col3.className = "col-3 col-sm-3 text-success";
-    const row1Col3Text = document.createTextNode(`${categoryGainAmount}`);
+    var row1Col3Text = document.createTextNode("" + categoryGainAmount);
     row1Col3.appendChild(row1Col3Text);
     row1.appendChild(row1Col3);
     reportResumDiv.appendChild(row1);
-
     // create Row 2 "Categoría con mayor gasto" and its respective columns
-    const row2 = document.createElement("div");
+    var row2 = document.createElement("div");
     row2.className = "row mt-1";
     // Row 2 Col 1
-    const row2Col1 = document.createElement("div");
+    var row2Col1 = document.createElement("div");
     row2Col1.className = "col-5 col-sm-6";
-    const row2Col1Text = document.createTextNode("Categoría con mayor gasto");
+    var row2Col1Text = document.createTextNode("Categoría con mayor gasto");
     row2Col1.appendChild(row2Col1Text);
     row2.appendChild(row2Col1);
     reportResumDiv.appendChild(row2);
     // Row 2 Col 2
-    const row2Col2 = document.createElement("div");
+    var row2Col2 = document.createElement("div");
     row2Col2.className = "col-4 col-sm-3 text-danger";
-    const row2Col2Text = document.createTextNode("row2");
+    var row2Col2Text = document.createTextNode("row2");
     row2Col2.appendChild(row2Col2Text);
     row2.appendChild(row2Col2);
     reportResumDiv.appendChild(row2);
     // Row 2 Col 3
-    const row2Col3 = document.createElement("div");
+    var row2Col3 = document.createElement("div");
     row2Col3.className = "col-3 col-sm-3 text-danger";
-    const row2Col3Text = document.createTextNode("row2");
+    var row2Col3Text = document.createTextNode("row2");
     row2Col3.appendChild(row2Col3Text);
     row2.appendChild(row2Col3);
     reportResumDiv.appendChild(row2);
-
     // create Row 3 "Categoría con mayor balance" and its respective columns
-    const row3 = document.createElement("div");
+    var row3 = document.createElement("div");
     row3.className = "row mt-1";
     // Row 3 Col 1
-    const row3Col1 = document.createElement("div");
+    var row3Col1 = document.createElement("div");
     row3Col1.className = "col-5 col-sm-6";
-    const row3Col1Text = document.createTextNode("Categoría con mayor balance");
+    var row3Col1Text = document.createTextNode("Categoría con mayor balance");
     row3Col1.appendChild(row3Col1Text);
     row3.appendChild(row3Col1);
     reportResumDiv.appendChild(row3);
     // Row 3 Col 2
-    const row3Col2 = document.createElement("div");
+    var row3Col2 = document.createElement("div");
     row3Col2.className = "col-4 col-sm-3";
-    const row3Col2Text = document.createTextNode("row3");
+    var row3Col2Text = document.createTextNode("row3");
     row3Col2.appendChild(row3Col2Text);
     row3.appendChild(row3Col2);
     reportResumDiv.appendChild(row3);
     // Row 3 Col 3
-    const row3Col3 = document.createElement("div");
+    var row3Col3 = document.createElement("div");
     row3Col3.className = "col-3 col-sm-3";
-    const row3Col3Text = document.createTextNode("row3");
+    var row3Col3Text = document.createTextNode("row3");
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
-
     // create Row 4 "Mes con mayor ganancia" and its respective columns
-    const row4 = document.createElement("div");
+    var row4 = document.createElement("div");
     row4.className = "row mt-1";
     // Row 4 Col 1
-    const row4Col1 = document.createElement("div");
+    var row4Col1 = document.createElement("div");
     row4Col1.className = "col-5 col-sm-6";
-    const row4Col1Text = document.createTextNode("Mes con mayor ganancia");
+    var row4Col1Text = document.createTextNode("Mes con mayor ganancia");
     row4Col1.appendChild(row4Col1Text);
     row4.appendChild(row4Col1);
     reportResumDiv.appendChild(row4);
     // Row 4 Col 2
-    const row4Col2 = document.createElement("div");
+    var row4Col2 = document.createElement("div");
     row4Col2.className = "col-4 col-sm-3";
-    const row4Col2Text = document.createTextNode("row4");
+    var row4Col2Text = document.createTextNode("row4");
     row4Col2.appendChild(row4Col2Text);
     row4.appendChild(row4Col2);
     reportResumDiv.appendChild(row4);
     // Row 4 Col 3
-    const row4Col3 = document.createElement("div");
+    var row4Col3 = document.createElement("div");
     row4Col3.className = "col-3 col-sm-3 text-success";
-    const row4Col3Text = document.createTextNode("row4");
+    var row4Col3Text = document.createTextNode("row4");
     row4Col3.appendChild(row4Col3Text);
     row4.appendChild(row4Col3);
     reportResumDiv.appendChild(row4);
-
     // create Row 5 "Mes con mayor gasto" and its respective columns
-    const row5 = document.createElement("div");
+    var row5 = document.createElement("div");
     row5.className = "row mt-1";
     // Row 5 Col 1
-    const row5Col1 = document.createElement("div");
+    var row5Col1 = document.createElement("div");
     row5Col1.className = "col-5 col-sm-6";
-    const row5Col1Text = document.createTextNode("Mes con mayor gasto");
+    var row5Col1Text = document.createTextNode("Mes con mayor gasto");
     row5Col1.appendChild(row5Col1Text);
     row5.appendChild(row5Col1);
     reportResumDiv.appendChild(row5);
     // Row 5 Col 2
-    const row5Col2 = document.createElement("div");
+    var row5Col2 = document.createElement("div");
     row5Col2.className = "col-4 col-sm-3";
-    const row5Col2Text = document.createTextNode("row5");
+    var row5Col2Text = document.createTextNode("row5");
     row5Col2.appendChild(row5Col2Text);
     row5.appendChild(row5Col2);
     reportResumDiv.appendChild(row5);
     // Row 5 Col 3
-    const row5Col3 = document.createElement("div");
+    var row5Col3 = document.createElement("div");
     row5Col3.className = "col-3 col-sm-3 text-danger";
-    const row5Col3Text = document.createTextNode("row5");
+    var row5Col3Text = document.createTextNode("row5");
     row5Col3.appendChild(row5Col3Text);
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
-}
-
-
+};
 // Total Category
-
 // Total Date
-
 // Check if there's operations or not
-const changeReportImg = () => {
-    const storage = getStorage();
-    const { operations } = storage;
+var changeReportImg = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
     if (operations.length > 0) {
         emptyReport.classList.add("d-none");
         loadedReport.classList.remove("d-none");
-    } else {
+    }
+    else {
         emptyReport.classList.remove("d-none");
         loadedReport.classList.add("d-none");
     }
-}
-
+};
 // Initial function of report
-const initReport = () => {
+var initReport = function () {
     getStorage();
     changeReportImg();
     reportResum();
-}
-initReport()
+};
+initReport();
