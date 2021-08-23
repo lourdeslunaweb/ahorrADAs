@@ -107,14 +107,14 @@ var reportResum = function () {
     // Row 3 Col 2
     var row3Col2 = document.createElement("div");
     row3Col2.className = "col-4 col-sm-3";
-    var row3Col2Text = document.createTextNode("row3");
+    var row3Col2Text = document.createTextNode("xCatNamex");
     row3Col2.appendChild(row3Col2Text);
     row3.appendChild(row3Col2);
     reportResumDiv.appendChild(row3);
     // Row 3 Col 3
     var row3Col3 = document.createElement("div");
     row3Col3.className = "col-3 col-sm-3";
-    var row3Col3Text = document.createTextNode("row3");
+    var row3Col3Text = document.createTextNode("xBalanceValuex");
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
@@ -202,7 +202,7 @@ var totalPerCategory = function () {
         rowCat.appendChild(colGain);
         rowCat.appendChild(colExpense);
         rowCat.appendChild(colBalance);
-        // Append child into Total per Category Div
+        // Append child row into Total per Category Div
         totalPerCatDiv.appendChild(rowCat);
     }
 };

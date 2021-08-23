@@ -108,14 +108,14 @@ const reportResum = () => {
     // Row 3 Col 2
     const row3Col2 = document.createElement("div");
     row3Col2.className = "col-4 col-sm-3";
-    const row3Col2Text = document.createTextNode("row3");
+    const row3Col2Text = document.createTextNode("xCatNamex");
     row3Col2.appendChild(row3Col2Text);
     row3.appendChild(row3Col2);
     reportResumDiv.appendChild(row3);
     // Row 3 Col 3
     const row3Col3 = document.createElement("div");
     row3Col3.className = "col-3 col-sm-3";
-    const row3Col3Text = document.createTextNode("row3");
+    const row3Col3Text = document.createTextNode("xBalanceValuex");
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
@@ -172,7 +172,7 @@ const reportResum = () => {
 // Totals Per Category
 const totalPerCategory = () => {
     const storage = getStorage();
-    const { categories } = storage;
+    const { categories} = storage;
     for (let category of categories) {
         // Row of each category
         const rowCat = document.createElement("div");
@@ -203,7 +203,7 @@ const totalPerCategory = () => {
         rowCat.appendChild(colGain)
         rowCat.appendChild(colExpense)
         rowCat.appendChild(colBalance)
-        // Append child into Total per Category Div
+        // Append child row into Total per Category Div
         totalPerCatDiv.appendChild(rowCat)
     }
 }
