@@ -2,12 +2,16 @@
 var emptyReport = document.getElementById("empty-report-interface");
 var loadedReport = document.getElementById("loaded-report-interface");
 var reportResumDiv = document.getElementById("report-resume-div");
-// Search category with higher gain
-var categoryGain = function () {
+// Search category with higher gain, higher expense and its corresponding month
+var categoryGainExpenseMonth = function () {
     var storage = getStorage();
     var operations = storage.operations;
     var higherGain = 0;
     var gainCatName;
+    var higherExpense = 0;
+    var expenseCatName;
+    var gainCatMonth;
+    var expenseCatMonth;
     for (var _i = 0, operations_1 = operations; _i < operations_1.length; _i++) {
         var operation = operations_1[_i];
         if (operation.type === "Ganancia") {
@@ -15,38 +19,39 @@ var categoryGain = function () {
             if (operationAmountNumber > higherGain) {
                 higherGain = operation.amount;
                 gainCatName = operation.category;
+                gainCatMonth = operation.date;
+            }
+        }
+        else if (operation.type === "Gasto") {
+            var operationAmountNumber = Number(operation.amount);
+            if (operationAmountNumber > higherExpense) {
+                higherExpense = operation.amount;
+                expenseCatName = operation.category;
+                expenseCatMonth = operation.date;
             }
         }
     }
-    return [gainCatName, higherGain];
+    return [gainCatName, higherGain, expenseCatName, higherExpense, gainCatMonth, expenseCatMonth];
 };
-var categoryGainArray = categoryGain();
+var categoryGainArray = categoryGainExpenseMonth();
 var categoryGainName = categoryGainArray[0];
 var categoryGainAmount = categoryGainArray[1];
-// const getCategoryGainName = (array)=>{
-//     console.log(categoryGainArray);
-//     // const categoryGainName = categoryGainArray[0]
-//     // console.log(categoryGainName);
-//     // return categoryGainName
-//     return categoryGainArray
-// } 
-// let categoryGainArray = 9999
-// getCategoryGainName(categoryGainArray);
-// let higherExpense = 0;
-// let expenseCatName;
-// else if (operation.type === "Gasto") {
-//     console.log("ingreso a operation.type === Gasto")
-//     let operationAmountNumber = Number(operation.amount);
-//     if (operationAmountNumber > higherExpense) {
-//         higherExpense = operation.amount;
-//         expenseCatName = operation.category;
-//         console.log(higherExpense);
-//         console.log(expenseCatName);
-//     }
-// }
-var categoryGainValue = function () {
-    return "categoryGainValue";
-};
+var categoryExpenseName = categoryGainArray[2];
+var categoryExpenseAmount = categoryGainArray[3];
+var categoryGainMonth = categoryGainArray[4];
+var categoryExpenseMonth = categoryGainArray[5];
+var options = { month: 'long' };
+var gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
+var expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
+// var fecha = new Date(1995, 11, 17);
+// var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+// console.log(
+//   fecha.toLocaleDateString("es-ES", options)
+// );
+// fecha = new Date("2017-08-21");
+// console.log(
+//   fecha.toLocaleDateString("es-ES", options)
+// );
 // Report Resum
 var reportResum = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
@@ -86,14 +91,14 @@ var reportResum = function () {
     // Row 2 Col 2
     var row2Col2 = document.createElement("div");
     row2Col2.className = "col-4 col-sm-3 text-danger";
-    var row2Col2Text = document.createTextNode("row2");
+    var row2Col2Text = document.createTextNode("" + categoryExpenseName);
     row2Col2.appendChild(row2Col2Text);
     row2.appendChild(row2Col2);
     reportResumDiv.appendChild(row2);
     // Row 2 Col 3
     var row2Col3 = document.createElement("div");
     row2Col3.className = "col-3 col-sm-3 text-danger";
-    var row2Col3Text = document.createTextNode("row2");
+    var row2Col3Text = document.createTextNode("" + categoryExpenseAmount);
     row2Col3.appendChild(row2Col3Text);
     row2.appendChild(row2Col3);
     reportResumDiv.appendChild(row2);
@@ -134,14 +139,14 @@ var reportResum = function () {
     // Row 4 Col 2
     var row4Col2 = document.createElement("div");
     row4Col2.className = "col-4 col-sm-3";
-    var row4Col2Text = document.createTextNode("row4");
+    var row4Col2Text = document.createTextNode("" + gainMonth);
     row4Col2.appendChild(row4Col2Text);
     row4.appendChild(row4Col2);
     reportResumDiv.appendChild(row4);
     // Row 4 Col 3
     var row4Col3 = document.createElement("div");
     row4Col3.className = "col-3 col-sm-3 text-success";
-    var row4Col3Text = document.createTextNode("row4");
+    var row4Col3Text = document.createTextNode("" + categoryGainAmount);
     row4Col3.appendChild(row4Col3Text);
     row4.appendChild(row4Col3);
     reportResumDiv.appendChild(row4);
@@ -158,14 +163,14 @@ var reportResum = function () {
     // Row 5 Col 2
     var row5Col2 = document.createElement("div");
     row5Col2.className = "col-4 col-sm-3";
-    var row5Col2Text = document.createTextNode("row5");
+    var row5Col2Text = document.createTextNode("" + expenseMonth);
     row5Col2.appendChild(row5Col2Text);
     row5.appendChild(row5Col2);
     reportResumDiv.appendChild(row5);
     // Row 5 Col 3
     var row5Col3 = document.createElement("div");
     row5Col3.className = "col-3 col-sm-3 text-danger";
-    var row5Col3Text = document.createTextNode("row5");
+    var row5Col3Text = document.createTextNode("" + categoryExpenseAmount);
     row5Col3.appendChild(row5Col3Text);
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);

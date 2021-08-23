@@ -3,56 +3,61 @@ const emptyReport = document.getElementById("empty-report-interface");
 const loadedReport = document.getElementById("loaded-report-interface");
 const reportResumDiv = document.getElementById("report-resume-div");
 
-// Search category with higher gain
-const categoryGain = () => {
+// Search category with higher gain, higher expense and its corresponding month
+const categoryGainExpenseMonth = () => {
     const storage = getStorage();
     const { operations } = storage;
     let higherGain = 0;
     let gainCatName;
+    let higherExpense = 0;
+    let expenseCatName;
+    let gainCatMonth;
+    let expenseCatMonth;
     for (let operation of operations) {
         if (operation.type === "Ganancia") {
             let operationAmountNumber = Number(operation.amount);
             if (operationAmountNumber > higherGain) {
                 higherGain = operation.amount;
                 gainCatName = operation.category;
+                gainCatMonth = operation.date;
             }
-        }
+        } else if (operation.type === "Gasto") {
+                let operationAmountNumber = Number(operation.amount);
+                if (operationAmountNumber > higherExpense) {
+                    higherExpense = operation.amount;
+                    expenseCatName = operation.category;
+                    expenseCatMonth = operation.date;
+                }
+            }
     }
-    return [gainCatName, higherGain]
+    return [gainCatName, higherGain, expenseCatName, higherExpense, gainCatMonth, expenseCatMonth]
 }
-const categoryGainArray = categoryGain();
+const categoryGainArray = categoryGainExpenseMonth();
 const categoryGainName = categoryGainArray[0];
-const categoryGainAmount = categoryGainArray[1]; 
-
-// const getCategoryGainName = (array)=>{
-//     console.log(categoryGainArray);
-//     // const categoryGainName = categoryGainArray[0]
-//     // console.log(categoryGainName);
-//     // return categoryGainName
-//     return categoryGainArray
-// } 
-
-// let categoryGainArray = 9999
-// getCategoryGainName(categoryGainArray);
+const categoryGainAmount = categoryGainArray[1];
+const categoryExpenseName = categoryGainArray[2];
+const categoryExpenseAmount = categoryGainArray[3];
+const categoryGainMonth = categoryGainArray[4];
+const categoryExpenseMonth = categoryGainArray[5];
+const options = {month: 'long'}
+const gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
+const expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
 
 
-// let higherExpense = 0;
-// let expenseCatName;
-// else if (operation.type === "Gasto") {
-//     console.log("ingreso a operation.type === Gasto")
-//     let operationAmountNumber = Number(operation.amount);
-//     if (operationAmountNumber > higherExpense) {
-//         higherExpense = operation.amount;
-//         expenseCatName = operation.category;
-//         console.log(higherExpense);
-//         console.log(expenseCatName);
-//     }
-// }
 
-const categoryGainValue = (): string => {
-    return "categoryGainValue"
-}
 
+
+// var fecha = new Date(1995, 11, 17);
+// var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+// console.log(
+//   fecha.toLocaleDateString("es-ES", options)
+// );
+
+// fecha = new Date("2017-08-21");
+// console.log(
+//   fecha.toLocaleDateString("es-ES", options)
+// );
 
 
 // Report Resum
@@ -81,7 +86,6 @@ const reportResum = () => {
     row1Col3.appendChild(row1Col3Text);
     row1.appendChild(row1Col3);
     reportResumDiv.appendChild(row1);
-
     // create Row 2 "Categoría con mayor gasto" and its respective columns
     const row2 = document.createElement("div");
     row2.className = "row mt-1";
@@ -95,18 +99,17 @@ const reportResum = () => {
     // Row 2 Col 2
     const row2Col2 = document.createElement("div");
     row2Col2.className = "col-4 col-sm-3 text-danger";
-    const row2Col2Text = document.createTextNode("row2");
+    const row2Col2Text = document.createTextNode(`${categoryExpenseName}`);
     row2Col2.appendChild(row2Col2Text);
     row2.appendChild(row2Col2);
     reportResumDiv.appendChild(row2);
     // Row 2 Col 3
     const row2Col3 = document.createElement("div");
     row2Col3.className = "col-3 col-sm-3 text-danger";
-    const row2Col3Text = document.createTextNode("row2");
+    const row2Col3Text = document.createTextNode(`${categoryExpenseAmount}`);
     row2Col3.appendChild(row2Col3Text);
     row2.appendChild(row2Col3);
     reportResumDiv.appendChild(row2);
-
     // create Row 3 "Categoría con mayor balance" and its respective columns
     const row3 = document.createElement("div");
     row3.className = "row mt-1";
@@ -131,7 +134,6 @@ const reportResum = () => {
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
-
     // create Row 4 "Mes con mayor ganancia" and its respective columns
     const row4 = document.createElement("div");
     row4.className = "row mt-1";
@@ -145,18 +147,17 @@ const reportResum = () => {
     // Row 4 Col 2
     const row4Col2 = document.createElement("div");
     row4Col2.className = "col-4 col-sm-3";
-    const row4Col2Text = document.createTextNode("row4");
+    const row4Col2Text = document.createTextNode(`${gainMonth}`);
     row4Col2.appendChild(row4Col2Text);
     row4.appendChild(row4Col2);
     reportResumDiv.appendChild(row4);
     // Row 4 Col 3
     const row4Col3 = document.createElement("div");
     row4Col3.className = "col-3 col-sm-3 text-success";
-    const row4Col3Text = document.createTextNode("row4");
+    const row4Col3Text = document.createTextNode(`${categoryGainAmount}`);
     row4Col3.appendChild(row4Col3Text);
     row4.appendChild(row4Col3);
     reportResumDiv.appendChild(row4);
-
     // create Row 5 "Mes con mayor gasto" and its respective columns
     const row5 = document.createElement("div");
     row5.className = "row mt-1";
@@ -170,14 +171,14 @@ const reportResum = () => {
     // Row 5 Col 2
     const row5Col2 = document.createElement("div");
     row5Col2.className = "col-4 col-sm-3";
-    const row5Col2Text = document.createTextNode("row5");
+    const row5Col2Text = document.createTextNode(`${expenseMonth}`);
     row5Col2.appendChild(row5Col2Text);
     row5.appendChild(row5Col2);
     reportResumDiv.appendChild(row5);
     // Row 5 Col 3
     const row5Col3 = document.createElement("div");
     row5Col3.className = "col-3 col-sm-3 text-danger";
-    const row5Col3Text = document.createTextNode("row5");
+    const row5Col3Text = document.createTextNode(`${categoryExpenseAmount}`);
     row5Col3.appendChild(row5Col3Text);
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
