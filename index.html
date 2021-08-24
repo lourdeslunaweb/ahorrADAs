@@ -90,16 +90,16 @@
                             </div>
                             <div class="mb-3">
                                 <h5>Tipo</h5>
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <select id="type-filter" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <option value="Todos">Todos</option>
-                                    <option value="Gasto">Gasto</option>
-                                    <option value="Ganancia">Ganancia</option>
+                                    <option value="Gastos">Gasto</option>
+                                    <option value="Ganancias">Ganancia</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <h5>Categoría</h5>
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option value="1">Todas</option>
+                                <select id="select-category" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="Todas">Todas</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -108,13 +108,13 @@
                             </div>
                             <div class="mb-3">
                                 <h5>Ordenar por</h5>
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option value="1">Más reciente</option>
-                                    <option value="2">Menos reciente</option>
-                                    <option value="3">Mayor monto</option>
-                                    <option value="4">Menor monto</option>
-                                    <option value="5">A/Z</option>
-                                    <option value="6">Z/A</option>
+                                <select id="select-sort" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="mas-reciente">Más reciente</option>
+                                    <option value="menos-reciente">Menos reciente</option>
+                                    <option value="mayor-monto">Mayor monto</option>
+                                    <option value="menor-monto">Menor monto</option>
+                                    <option value="a-z">A/Z</option>
+                                    <option value="z-a">Z/A</option>
                                 </select>
                             </div>
                         </div>
@@ -128,8 +128,7 @@
                                     <h4 class="fw-bolder">Operaciones</h4>
                                 </div>
                                 <div class="col-6 d-flex justify-content-end">
-                                    <a href="new_op.html"><button type="button" class="btn btn-bg-color">+Nueva
-                                            operación</button></a>
+                                    <a href="new_op.html"><button type="button" class="btn btn-bg-color">+ Nueva operación</button></a>
                                 </div>
                             </div>
                         </div>
@@ -198,8 +197,8 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="./assets/types/script.js"></script>
-    <script src="./assets/types/filters.js"></script>
     <script src="./assets/types/operations.js"></script>
+    <script src="./assets/types/filters.js"></script>
     <script src="./assets/types/balance.js"></script>
 </body>
 
