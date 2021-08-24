@@ -116,7 +116,6 @@ const balanceCounter = () => {
     const storage = getStorage();    
     for(let operation of storage.operations){
         let value = parseInt(`${operation.amount}`);
-        console.log(operation.type)
         if(operation.type === 'Ganancia'){    
             finalGain += value            
         }

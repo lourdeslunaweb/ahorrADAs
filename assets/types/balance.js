@@ -127,7 +127,6 @@ var balanceCounter = function () {
     for (var _i = 0, _a = storage.operations; _i < _a.length; _i++) {
         var operation = _a[_i];
         var value = parseInt("" + operation.amount);
-        console.log(operation.type);
         if (operation.type === 'Ganancia') {
             finalGain += value;
         }

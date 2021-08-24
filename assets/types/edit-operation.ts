@@ -34,7 +34,6 @@ upDateCatOps()
 // Edit Operation
 editOpBtn.addEventListener("click", e => {
     e.preventDefault()
-    console.log("click editar")
     const storage = getStorage();
     const { operations } = storage;
     let newDescription = descToEdit.value;
