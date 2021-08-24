@@ -29,21 +29,17 @@ const refreshCategoryTable = () => {
     
         categoriesGrid.appendChild(categoryDiv);
     
-        categoryDiv.classList.add("row");
-        categoryDiv.classList.add("mt-3");
+        categoryDiv.className = "row mt-3";
         categoryDiv.appendChild(divNewCat);
         categoryDiv.appendChild(divActions);
         categoryDiv.setAttribute("id",generateId(10));
     
         divNewCat.appendChild(categoryText);
-        divNewCat.classList.add("fw-bold");
-        divNewCat.classList.add("col-8");
-    
+        divNewCat.className = "fw-bold col-6 col-sm-8"
+
         divActions.appendChild(editCat);
         divActions.appendChild(removeCat);
-        divActions.classList.add("col-4");
-        divActions.classList.add("d-flex");
-        divActions.classList.add("justify-content-around");
+        divActions.className = "d-flex justify-content-between col-6 col-sm-4"
     
         editCat.appendChild(editLink);
         editCat.setAttribute("href",`./edit_cat.html?catName=${category.name}`);

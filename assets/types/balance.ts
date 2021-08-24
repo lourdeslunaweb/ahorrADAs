@@ -2,6 +2,12 @@
 const emptyOps = document.getElementById("empty-ops");
 const loadedOps = document.getElementById("loaded-ops");
 const operationRowGrid = document.getElementById("operation-row-grid");
+const gainCounter = document.getElementById("gain-counter");
+const lossCounter = document.getElementById("loss-counter");
+const finalAmount = document.getElementById("final-amount");
+//Balance values
+let finalGain = 0
+let finalLoss = 0
 
 //Remove Operation
 const removeOperation = (e) => {
@@ -22,35 +28,36 @@ const refreshOperationTable = () => {
     for (let operation of storage.operations) {
         // Create row div and set class
         const rowOpDiv = document.createElement("div");
-        rowOpDiv.className = "row mt-1";
+        rowOpDiv.className = "row mt-5 mt-md-3";
         rowOpDiv.setAttribute("id", generateId(10));
         // Create description column, its text node and set class
         const descriptionCol = document.createElement("div");
-        descriptionCol.className = "col-2";
+        descriptionCol.className = "col-4 col-md-2 fw-bolder";
         const descriptionOp = document.createTextNode(operation.description);
         // Create category column, its text node and set class
         const categoryCol = document.createElement("div");
-        categoryCol.className = "col-2";
+        categoryCol.className = "col-4 col-md-2";
         const categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
+        const options = {month: 'long'}
         const dateCol = document.createElement("div");
-        dateCol.className = "col-3";
-        const dateOp = document.createTextNode(operation.date);
+        dateCol.className = "col-4 col-md-2";
+        const dateOp = document.createTextNode(new Date(operation.date).toLocaleDateString("es-ES", options.month));
         // Create amount column, its text node and set class
         const amountCol = document.createElement("div");
-        amountCol.className = "col-2";
+        amountCol.className = "col-4 col-md-2";
         const amountOp = document.createTextNode(operation.amount);
         // Create action column,  two text node (edit and remove) and set class
         const actionCol = document.createElement("div");
-        actionCol.className = "col-3 d-flex";
+        actionCol.className = "col-4 col-md-2 d-flex";
         const editOpDiv = document.createElement("div");
         const editOpLink = document.createTextNode("Editar");
         const editOp = document.createElement("a")
-        editOp.className = "text-success me-3 edit-op-btn fs-6 text";
+        editOp.className = "text-primary me-3 edit-op-btn fs-6";
         const removeOpDiv = document.createElement("div");
         const removeOpLink = document.createTextNode("Eliminar");
         const removeOp = document.createElement("a")
-        removeOp.className = "text-danger remove-op-btn fs-6 text";
+        removeOp.className = "text-primary remove-op-btn fs-6 text";
         // Append child node text into columns
         descriptionCol.appendChild(descriptionOp);
         categoryCol.appendChild(categoryOp);
@@ -89,10 +96,10 @@ const refreshOperationTable = () => {
         const typeOp = document.createTextNode(operation.type);
 >>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
         // Set class if operation.type is " Gasto" o "Ganancia"
-        if (operation.type === "Gastos"){
+        if (operation.type === "Gasto"){
             amountCol.className = "col-2 text-danger fw-bold";
             amountOp.textContent = `-${operation.amount}`
-        } else if (operation.type === "Ganancias"){
+        } else if (operation.type === "Ganancia"){
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = `+${operation.amount}`
 <<<<<<< HEAD
@@ -119,11 +126,37 @@ const changeIndexImg = () => {
         loadedOps.classList.add("d-none");
     }
 }
+// Balance
+const balanceCounter = () => {
+    const storage = getStorage();    
+    for(let operation of storage.operations){
+        let value = parseInt(`${operation.amount}`);
+        if(operation.type === 'Ganancia'){    
+            finalGain += value            
+        }
+        else if(operation.type === 'Gasto'){
+            finalLoss -= value            
+        }
+    }
+    gainCounter.innerHTML = `$ ${finalGain}`;
+    lossCounter.innerHTML = `$ ${finalLoss}`; 
+    let total = finalLoss + finalGain;
+    finalAmount.innerHTML = `$ ${total}`;  
+    finalGain = 0
+    finalLoss = 0
+
+    localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: storage.operations }));    
+    
+}
+
+
+
 
 // Initial function of balance
 const initBalance = () => {
     getStorage();
     changeIndexImg();
     refreshOperationTable();
+    balanceCounter()
 }
 initBalance()
