@@ -76,22 +76,38 @@ const expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", 
 // // "b: 2"
 // // "c: 3"
 
-const higherBalance = (object)=>{
-//     const storage = getStorage();
-//     const { operations } = storage;
-//     console.log(storage);
-//     let balance = 0;
-//     let balanceName: string;
-//     for (let operation of operations){
-//         for (const property in object){
-// console.log("hola")
-//         }
+const higherBalance = () => {
+    const storage = getStorage();
+    const { operations } = storage;
+    for (let operation of operations) {
+        for (let property in operation) {
+console.log(operation[property]);
+
+
+
+            // let balance = operation[property].Ganancia - operation[property].Gasto
+            // if (property === "type") {
+            //     if (operation[property] === "Gasto") {
+            //         console.log(`gasto de ${operation.category}  es -${operation.amount}`);
+            //     } else if (operation[property] === "Ganancia") {
+            //         console.log(`ganancia de ${operation.category} es +${operation.amount}`)
+            //     }
+            // }
+        }
     }
+    //     let balance = 0;
+    //     let balanceName: string;
+    //     for (let operation of operations){
+    //         for (const property in object){
+    // console.log("hola")
+    //         }
+}
 
 
 
 // }
 
+higherBalance();
 
 
 
@@ -222,7 +238,7 @@ const reportResum = () => {
 // Totals Per Category
 const totalPerCategory = () => {
     const storage = getStorage();
-    const { categories} = storage;
+    const { categories } = storage;
     for (let category of categories) {
         // Row of each category
         const rowCat = document.createElement("div");

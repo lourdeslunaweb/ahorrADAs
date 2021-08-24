@@ -69,10 +69,23 @@ var expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", op
 // // "a: 1"
 // // "b: 2"
 // // "c: 3"
-var higherBalance = function (object) {
-    //     const storage = getStorage();
-    //     const { operations } = storage;
-    //     console.log(storage);
+var higherBalance = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    for (var _i = 0, operations_2 = operations; _i < operations_2.length; _i++) {
+        var operation = operations_2[_i];
+        for (var property in operation) {
+            console.log(operation[property]);
+            // let balance = operation[property].Ganancia - operation[property].Gasto
+            // if (property === "type") {
+            //     if (operation[property] === "Gasto") {
+            //         console.log(`gasto de ${operation.category}  es -${operation.amount}`);
+            //     } else if (operation[property] === "Ganancia") {
+            //         console.log(`ganancia de ${operation.category} es +${operation.amount}`)
+            //     }
+            // }
+        }
+    }
     //     let balance = 0;
     //     let balanceName: string;
     //     for (let operation of operations){
@@ -81,6 +94,7 @@ var higherBalance = function (object) {
     //         }
 };
 // }
+higherBalance();
 // Report Resum
 var reportResum = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
