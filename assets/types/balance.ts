@@ -28,32 +28,32 @@ const refreshOperationTable = () => {
     for (let operation of storage.operations) {
         // Create row div and set class
         const rowOpDiv = document.createElement("div");
-        rowOpDiv.className = "row mt-1";
+        rowOpDiv.className = "row mt-5 mt-md-3";
         rowOpDiv.setAttribute("id", generateId(10));
         // Create description column, its text node and set class
         const descriptionCol = document.createElement("div");
-        descriptionCol.className = "col-2";
+        descriptionCol.className = "col-4 col-md-2 fw-bolder";
         const descriptionOp = document.createTextNode(operation.description);
         // Create category column, its text node and set class
         const categoryCol = document.createElement("div");
-        categoryCol.className = "col-2";
+        categoryCol.className = "col-4 col-md-2";
         const categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
         const options = {month: 'long'}
         const dateCol = document.createElement("div");
-        dateCol.className = "col-3";
+        dateCol.className = "col-4 col-md-2";
         const dateOp = document.createTextNode(new Date(operation.date).toLocaleDateString("es-ES", options.month));
         // Create amount column, its text node and set class
         const amountCol = document.createElement("div");
-        amountCol.className = "col-2";
+        amountCol.className = "col-4 col-md-2";
         const amountOp = document.createTextNode(operation.amount);
         // Create action column,  two text node (edit and remove) and set class
         const actionCol = document.createElement("div");
-        actionCol.className = "col-3 d-flex";
+        actionCol.className = "col-4 col-md-2 d-flex";
         const editOpDiv = document.createElement("div");
         const editOpLink = document.createTextNode("Editar");
         const editOp = document.createElement("a")
-        editOp.className = "text-primary me-3 edit-op-btn fs-6 text";
+        editOp.className = "text-primary me-3 edit-op-btn fs-6";
         const removeOpDiv = document.createElement("div");
         const removeOpLink = document.createTextNode("Eliminar");
         const removeOp = document.createElement("a")
@@ -116,7 +116,6 @@ const balanceCounter = () => {
     const storage = getStorage();    
     for(let operation of storage.operations){
         let value = parseInt(`${operation.amount}`);
-        console.log(operation.type)
         if(operation.type === 'Ganancia'){    
             finalGain += value            
         }

@@ -72,7 +72,7 @@ var reportResum = function () {
     reportResumDiv.appendChild(row1);
     // create Row 2 "Categoría con mayor gasto" and its respective columns
     var row2 = document.createElement("div");
-    row2.className = "row mt-1";
+    row2.className = "row mt-3 mt-sm-1";
     // Row 2 Col 1
     var row2Col1 = document.createElement("div");
     row2Col1.className = "col-5 col-sm-6";
@@ -96,7 +96,7 @@ var reportResum = function () {
     reportResumDiv.appendChild(row2);
     // create Row 3 "Categoría con mayor balance" and its respective columns
     var row3 = document.createElement("div");
-    row3.className = "row mt-1";
+    row3.className = "row mt-3 mt-sm-1";
     // Row 3 Col 1
     var row3Col1 = document.createElement("div");
     row3Col1.className = "col-5 col-sm-6";
@@ -114,13 +114,13 @@ var reportResum = function () {
     // Row 3 Col 3
     var row3Col3 = document.createElement("div");
     row3Col3.className = "col-3 col-sm-3";
-    var row3Col3Text = document.createTextNode("xBalanceValuex");
+    var row3Col3Text = document.createTextNode("xxxxx");
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
     // create Row 4 "Mes con mayor ganancia" and its respective columns
     var row4 = document.createElement("div");
-    row4.className = "row mt-1";
+    row4.className = "row mt-3 mt-sm-1";
     // Row 4 Col 1
     var row4Col1 = document.createElement("div");
     row4Col1.className = "col-5 col-sm-6";
@@ -144,7 +144,7 @@ var reportResum = function () {
     reportResumDiv.appendChild(row4);
     // create Row 5 "Mes con mayor gasto" and its respective columns
     var row5 = document.createElement("div");
-    row5.className = "row mt-1";
+    row5.className = "row mt-3 mt-sm-1";
     // Row 5 Col 1
     var row5Col1 = document.createElement("div");
     row5Col1.className = "col-5 col-sm-6";
@@ -175,22 +175,22 @@ var totalPerCategory = function () {
         var category = categories_1[_i];
         // Row of each category
         var rowCat = document.createElement("div");
-        rowCat.className = "row mt-1";
+        rowCat.className = "row mt-3 mt-sm-1";
         // Categiry Name column
         var colName = document.createElement("div");
-        colName.className = "col-3";
+        colName.className = "col-6 col-sm-3 fw-bold";
         var colNameText = document.createTextNode("" + category.name);
         // Category Gain column
         var colGain = document.createElement("div");
-        colGain.className = "col-3 text-success";
+        colGain.className = "col-6 col-sm-3 text-success";
         var colGainText = document.createTextNode("xGanx");
         // Category Expense column
         var colExpense = document.createElement("div");
-        colExpense.className = "col-3 text-danger";
+        colExpense.className = "col-6 col-sm-3 text-danger";
         var colExpenseText = document.createTextNode("xGastx");
         // Category Balance colum
         var colBalance = document.createElement("div");
-        colBalance.className = "col-3";
+        colBalance.className = "col-6 col-sm-3";
         var colBalanceText = document.createTextNode("xBalx");
         //Append child text into div
         colName.appendChild(colNameText);
