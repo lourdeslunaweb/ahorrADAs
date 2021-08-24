@@ -13,6 +13,12 @@ var __assign = (this && this.__assign) || function () {
 var emptyOps = document.getElementById("empty-ops");
 var loadedOps = document.getElementById("loaded-ops");
 var operationRowGrid = document.getElementById("operation-row-grid");
+var gainCounter = document.getElementById("gain-counter");
+var lossCounter = document.getElementById("loss-counter");
+var finalAmount = document.getElementById("final-amount");
+//Balance values
+var finalGain = 0;
+var finalLoss = 0;
 //Remove Operation
 var removeOperation = function (e) {
     var idOperation = e.target.dataset.id;
@@ -42,9 +48,10 @@ var refreshOperationTable = function () {
         categoryCol.className = "col-2";
         var categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
+        var options = { month: 'long' };
         var dateCol = document.createElement("div");
         dateCol.className = "col-3";
-        var dateOp = document.createTextNode(operation.date);
+        var dateOp = document.createTextNode(new Date(operation.date).toLocaleDateString("es-ES", options.month));
         // Create amount column, its text node and set class
         var amountCol = document.createElement("div");
         amountCol.className = "col-2";
@@ -55,11 +62,11 @@ var refreshOperationTable = function () {
         var editOpDiv = document.createElement("div");
         var editOpLink = document.createTextNode("Editar");
         var editOp = document.createElement("a");
-        editOp.className = "text-success me-3 edit-op-btn fs-6 text";
+        editOp.className = "text-primary me-3 edit-op-btn fs-6 text";
         var removeOpDiv = document.createElement("div");
         var removeOpLink = document.createTextNode("Eliminar");
         var removeOp = document.createElement("a");
-        removeOp.className = "text-danger remove-op-btn fs-6 text";
+        removeOp.className = "text-primary remove-op-btn fs-6 text";
         // Append child node text into columns
         descriptionCol.appendChild(descriptionOp);
         categoryCol.appendChild(categoryOp);
@@ -89,11 +96,11 @@ var refreshOperationTable = function () {
         // Operation type to set in href
         var typeOp = document.createTextNode(operation.type);
         // Set class if operation.type is " Gasto" o "Ganancia"
-        if (operation.type === "Gastos") {
+        if (operation.type === "Gasto") {
             amountCol.className = "col-2 text-danger fw-bold";
             amountOp.textContent = "-" + operation.amount;
         }
-        else if (operation.type === "Ganancias") {
+        else if (operation.type === "Ganancia") {
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = "+" + operation.amount;
         }
@@ -114,10 +121,33 @@ var changeIndexImg = function () {
         loadedOps.classList.add("d-none");
     }
 };
+// Balance
+var balanceCounter = function () {
+    var storage = getStorage();
+    for (var _i = 0, _a = storage.operations; _i < _a.length; _i++) {
+        var operation = _a[_i];
+        var value = parseInt("" + operation.amount);
+        console.log(operation.type);
+        if (operation.type === 'Ganancias') {
+            finalGain += value;
+        }
+        else if (operation.type === 'Gastos') {
+            finalLoss -= value;
+        }
+    }
+    gainCounter.innerHTML = "$ " + finalGain;
+    lossCounter.innerHTML = "$ " + finalLoss;
+    var total = finalLoss + finalGain;
+    finalAmount.innerHTML = "$ " + total;
+    finalGain = 0;
+    finalLoss = 0;
+    localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { operations: storage.operations })));
+};
 // Initial function of balance
 var initBalance = function () {
     getStorage();
     changeIndexImg();
     refreshOperationTable();
+    balanceCounter();
 };
 initBalance();

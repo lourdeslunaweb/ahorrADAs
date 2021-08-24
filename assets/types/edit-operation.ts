@@ -3,6 +3,8 @@
 const params = new URLSearchParams(window.location.search);
 const descToEditValue = params.get("descriptionOp");
 const amountToEditValue = params.get("amountOp");
+const amountToEditValue = params.get("amountOp");
+const amountToEditValue = params.get("amountOp");
 const typeToEditValue = params.get("typeOp");
 const categoryToEditValue = params.get("categoryOp");
 const dateToEditValue = params.get("dateOp");
