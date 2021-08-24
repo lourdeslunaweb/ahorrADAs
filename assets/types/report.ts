@@ -44,6 +44,72 @@ const options = { month: 'long' }
 const gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
 const expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
 
+//Search category with higher balance
+// ********
+// const balanceCategory = (object) => {
+
+// 	let max = 0;
+// 	let category = " ";
+// 	const categoryBadge = document.getElementById('higherBalanceByCategoryBadge');
+// 	const higherBalance = document.getElementById('higherBalanceByCategory')
+
+// 	for (const prop in object) {
+// 		let balance = object[prop].Ganancia - object[prop].Gasto
+// 		if (balance > max) {
+// 			max = balance;
+// 			category = prop
+// 		}
+// 	}
+// 	categoryBadge.innerText = category
+// 	higherBalance.innerText = `$ ${max}`
+
+// }
+
+// const object = { a: 1, b: 2, c: 3 };
+
+// for (const property in object) {
+//   console.log(`${property}: ${object[property]}`);
+// }
+
+// // expected output:
+// // "a: 1"
+// // "b: 2"
+// // "c: 3"
+
+const higherBalance = () => {
+    const storage = getStorage();
+    const { operations } = storage;
+    for (let operation of operations) {
+        for (let property in operation) {
+console.log(operation[property]);
+
+
+
+            // let balance = operation[property].Ganancia - operation[property].Gasto
+            // if (property === "type") {
+            //     if (operation[property] === "Gasto") {
+            //         console.log(`gasto de ${operation.category}  es -${operation.amount}`);
+            //     } else if (operation[property] === "Ganancia") {
+            //         console.log(`ganancia de ${operation.category} es +${operation.amount}`)
+            //     }
+            // }
+        }
+    }
+    //     let balance = 0;
+    //     let balanceName: string;
+    //     for (let operation of operations){
+    //         for (const property in object){
+    // console.log("hola")
+    //         }
+}
+
+
+
+// }
+
+higherBalance();
+
+
 
 // Report Resum
 const reportResum = () => {
@@ -172,7 +238,7 @@ const reportResum = () => {
 // Totals Per Category
 const totalPerCategory = () => {
     const storage = getStorage();
-    const { categories} = storage;
+    const { categories } = storage;
     for (let category of categories) {
         // Row of each category
         const rowCat = document.createElement("div");

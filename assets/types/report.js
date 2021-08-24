@@ -44,6 +44,57 @@ var categoryExpenseMonth = categoryGainArray[5];
 var options = { month: 'long' };
 var gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
 var expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
+//Search category with higher balance
+// ********
+// const balanceCategory = (object) => {
+// 	let max = 0;
+// 	let category = " ";
+// 	const categoryBadge = document.getElementById('higherBalanceByCategoryBadge');
+// 	const higherBalance = document.getElementById('higherBalanceByCategory')
+// 	for (const prop in object) {
+// 		let balance = object[prop].Ganancia - object[prop].Gasto
+// 		if (balance > max) {
+// 			max = balance;
+// 			category = prop
+// 		}
+// 	}
+// 	categoryBadge.innerText = category
+// 	higherBalance.innerText = `$ ${max}`
+// }
+// const object = { a: 1, b: 2, c: 3 };
+// for (const property in object) {
+//   console.log(`${property}: ${object[property]}`);
+// }
+// // expected output:
+// // "a: 1"
+// // "b: 2"
+// // "c: 3"
+var higherBalance = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    for (var _i = 0, operations_2 = operations; _i < operations_2.length; _i++) {
+        var operation = operations_2[_i];
+        for (var property in operation) {
+            console.log(operation[property]);
+            // let balance = operation[property].Ganancia - operation[property].Gasto
+            // if (property === "type") {
+            //     if (operation[property] === "Gasto") {
+            //         console.log(`gasto de ${operation.category}  es -${operation.amount}`);
+            //     } else if (operation[property] === "Ganancia") {
+            //         console.log(`ganancia de ${operation.category} es +${operation.amount}`)
+            //     }
+            // }
+        }
+    }
+    //     let balance = 0;
+    //     let balanceName: string;
+    //     for (let operation of operations){
+    //         for (const property in object){
+    // console.log("hola")
+    //         }
+};
+// }
+higherBalance();
 // Report Resum
 var reportResum = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
