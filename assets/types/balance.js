@@ -37,32 +37,32 @@ var refreshOperationTable = function () {
         var operation = _a[_i];
         // Create row div and set class
         var rowOpDiv = document.createElement("div");
-        rowOpDiv.className = "row mt-1";
+        rowOpDiv.className = "row mt-5 mt-md-3";
         rowOpDiv.setAttribute("id", generateId(10));
         // Create description column, its text node and set class
         var descriptionCol = document.createElement("div");
-        descriptionCol.className = "col-2";
+        descriptionCol.className = "col-4 col-md-2 fw-bolder";
         var descriptionOp = document.createTextNode(operation.description);
         // Create category column, its text node and set class
         var categoryCol = document.createElement("div");
-        categoryCol.className = "col-2";
+        categoryCol.className = "col-4 col-md-2";
         var categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
         var options = { month: 'long' };
         var dateCol = document.createElement("div");
-        dateCol.className = "col-3";
+        dateCol.className = "col-4 col-md-2";
         var dateOp = document.createTextNode(new Date(operation.date).toLocaleDateString("es-ES", options.month));
         // Create amount column, its text node and set class
         var amountCol = document.createElement("div");
-        amountCol.className = "col-2";
+        amountCol.className = "col-4 col-md-2";
         var amountOp = document.createTextNode(operation.amount);
         // Create action column,  two text node (edit and remove) and set class
         var actionCol = document.createElement("div");
-        actionCol.className = "col-3 d-flex";
+        actionCol.className = "col-4 col-md-2 d-flex";
         var editOpDiv = document.createElement("div");
         var editOpLink = document.createTextNode("Editar");
         var editOp = document.createElement("a");
-        editOp.className = "text-primary me-3 edit-op-btn fs-6 text";
+        editOp.className = "text-primary me-3 edit-op-btn fs-6";
         var removeOpDiv = document.createElement("div");
         var removeOpLink = document.createTextNode("Eliminar");
         var removeOp = document.createElement("a");

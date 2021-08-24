@@ -73,7 +73,7 @@ const reportResum = () => {
     reportResumDiv.appendChild(row1);
     // create Row 2 "Categoría con mayor gasto" and its respective columns
     const row2 = document.createElement("div");
-    row2.className = "row mt-1";
+    row2.className = "row mt-3 mt-sm-1";
     // Row 2 Col 1
     const row2Col1 = document.createElement("div");
     row2Col1.className = "col-5 col-sm-6";
@@ -97,7 +97,7 @@ const reportResum = () => {
     reportResumDiv.appendChild(row2);
     // create Row 3 "Categoría con mayor balance" and its respective columns
     const row3 = document.createElement("div");
-    row3.className = "row mt-1";
+    row3.className = "row mt-3 mt-sm-1";
     // Row 3 Col 1
     const row3Col1 = document.createElement("div");
     row3Col1.className = "col-5 col-sm-6";
@@ -115,13 +115,13 @@ const reportResum = () => {
     // Row 3 Col 3
     const row3Col3 = document.createElement("div");
     row3Col3.className = "col-3 col-sm-3";
-    const row3Col3Text = document.createTextNode("xBalanceValuex");
+    const row3Col3Text = document.createTextNode("xxxxx");
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
     // create Row 4 "Mes con mayor ganancia" and its respective columns
     const row4 = document.createElement("div");
-    row4.className = "row mt-1";
+    row4.className = "row mt-3 mt-sm-1";
     // Row 4 Col 1
     const row4Col1 = document.createElement("div");
     row4Col1.className = "col-5 col-sm-6";
@@ -145,7 +145,7 @@ const reportResum = () => {
     reportResumDiv.appendChild(row4);
     // create Row 5 "Mes con mayor gasto" and its respective columns
     const row5 = document.createElement("div");
-    row5.className = "row mt-1";
+    row5.className = "row mt-3 mt-sm-1";
     // Row 5 Col 1
     const row5Col1 = document.createElement("div");
     row5Col1.className = "col-5 col-sm-6";
@@ -176,22 +176,22 @@ const totalPerCategory = () => {
     for (let category of categories) {
         // Row of each category
         const rowCat = document.createElement("div");
-        rowCat.className = "row mt-1";
+        rowCat.className = "row mt-3 mt-sm-1";
         // Categiry Name column
         const colName = document.createElement("div");
-        colName.className = "col-3"
+        colName.className = "col-6 col-sm-3 fw-bold"
         const colNameText = document.createTextNode(`${category.name}`);
         // Category Gain column
         const colGain = document.createElement("div");
-        colGain.className = "col-3 text-success";
+        colGain.className = "col-6 col-sm-3 text-success";
         const colGainText = document.createTextNode("xGanx");
         // Category Expense column
         const colExpense = document.createElement("div");
-        colExpense.className = "col-3 text-danger";
+        colExpense.className = "col-6 col-sm-3 text-danger";
         const colExpenseText = document.createTextNode("xGastx");
         // Category Balance colum
         const colBalance = document.createElement("div");
-        colBalance.className = "col-3";
+        colBalance.className = "col-6 col-sm-3";
         const colBalanceText = document.createTextNode("xBalx");
         //Append child text into div
         colName.appendChild(colNameText);
