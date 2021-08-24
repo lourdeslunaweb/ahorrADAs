@@ -55,11 +55,11 @@ var refreshOperationTable = function () {
         var editOpDiv = document.createElement("div");
         var editOpLink = document.createTextNode("Editar");
         var editOp = document.createElement("a");
-        editOp.className = "text-success me-3 edit-op-btn";
+        editOp.className = "text-success me-3 edit-op-btn fs-6 text";
         var removeOpDiv = document.createElement("div");
         var removeOpLink = document.createTextNode("Eliminar");
         var removeOp = document.createElement("a");
-        removeOp.className = "text-danger remove-op-btn";
+        removeOp.className = "text-danger remove-op-btn fs-6 text";
         // Append child node text into columns
         descriptionCol.appendChild(descriptionOp);
         categoryCol.appendChild(categoryOp);
@@ -73,19 +73,32 @@ var refreshOperationTable = function () {
         rowOpDiv.appendChild(dateCol);
         rowOpDiv.appendChild(amountCol);
         rowOpDiv.appendChild(actionCol);
-        // Append child row into Row Operation Div
+        // Append child row into Row Operation Div and set Id
         operationRowGrid.appendChild(rowOpDiv);
         operationRowGrid.setAttribute("id", generateId(10));
-        // Set id to remove div 
         // Append child text node edit and remove into their divs
         removeOpDiv.appendChild(removeOp);
         removeOp.appendChild(removeOpLink);
         removeOp.setAttribute("href", "#");
         removeOp.addEventListener('click', removeOperation);
+        // Set id to remove div 
         removeOp.dataset.id = "" + operation.id;
+        // Final append child
         editOpDiv.appendChild(editOp);
         editOp.appendChild(editOpLink);
-        editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount);
+        // Operation type to set in href
+        var typeOp = document.createTextNode(operation.type);
+        // Set class if operation.type is " Gasto" o "Ganancia"
+        if (operation.type === "Gastos") {
+            amountCol.className = "col-2 text-danger fw-bold";
+            amountOp.textContent = "-" + operation.amount;
+        }
+        else if (operation.type === "Ganancias") {
+            amountCol.className = "col-2 text-success fw-bold";
+            amountOp.textContent = "+" + operation.amount;
+        }
+        // Set href to pass values to params
+        editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount + "&typeOp=" + operation.type + "&categoryOp=" + operation.category + "&dateOp=" + operation.date);
     }
 };
 // Check if there's operations or not
@@ -101,7 +114,6 @@ var changeIndexImg = function () {
         loadedOps.classList.add("d-none");
     }
 };
-// changeIndexImg();
 // Initial function of balance
 var initBalance = function () {
     getStorage();

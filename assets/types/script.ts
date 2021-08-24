@@ -35,6 +35,11 @@ type Filter = {
     sortby: 'Más reciente' | 'Menos reciente' | 'Mayor monto' | 'Menor monto' | 'A-Z' | 'Z-A',
 }
 
+// Set a default date
+
+let inputDate = document.querySelector('input[type="date"]');
+inputDate.valueAsDate = new Date()
+
 // Generate randoms IDs
 const generateId = (length: number): string => {
     let id = '';
@@ -89,22 +94,3 @@ const getStorage = (): LocalStorage => {
     return locStor;
 }
 
-
-
-// let storage = getStorage();
-// const filter: Filter = {
-//     display:true,
-//     tipo: 'Todos',
-//     categoria: {nombre: 'comida', slug: ''},
-//     desde: '3/3/21',
-//     ordenar: 'Más reciente',
-// }
-// console.log(filter.ordenar)
-// const acceder = (filter:Filter) => {
-//     if(filter.ordenar === 'Más reciente' ){
-//         console.log('holis')
-//     }
-//     else{
-//         console.log('chauchis')
-//     }
-// }

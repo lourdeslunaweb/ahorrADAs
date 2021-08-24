@@ -3,7 +3,6 @@ const newCatForm = document.getElementById ("newcat-form");
 let inputCat = document.getElementById ("input-cat");
 const categoriesGrid = document.getElementById("categories-grid");
 
-
 // Remove categories from Local Storage:
 const removeCategory = (e) => {   
     const idCategory = e.target.dataset.id;
@@ -13,7 +12,6 @@ const removeCategory = (e) => {
     localStorage.setItem('to-storage', JSON.stringify({...storage, categories: categoriesUpdate}));
     refreshCategoryTable()
 }
-
 
 // Create new category
 const refreshCategoryTable = () => {
@@ -59,7 +57,6 @@ const refreshCategoryTable = () => {
     }   
     
 }
-
 
 // Show new categories on screen / Set Local Storage new data:
 newCatForm.addEventListener('submit',(e) => {

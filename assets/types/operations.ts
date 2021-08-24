@@ -7,6 +7,7 @@ const newOperation: Operation = {
     date: '',
     id: '',
 }
+
 const newOpForm = document.getElementById("newOp-form");
 const newOpDescription = document.getElementById('newOp-description');
 const newOpAmount = document.getElementById("newOp-amount");
@@ -14,8 +15,6 @@ const newOpType = document.getElementById("newOp-type");
 const newOpDate = document.getElementById("newOp-date");
 const submitNewOp = document.getElementById("submit-newOp");
 const newOpCategory = document.getElementById("newOp-category");
-
-
 
 // Update categories in new_op.html
 const upDateCatOps = () =>{
