@@ -44,6 +44,56 @@ const options = { month: 'long' }
 const gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
 const expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
 
+//Search category with higher balance
+// ********
+// const balanceCategory = (object) => {
+
+// 	let max = 0;
+// 	let category = " ";
+// 	const categoryBadge = document.getElementById('higherBalanceByCategoryBadge');
+// 	const higherBalance = document.getElementById('higherBalanceByCategory')
+
+// 	for (const prop in object) {
+// 		let balance = object[prop].Ganancia - object[prop].Gasto
+// 		if (balance > max) {
+// 			max = balance;
+// 			category = prop
+// 		}
+// 	}
+// 	categoryBadge.innerText = category
+// 	higherBalance.innerText = `$ ${max}`
+
+// }
+
+// const object = { a: 1, b: 2, c: 3 };
+
+// for (const property in object) {
+//   console.log(`${property}: ${object[property]}`);
+// }
+
+// // expected output:
+// // "a: 1"
+// // "b: 2"
+// // "c: 3"
+
+const higherBalance = (object)=>{
+//     const storage = getStorage();
+//     const { operations } = storage;
+//     console.log(storage);
+//     let balance = 0;
+//     let balanceName: string;
+//     for (let operation of operations){
+//         for (const property in object){
+// console.log("hola")
+//         }
+    }
+
+
+
+// }
+
+
+
 
 // Report Resum
 const reportResum = () => {
