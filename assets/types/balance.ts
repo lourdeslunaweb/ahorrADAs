@@ -4,26 +4,26 @@ const loadedOps = document.getElementById("loaded-ops");
 const operationRowGrid = document.getElementById("operation-row-grid");
 
 //Remove Operation
-const removeOperation = (e) => {   
+const removeOperation = (e) => {
     const idOperation = e.target.dataset.id;
     const storage = getStorage();
-    const {operations} = storage;      
+    const { operations } = storage;
     const operationsUpdate = operations.filter(operation => idOperation !== operation.id);
-    localStorage.setItem('to-storage', JSON.stringify({...storage, operations: operationsUpdate}));
+    localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: operationsUpdate }));
     refreshOperationTable();
     initBalance();
 }
 
 //Create New Operation Row
 const refreshOperationTable = () => {
-    operationRowGrid.innerHTML = " "; 
+    operationRowGrid.innerHTML = " ";
     const storage = getStorage();
 
     for (let operation of storage.operations) {
         // Create row div and set class
         const rowOpDiv = document.createElement("div");
         rowOpDiv.className = "row mt-1";
-        rowOpDiv.setAttribute("id",generateId(10));
+        rowOpDiv.setAttribute("id", generateId(10));
         // Create description column, its text node and set class
         const descriptionCol = document.createElement("div");
         descriptionCol.className = "col-2";
@@ -66,19 +66,28 @@ const refreshOperationTable = () => {
         rowOpDiv.appendChild(actionCol);
         // Append child row into Row Operation Div and set Id
         operationRowGrid.appendChild(rowOpDiv);
+<<<<<<< HEAD
         operationRowGrid.setAttribute("id",generateId(10));
+=======
+        operationRowGrid.setAttribute("id", generateId(10));
+>>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
         // Append child text node edit and remove into their divs
         removeOpDiv.appendChild(removeOp);
         removeOp.appendChild(removeOpLink);
-        removeOp.setAttribute("href","#"); 
+        removeOp.setAttribute("href", "#");
         removeOp.addEventListener('click', removeOperation)
         // Set id to remove div 
         removeOp.dataset.id = `${operation.id}`;
         // Final append child
         editOpDiv.appendChild(editOp);
         editOp.appendChild(editOpLink);
+<<<<<<< HEAD
          // Operation type to set in href
          const typeOp = document.createTextNode(operation.type);
+=======
+        // Operation type to set in href
+        const typeOp = document.createTextNode(operation.type);
+>>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
         // Set class if operation.type is " Gasto" o "Ganancia"
         if (operation.type === "Gastos"){
             amountCol.className = "col-2 text-danger fw-bold";
@@ -86,9 +95,15 @@ const refreshOperationTable = () => {
         } else if (operation.type === "Ganancias"){
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = `+${operation.amount}`
+<<<<<<< HEAD
     }
     // Set href to pass values to params
     editOp.setAttribute("href", `./edit_op.html?descriptionOp=${operation.description}&amountOp=${operation.amount}&typeOp=${operation.type}&categoryOp=${operation.category}&dateOp=${operation.date}`);
+=======
+        }
+        //   Set href to pass values to params
+        editOp.setAttribute("href", `./edit_op.html?descriptionOp=${operation.description}&amountOp=${operation.amount}&typeOp=${operation.type}&categoryOp=${operation.category}&dateOp=${operation.date}`);
+>>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
     }
 }
 
@@ -111,5 +126,4 @@ const initBalance = () => {
     changeIndexImg();
     refreshOperationTable();
 }
-
 initBalance()
