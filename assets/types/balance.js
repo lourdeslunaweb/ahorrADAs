@@ -127,10 +127,10 @@ var balanceCounter = function () {
         var operation = _a[_i];
         var value = parseInt("" + operation.amount);
         console.log(operation.type);
-        if (operation.type === 'Ganancias') {
+        if (operation.type === 'Ganancia') {
             finalGain += value;
         }
-        else if (operation.type === 'Gastos') {
+        else if (operation.type === 'Gasto') {
             finalLoss -= value;
         }
     }
