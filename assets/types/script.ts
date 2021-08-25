@@ -93,4 +93,3 @@ const getStorage = (): LocalStorage => {
     }
     return locStor;
 }
-

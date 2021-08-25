@@ -25,6 +25,7 @@ const removeOperation = (e) => {
 const refreshOperationTable = () => {
     operationRowGrid.innerHTML = " ";
     const storage = getStorage();
+
     for (let operation of storage.operations) {
         // Create row div and set class
         const rowOpDiv = document.createElement("div");
@@ -73,7 +74,7 @@ const refreshOperationTable = () => {
         rowOpDiv.appendChild(actionCol);
         // Append child row into Row Operation Div and set Id
         operationRowGrid.appendChild(rowOpDiv);
-        operationRowGrid.setAttribute("id",generateId(10));
+        operationRowGrid.setAttribute("id", generateId(10));
         // Append child text node edit and remove into their divs
         removeOpDiv.appendChild(removeOp);
         removeOp.appendChild(removeOpLink);
@@ -84,10 +85,8 @@ const refreshOperationTable = () => {
         // Final append child
         editOpDiv.appendChild(editOp);
         editOp.appendChild(editOpLink);
-
         // Operation type to set in href
         const typeOp = document.createTextNode(operation.type);
-
         // Set class if operation.type is " Gasto" o "Ganancia"
         if (operation.type === "Gasto"){
             amountCol.className = "col-2 text-danger fw-bold";
@@ -95,12 +94,10 @@ const refreshOperationTable = () => {
         } else if (operation.type === "Ganancia"){
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = `+${operation.amount}`
-        }
         //   Set href to pass values to params
         editOp.setAttribute("href", `./edit_op.html?descriptionOp=${operation.description}&amountOp=${operation.amount}&typeOp=${operation.type}&categoryOp=${operation.category}&dateOp=${operation.date}`);
     }
 }
-
 // Check if there's operations or not
 const changeIndexImg = () => {
     const storage = getStorage();
