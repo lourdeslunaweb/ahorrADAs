@@ -35,6 +35,11 @@ type Filter = {
     sortby: 'Más reciente' | 'Menos reciente' | 'Mayor monto' | 'Menor monto' | 'A-Z' | 'Z-A',
 }
 
+// Set a default date
+
+let inputDate = document.querySelector('input[type="date"]');
+inputDate.valueAsDate = new Date()
+
 // Generate randoms IDs
 const generateId = (length: number): string => {
     let id = '';
@@ -88,4 +93,3 @@ const getStorage = (): LocalStorage => {
     }
     return locStor;
 }
-

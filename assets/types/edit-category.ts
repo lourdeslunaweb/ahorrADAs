@@ -1,3 +1,4 @@
+
 // Set variables of edit categories
 const params = new URLSearchParams(window.location.search);
 const catToEdit = document.getElementById("cat-to-edit");
@@ -19,8 +20,3 @@ editCatBtn.addEventListener("click", e => {
     localStorage.setItem('to-storage', JSON.stringify(storage));
     refreshCategoryTable()
 })
-
-
-
-
-
