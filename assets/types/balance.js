@@ -83,7 +83,6 @@ var refreshOperationTable = function () {
         // Append child row into Row Operation Div and set Id
         operationRowGrid.appendChild(rowOpDiv);
         operationRowGrid.setAttribute("id", generateId(10));
-        // Append child text node edit and remove into their divs
         removeOpDiv.appendChild(removeOp);
         removeOp.appendChild(removeOpLink);
         removeOp.setAttribute("href", "#");
@@ -93,9 +92,7 @@ var refreshOperationTable = function () {
         // Final append child
         editOpDiv.appendChild(editOp);
         editOp.appendChild(editOpLink);
-        // Operation type to set in href
         var typeOp = document.createTextNode(operation.type);
-        // Set class if operation.type is " Gasto" o "Ganancia"
         if (operation.type === "Gasto") {
             amountCol.className = "col-2 text-danger fw-bold";
             amountOp.textContent = "-" + operation.amount;
@@ -104,11 +101,7 @@ var refreshOperationTable = function () {
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = "+" + operation.amount;
         }
-<<<<<<< HEAD
         // Set href to pass values to params
-=======
-        //   Set href to pass values to params
->>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
         editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount + "&typeOp=" + operation.type + "&categoryOp=" + operation.category + "&dateOp=" + operation.date);
     }
 };

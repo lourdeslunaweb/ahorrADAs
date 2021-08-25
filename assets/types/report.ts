@@ -107,7 +107,7 @@ console.log(operation[property]);
 
 // }
 
-higherBalance();
+// higherBalance();
 
 
 
