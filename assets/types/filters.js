@@ -3,12 +3,13 @@
  * FILTROS
  *
  * **********/
+
 var __spreadArray = (this && this.__spreadArray) || function (to, from) {
     for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
         to[j] = from[i];
     return to;
 };
-// TIPO
+
 //   const filtrarPorMes = (mes, anio, operaciones) => {
 //     return operaciones.filter((operacion) => {
 //       const fecha = new Date(operacion.fecha)

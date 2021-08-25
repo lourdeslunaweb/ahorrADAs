@@ -1,11 +1,8 @@
-/*************
+/*****
  * 
  * FILTROS
  *
- * **********/ 
-
-// TIPO
-
+ * ****/ 
 
 //   const filtrarPorMes = (mes, anio, operaciones) => {
 //     return operaciones.filter((operacion) => {
@@ -13,9 +10,7 @@
 //       return fecha.getFullYear() === anio && fecha.getMonth() === mes
 //     })
 //   }
-  
 
-  
 //   const ordernarPorMonto = (operaciones, orden) => {
 //     return [...operaciones].sort((a, b) => {
 //       return orden === 'ASC' ? a.monto - b.monto : b.monto - a.monto
