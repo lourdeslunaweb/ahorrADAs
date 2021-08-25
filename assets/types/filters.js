@@ -131,12 +131,4 @@ var filters = function () {
     selectSort.addEventListener("change", operationsFilter);
 };
 filters();
-/* ORDENAR POR:
-// Más reciente
-// Menos reciente
-// Mayor monto
-// Menor monto
-// A/Z
-// Z/A
-*/
-// OCULTAR FILTROS
+

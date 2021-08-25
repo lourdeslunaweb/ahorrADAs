@@ -104,7 +104,11 @@ var refreshOperationTable = function () {
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = "+" + operation.amount;
         }
+<<<<<<< HEAD
+        // Set href to pass values to params
+=======
         //   Set href to pass values to params
+>>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
         editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount + "&typeOp=" + operation.type + "&categoryOp=" + operation.category + "&dateOp=" + operation.date);
     }
 };
