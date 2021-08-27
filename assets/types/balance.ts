@@ -73,11 +73,7 @@ const refreshOperationTable = () => {
         rowOpDiv.appendChild(actionCol);
         // Append child row into Row Operation Div and set Id
         operationRowGrid.appendChild(rowOpDiv);
-<<<<<<< HEAD
-        operationRowGrid.setAttribute("id",generateId(10));
-=======
         operationRowGrid.setAttribute("id", generateId(10));
->>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
         // Append child text node edit and remove into their divs
         removeOpDiv.appendChild(removeOp);
         removeOp.appendChild(removeOpLink);
@@ -88,13 +84,8 @@ const refreshOperationTable = () => {
         // Final append child
         editOpDiv.appendChild(editOp);
         editOp.appendChild(editOpLink);
-<<<<<<< HEAD
-         // Operation type to set in href
-         const typeOp = document.createTextNode(operation.type);
-=======
         // Operation type to set in href
         const typeOp = document.createTextNode(operation.type);
->>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
         // Set class if operation.type is " Gasto" o "Ganancia"
         if (operation.type === "Gasto"){
             amountCol.className = "col-2 text-danger fw-bold";
@@ -102,15 +93,9 @@ const refreshOperationTable = () => {
         } else if (operation.type === "Ganancia"){
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = `+${operation.amount}`
-<<<<<<< HEAD
-    }
-    // Set href to pass values to params
-    editOp.setAttribute("href", `./edit_op.html?descriptionOp=${operation.description}&amountOp=${operation.amount}&typeOp=${operation.type}&categoryOp=${operation.category}&dateOp=${operation.date}`);
-=======
         }
         //   Set href to pass values to params
         editOp.setAttribute("href", `./edit_op.html?descriptionOp=${operation.description}&amountOp=${operation.amount}&typeOp=${operation.type}&categoryOp=${operation.category}&dateOp=${operation.date}`);
->>>>>>> 5798b7826c27b71727b8ef613dc1e8e76ccac59a
     }
 }
 // Check if there's operations or not
@@ -144,6 +129,6 @@ const balanceCounter = () => {
     finalGain = 0
     finalLoss = 0
 
-    localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: storage.operations }));    
+    //localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: storage.operations }));    
     
 }
