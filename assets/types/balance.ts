@@ -5,6 +5,7 @@ const operationRowGrid = document.getElementById("operation-row-grid");
 const gainCounter = document.getElementById("gain-counter");
 const lossCounter = document.getElementById("loss-counter");
 const finalAmount = document.getElementById("final-amount");
+
 //Balance values
 let finalGain = 0
 let finalLoss = 0
@@ -47,7 +48,7 @@ const refreshOperationTable = () => {
         const amountCol = document.createElement("div");
         amountCol.className = "col-4 col-md-2";
         const amountOp = document.createTextNode(operation.amount);
-        // Create action column,  two text node (edit and remove) and set class
+        // Create action column,  two text nodes (edit and remove) and set class
         const actionCol = document.createElement("div");
         actionCol.className = "col-4 col-md-2 d-flex";
         const editOpDiv = document.createElement("div");
@@ -110,6 +111,7 @@ const changeIndexImg = () => {
         loadedOps.classList.add("d-none");
     }
 }
+
 // Balance
 const balanceCounter = () => {
     const storage = getStorage();    
@@ -129,6 +131,14 @@ const balanceCounter = () => {
     finalGain = 0
     finalLoss = 0
 
-    //localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: storage.operations }));    
-    
+    // localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: storage.operations }));    
 }
+
+// Initial function of balance
+const initBalance = () => {
+    getStorage();
+    changeIndexImg();
+    refreshOperationTable();
+    balanceCounter()
+}
+initBalance()

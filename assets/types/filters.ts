@@ -4,6 +4,7 @@
  *
  * ****/ 
 
+
 //   const filtrarPorMes = (mes, anio, operaciones) => {
 //     return operaciones.filter((operacion) => {
 //       const fecha = new Date(operacion.fecha)
@@ -44,6 +45,7 @@
 const selectCategory = document.getElementById("select-category");
 const selectType = document.getElementById("type-filter");
 const selectSort = document.getElementById("select-sort");
+
 // Se puede usar la misma función que se usa en updateCatOp?
 const updateCatFilter = () =>{
     const storage = getStorage();
@@ -157,17 +159,3 @@ filters()
 
 
 
-
-
-
-/* ORDENAR POR:
-// Más reciente
-// Menos reciente
-// Mayor monto
-// Menor monto
-// A/Z
-// Z/A
-*/
-
-
-// OCULTAR FILTROS
