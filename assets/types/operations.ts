@@ -50,4 +50,3 @@ const initOperations = () =>{
     upDateCatOps();
 }
 initOperations()
-

@@ -1,8 +1,8 @@
-/*************
+/*****
  *
  * FILTROS
  *
- * **********/
+ * ****/
 var __spreadArray = (this && this.__spreadArray) || function (to, from) {
     for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
         to[j] = from[i];
@@ -131,25 +131,3 @@ var filters = function () {
     selectSort.addEventListener("change", operationsFilter);
 };
 filters();
-/* ORDENAR POR:
-
-// Más reciente
-
-
-// Menos reciente
-
-
-// Mayor monto
-
-
-// Menor monto
-
-
-// A/Z
-
-
-// Z/A
-
-
-*/
-// OCULTAR FILTROS

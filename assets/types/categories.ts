@@ -74,7 +74,3 @@ const initCategories = () => {
     refreshCategoryTable();
 }
 initCategories()
-
-
-
-
