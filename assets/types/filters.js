@@ -131,4 +131,3 @@ var filters = function () {
     selectSort.addEventListener("change", operationsFilter);
 };
 filters();
-

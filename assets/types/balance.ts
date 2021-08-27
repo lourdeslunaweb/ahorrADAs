@@ -94,6 +94,7 @@ const refreshOperationTable = () => {
         } else if (operation.type === "Ganancia"){
             amountCol.className = "col-2 text-success fw-bold";
             amountOp.textContent = `+${operation.amount}`
+        }
         //   Set href to pass values to params
         editOp.setAttribute("href", `./edit_op.html?descriptionOp=${operation.description}&amountOp=${operation.amount}&typeOp=${operation.type}&categoryOp=${operation.category}&dateOp=${operation.date}`);
     }
