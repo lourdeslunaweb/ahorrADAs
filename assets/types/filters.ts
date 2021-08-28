@@ -4,6 +4,7 @@
  *
  * ****/ 
 
+
 //   const filtrarPorMes = (mes, anio, operaciones) => {
 //     return operaciones.filter((operacion) => {
 //       const fecha = new Date(operacion.fecha)
@@ -93,6 +94,7 @@ const operationsFilter = () => {
     const typeValue = selectType.value;
     const categoryValue = selectCategory.value;
     const sortValue = selectSort.value;
+
     // const orden = $('#filtro-orden').value
     let {operations} = storage;
 
@@ -157,30 +159,3 @@ filters()
 
 
 
-
-
-
-/* ORDENAR POR:
-
-// Más reciente
-
-
-// Menos reciente
-
-
-// Mayor monto
-
-
-// Menor monto
-
-
-// A/Z
-
-
-// Z/A
-
-
-*/
-
-
-// OCULTAR FILTROS

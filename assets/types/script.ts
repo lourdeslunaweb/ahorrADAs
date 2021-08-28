@@ -21,7 +21,7 @@ type Operation = {
     description: string,
     category: string,
     date: string,
-    amount: number,
+    amount: string,
     type?: 'Gasto' | 'Ganancia',
     actions?: 'Editar' | 'Eliminar',
     id: string,
@@ -37,8 +37,8 @@ type Filter = {
 
 // Set a default date
 
-let inputDate = document.querySelector('input[type="date"]');
-inputDate.valueAsDate = new Date()
+// let inputDate = document.querySelector('input[type="date"]');
+// inputDate.valueAsDate = new Date()
 
 // Generate randoms IDs
 const generateId = (length: number): string => {
@@ -93,4 +93,3 @@ const getStorage = (): LocalStorage => {
     }
     return locStor;
 }
-
