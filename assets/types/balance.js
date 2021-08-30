@@ -41,11 +41,11 @@ var refreshOperationTable = function () {
         rowOpDiv.setAttribute("id", generateId(10));
         // Create description column, its text node and set class
         var descriptionCol = document.createElement("div");
-        descriptionCol.className = "col-4 col-md-2 fw-bolder";
+        descriptionCol.className = "col-4 col-md-3 fw-bolder";
         var descriptionOp = document.createTextNode(operation.description);
         // Create category column, its text node and set class
         var categoryCol = document.createElement("div");
-        categoryCol.className = "col-4 col-md-2";
+        categoryCol.className = "col-4 col-md-3";
         var categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
         var options = { month: 'long' };
@@ -56,7 +56,7 @@ var refreshOperationTable = function () {
         var amountCol = document.createElement("div");
         amountCol.className = "col-4 col-md-2";
         var amountOp = document.createTextNode(operation.amount);
-        // Create action column,  two text node (edit and remove) and set class
+        // Create action column,  two text nodes (edit and remove) and set class
         var actionCol = document.createElement("div");
         actionCol.className = "col-4 col-md-2 d-flex";
         var editOpDiv = document.createElement("div");
@@ -83,6 +83,7 @@ var refreshOperationTable = function () {
         // Append child row into Row Operation Div and set Id
         operationRowGrid.appendChild(rowOpDiv);
         operationRowGrid.setAttribute("id", generateId(10));
+        // Append child text node edit and remove into their divs
         removeOpDiv.appendChild(removeOp);
         removeOp.appendChild(removeOpLink);
         removeOp.setAttribute("href", "#");
@@ -92,16 +93,18 @@ var refreshOperationTable = function () {
         // Final append child
         editOpDiv.appendChild(editOp);
         editOp.appendChild(editOpLink);
+        // Operation type to set in href
         var typeOp = document.createTextNode(operation.type);
+        // Set class if operation.type is " Gasto" o "Ganancia"
         if (operation.type === "Gasto") {
-            amountCol.className = "col-2 text-danger fw-bold";
+            amountCol.className = "col-2 text-danger fw-bold text-center";
             amountOp.textContent = "-" + operation.amount;
         }
         else if (operation.type === "Ganancia") {
-            amountCol.className = "col-2 text-success fw-bold";
+            amountCol.className = "col-2 text-success fw-bold text-center";
             amountOp.textContent = "+" + operation.amount;
         }
-        // Set href to pass values to params
+        //   Set href to pass values to params
         editOp.setAttribute("href", "./edit_op.html?descriptionOp=" + operation.description + "&amountOp=" + operation.amount + "&typeOp=" + operation.type + "&categoryOp=" + operation.category + "&dateOp=" + operation.date);
     }
 };
@@ -137,7 +140,7 @@ var balanceCounter = function () {
     finalAmount.innerHTML = "$ " + total;
     finalGain = 0;
     finalLoss = 0;
-    localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { operations: storage.operations })));
+    // localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: storage.operations }));    
 };
 // Initial function of balance
 var initBalance = function () {

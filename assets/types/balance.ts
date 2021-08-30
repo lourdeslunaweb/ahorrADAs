@@ -33,11 +33,11 @@ const refreshOperationTable = () => {
         rowOpDiv.setAttribute("id", generateId(10));
         // Create description column, its text node and set class
         const descriptionCol = document.createElement("div");
-        descriptionCol.className = "col-4 col-md-2 fw-bolder";
+        descriptionCol.className = "col-4 col-md-3 fw-bolder";
         const descriptionOp = document.createTextNode(operation.description);
         // Create category column, its text node and set class
         const categoryCol = document.createElement("div");
-        categoryCol.className = "col-4 col-md-2";
+        categoryCol.className = "col-4 col-md-3";
         const categoryOp = document.createTextNode(operation.category);
         // Create date column, its text node and set class
         const options = {month: 'long'}
@@ -89,10 +89,10 @@ const refreshOperationTable = () => {
         const typeOp = document.createTextNode(operation.type);
         // Set class if operation.type is " Gasto" o "Ganancia"
         if (operation.type === "Gasto"){
-            amountCol.className = "col-2 text-danger fw-bold";
+            amountCol.className = "col-2 text-danger fw-bold text-center";
             amountOp.textContent = `-${operation.amount}`
         } else if (operation.type === "Ganancia"){
-            amountCol.className = "col-2 text-success fw-bold";
+            amountCol.className = "col-2 text-success fw-bold text-center";
             amountOp.textContent = `+${operation.amount}`
         }
         //   Set href to pass values to params

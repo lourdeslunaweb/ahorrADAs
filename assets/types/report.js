@@ -94,7 +94,7 @@ var higherBalance = function () {
     //         }
 };
 // }
-higherBalance();
+// higherBalance();
 // Report Resum
 var reportResum = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
