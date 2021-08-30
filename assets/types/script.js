@@ -1,8 +1,6 @@
 // Set a default date
-
 // let inputDate = document.querySelector('input[type="date"]');
 // inputDate.valueAsDate = new Date()
-
 // Generate randoms IDs
 var generateId = function (length) {
     var id = '';

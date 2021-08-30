@@ -3,6 +3,7 @@ var emptyReport = document.getElementById("empty-report-interface");
 var loadedReport = document.getElementById("loaded-report-interface");
 var reportResumDiv = document.getElementById("report-resume-div");
 var totalPerCatDiv = document.getElementById("total-per-category");
+var totalPerMonth = document.getElementById("total-per-month");
 // Search category with higher gain, higher expense and its corresponding month
 var categoryGainExpenseMonth = function () {
     var storage = getStorage();
@@ -44,57 +45,6 @@ var categoryExpenseMonth = categoryGainArray[5];
 var options = { month: 'long' };
 var gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
 var expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
-//Search category with higher balance
-// ********
-// const balanceCategory = (object) => {
-// 	let max = 0;
-// 	let category = " ";
-// 	const categoryBadge = document.getElementById('higherBalanceByCategoryBadge');
-// 	const higherBalance = document.getElementById('higherBalanceByCategory')
-// 	for (const prop in object) {
-// 		let balance = object[prop].Ganancia - object[prop].Gasto
-// 		if (balance > max) {
-// 			max = balance;
-// 			category = prop
-// 		}
-// 	}
-// 	categoryBadge.innerText = category
-// 	higherBalance.innerText = `$ ${max}`
-// }
-// const object = { a: 1, b: 2, c: 3 };
-// for (const property in object) {
-//   console.log(`${property}: ${object[property]}`);
-// }
-// // expected output:
-// // "a: 1"
-// // "b: 2"
-// // "c: 3"
-var higherBalance = function () {
-    var storage = getStorage();
-    var operations = storage.operations;
-    for (var _i = 0, operations_2 = operations; _i < operations_2.length; _i++) {
-        var operation = operations_2[_i];
-        for (var property in operation) {
-            console.log(operation[property]);
-            // let balance = operation[property].Ganancia - operation[property].Gasto
-            // if (property === "type") {
-            //     if (operation[property] === "Gasto") {
-            //         console.log(`gasto de ${operation.category}  es -${operation.amount}`);
-            //     } else if (operation[property] === "Ganancia") {
-            //         console.log(`ganancia de ${operation.category} es +${operation.amount}`)
-            //     }
-            // }
-        }
-    }
-    //     let balance = 0;
-    //     let balanceName: string;
-    //     for (let operation of operations){
-    //         for (const property in object){
-    // console.log("hola")
-    //         }
-};
-// }
-higherBalance();
 // Report Resum
 var reportResum = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
@@ -218,6 +168,29 @@ var reportResum = function () {
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
 };
+//Report by category
+var reportByCategory = function (name) {
+    var storage = getStorage();
+    var operations = storage.operations;
+    // arrCatGroup is an array of objets grouped per categories
+    var arrCatGroup = operations.filter(function (operation) {
+        return (operation.category === name);
+    });
+    var totalExpByCat = 0;
+    var totalGainByCat = 0;
+    var totalBalanceByCat = 0;
+    for (var _i = 0, arrCatGroup_1 = arrCatGroup; _i < arrCatGroup_1.length; _i++) {
+        var item = arrCatGroup_1[_i];
+        if (item.type === "Gasto") {
+            totalExpByCat += Number(item.amount);
+        }
+        else if (item.type === "Ganancia") {
+            totalGainByCat += Number(item.amount);
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat;
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
+};
 // Totals Per Category
 var totalPerCategory = function () {
     var storage = getStorage();
@@ -234,15 +207,20 @@ var totalPerCategory = function () {
         // Category Gain column
         var colGain = document.createElement("div");
         colGain.className = "col-6 col-sm-3 text-success";
-        var colGainText = document.createTextNode("xGanx");
+        // *** IMPORTANT ***
+        var arrReportResults = reportByCategory(category.name);
+        var totalGainByCat = arrReportResults[0];
+        var totalExpByCat = arrReportResults[1];
+        var totalBalanceByCat = arrReportResults[2];
+        var colGainText = document.createTextNode("" + totalGainByCat);
         // Category Expense column
         var colExpense = document.createElement("div");
         colExpense.className = "col-6 col-sm-3 text-danger";
-        var colExpenseText = document.createTextNode("xGastx");
+        var colExpenseText = document.createTextNode("" + totalExpByCat);
         // Category Balance colum
         var colBalance = document.createElement("div");
         colBalance.className = "col-6 col-sm-3";
-        var colBalanceText = document.createTextNode("xBalx");
+        var colBalanceText = document.createTextNode("" + totalBalanceByCat);
         //Append child text into div
         colName.appendChild(colNameText);
         colGain.appendChild(colGainText);
@@ -258,6 +236,29 @@ var totalPerCategory = function () {
     }
 };
 // Total Date
+// const totalPerMonth = document.getElementById("total-per-month");
+var reportByMonth = function (name) {
+    var storage = getStorage();
+    var operations = storage.operations;
+    // arrCatGroup is an array of objets grouped per categories
+    var arrCatGroup = operations.filter(function (operation) {
+        return (operation.category === name);
+    });
+    var totalExpByCat = 0;
+    var totalGainByCat = 0;
+    var totalBalanceByCat = 0;
+    for (var _i = 0, arrCatGroup_2 = arrCatGroup; _i < arrCatGroup_2.length; _i++) {
+        var item = arrCatGroup_2[_i];
+        if (item.type === "Gasto") {
+            totalExpByCat += Number(item.amount);
+        }
+        else if (item.type === "Ganancia") {
+            totalGainByCat += Number(item.amount);
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat;
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
+};
 // Check if there's operations or not
 var changeReportImg = function () {
     var storage = getStorage();

@@ -2,7 +2,8 @@
 const emptyReport = document.getElementById("empty-report-interface");
 const loadedReport = document.getElementById("loaded-report-interface");
 const reportResumDiv = document.getElementById("report-resume-div");
-const totalPerCatDiv = document.getElementById("total-per-category")
+const totalPerCatDiv = document.getElementById("total-per-category");
+const totalPerMonth = document.getElementById("total-per-month");
 
 // Search category with higher gain, higher expense and its corresponding month
 const categoryGainExpenseMonth = () => {
@@ -43,73 +44,6 @@ const categoryExpenseMonth = categoryGainArray[5];
 const options = { month: 'long' }
 const gainMonth = new Date(categoryGainMonth).toLocaleDateString("es-ES", options);
 const expenseMonth = new Date(categoryExpenseMonth).toLocaleDateString("es-ES", options);
-
-//Search category with higher balance
-// ********
-// const balanceCategory = (object) => {
-
-// 	let max = 0;
-// 	let category = " ";
-// 	const categoryBadge = document.getElementById('higherBalanceByCategoryBadge');
-// 	const higherBalance = document.getElementById('higherBalanceByCategory')
-
-// 	for (const prop in object) {
-// 		let balance = object[prop].Ganancia - object[prop].Gasto
-// 		if (balance > max) {
-// 			max = balance;
-// 			category = prop
-// 		}
-// 	}
-// 	categoryBadge.innerText = category
-// 	higherBalance.innerText = `$ ${max}`
-
-// }
-
-// const object = { a: 1, b: 2, c: 3 };
-
-// for (const property in object) {
-//   console.log(`${property}: ${object[property]}`);
-// }
-
-// // expected output:
-// // "a: 1"
-// // "b: 2"
-// // "c: 3"
-
-const higherBalance = () => {
-    const storage = getStorage();
-    const { operations } = storage;
-    for (let operation of operations) {
-        for (let property in operation) {
-console.log(operation[property]);
-
-
-
-            // let balance = operation[property].Ganancia - operation[property].Gasto
-            // if (property === "type") {
-            //     if (operation[property] === "Gasto") {
-            //         console.log(`gasto de ${operation.category}  es -${operation.amount}`);
-            //     } else if (operation[property] === "Ganancia") {
-            //         console.log(`ganancia de ${operation.category} es +${operation.amount}`)
-            //     }
-            // }
-        }
-    }
-    //     let balance = 0;
-    //     let balanceName: string;
-    //     for (let operation of operations){
-    //         for (const property in object){
-    // console.log("hola")
-    //         }
-}
-
-
-
-// }
-
-higherBalance();
-
-
 
 // Report Resum
 const reportResum = () => {
@@ -235,6 +169,33 @@ const reportResum = () => {
     reportResumDiv.appendChild(row5);
 }
 
+
+//Report by category
+const reportByCategory = (name: string) => {
+    const storage = getStorage();
+    const { operations } = storage;
+    // arrCatGroup is an array of objets grouped per categories
+    const arrCatGroup: Operation[] = operations.filter(operation => {
+        return (operation.category === name)
+    })
+    let totalExpByCat = 0;
+    let totalGainByCat = 0;
+    let totalBalanceByCat = 0;
+
+    for (const item of arrCatGroup) {
+        if (item.type === "Gasto"){
+            totalExpByCat += Number(item.amount)
+        } else if (item.type === "Ganancia"){
+            totalGainByCat += Number(item.amount)
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat
+
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat]
+}
+
+
+
 // Totals Per Category
 const totalPerCategory = () => {
     const storage = getStorage();
@@ -250,15 +211,24 @@ const totalPerCategory = () => {
         // Category Gain column
         const colGain = document.createElement("div");
         colGain.className = "col-6 col-sm-3 text-success";
-        const colGainText = document.createTextNode("xGanx");
+
+        // *** IMPORTANT ***
+        const arrReportResults = reportByCategory(category.name)
+        const totalGainByCat = arrReportResults[0];
+        const totalExpByCat = arrReportResults[1];
+        const totalBalanceByCat = arrReportResults[2];
+
+        const colGainText = document.createTextNode(`${totalGainByCat}`);
         // Category Expense column
         const colExpense = document.createElement("div");
         colExpense.className = "col-6 col-sm-3 text-danger";
-        const colExpenseText = document.createTextNode("xGastx");
+
+        const colExpenseText = document.createTextNode(`${totalExpByCat}`);
         // Category Balance colum
         const colBalance = document.createElement("div");
         colBalance.className = "col-6 col-sm-3";
-        const colBalanceText = document.createTextNode("xBalx");
+
+        const colBalanceText = document.createTextNode(`${totalBalanceByCat}`);
         //Append child text into div
         colName.appendChild(colNameText);
         colGain.appendChild(colGainText);
@@ -275,6 +245,30 @@ const totalPerCategory = () => {
 }
 
 // Total Date
+// const totalPerMonth = document.getElementById("total-per-month");
+const reportByMonth = (name: string) => {
+    const storage = getStorage();
+    const { operations } = storage;
+    // arrCatGroup is an array of objets grouped per categories
+    const arrCatGroup: Operation[] = operations.filter(operation => {
+        return (operation.category === name)
+    })
+    let totalExpByCat = 0;
+    let totalGainByCat = 0;
+    let totalBalanceByCat = 0;
+
+    for (const item of arrCatGroup) {
+        if (item.type === "Gasto"){
+            totalExpByCat += Number(item.amount)
+        } else if (item.type === "Ganancia"){
+            totalGainByCat += Number(item.amount)
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat
+
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat]
+}
+
 
 // Check if there's operations or not
 const changeReportImg = () => {
