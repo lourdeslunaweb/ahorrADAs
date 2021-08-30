@@ -43,7 +43,7 @@ const refreshOperationTable = () => {
         const options = {month: 'long'}
         const dateCol = document.createElement("div");
         dateCol.className = "col-4 col-md-2";
-        const dateOp = document.createTextNode(new Date(operation.date).toLocaleDateString("es-ES", options.month));
+        const dateOp = document.createTextNode(new Date(`${operation.date}T00:00:00`).toLocaleDateString("es-ES", options.month));
         // Create amount column, its text node and set class
         const amountCol = document.createElement("div");
         amountCol.className = "col-4 col-md-2";

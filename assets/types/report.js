@@ -3,6 +3,7 @@ var emptyReport = document.getElementById("empty-report-interface");
 var loadedReport = document.getElementById("loaded-report-interface");
 var reportResumDiv = document.getElementById("report-resume-div");
 var totalPerCatDiv = document.getElementById("total-per-category");
+var totalPerMonth = document.getElementById("total-per-month");
 // Search category with higher gain, higher expense and its corresponding month
 var categoryGainExpenseMonth = function () {
     var storage = getStorage();
@@ -167,8 +168,6 @@ var reportResum = function () {
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
 };
-// myArray = [{'id':'73','foo':'bar'},{'id':'45','foo':'bar'}, etc.]
-// myArray.find(x => x.id === '45').foo;
 //Report by category
 var reportByCategory = function (name) {
     var storage = getStorage();
@@ -208,7 +207,7 @@ var totalPerCategory = function () {
         // Category Gain column
         var colGain = document.createElement("div");
         colGain.className = "col-6 col-sm-3 text-success";
-        // *** IMPORTANTE ***
+        // *** IMPORTANT ***
         var arrReportResults = reportByCategory(category.name);
         var totalGainByCat = arrReportResults[0];
         var totalExpByCat = arrReportResults[1];
@@ -237,6 +236,29 @@ var totalPerCategory = function () {
     }
 };
 // Total Date
+// const totalPerMonth = document.getElementById("total-per-month");
+var reportByMonth = function (name) {
+    var storage = getStorage();
+    var operations = storage.operations;
+    // arrCatGroup is an array of objets grouped per categories
+    var arrCatGroup = operations.filter(function (operation) {
+        return (operation.category === name);
+    });
+    var totalExpByCat = 0;
+    var totalGainByCat = 0;
+    var totalBalanceByCat = 0;
+    for (var _i = 0, arrCatGroup_2 = arrCatGroup; _i < arrCatGroup_2.length; _i++) {
+        var item = arrCatGroup_2[_i];
+        if (item.type === "Gasto") {
+            totalExpByCat += Number(item.amount);
+        }
+        else if (item.type === "Ganancia") {
+            totalGainByCat += Number(item.amount);
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat;
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
+};
 // Check if there's operations or not
 var changeReportImg = function () {
     var storage = getStorage();

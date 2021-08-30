@@ -2,7 +2,8 @@
 const emptyReport = document.getElementById("empty-report-interface");
 const loadedReport = document.getElementById("loaded-report-interface");
 const reportResumDiv = document.getElementById("report-resume-div");
-const totalPerCatDiv = document.getElementById("total-per-category")
+const totalPerCatDiv = document.getElementById("total-per-category");
+const totalPerMonth = document.getElementById("total-per-month");
 
 // Search category with higher gain, higher expense and its corresponding month
 const categoryGainExpenseMonth = () => {
@@ -168,8 +169,6 @@ const reportResum = () => {
     reportResumDiv.appendChild(row5);
 }
 
-// myArray = [{'id':'73','foo':'bar'},{'id':'45','foo':'bar'}, etc.]
-// myArray.find(x => x.id === '45').foo;
 
 //Report by category
 const reportByCategory = (name: string) => {
@@ -213,7 +212,7 @@ const totalPerCategory = () => {
         const colGain = document.createElement("div");
         colGain.className = "col-6 col-sm-3 text-success";
 
-        // *** IMPORTANTE ***
+        // *** IMPORTANT ***
         const arrReportResults = reportByCategory(category.name)
         const totalGainByCat = arrReportResults[0];
         const totalExpByCat = arrReportResults[1];
@@ -246,6 +245,30 @@ const totalPerCategory = () => {
 }
 
 // Total Date
+// const totalPerMonth = document.getElementById("total-per-month");
+const reportByMonth = (name: string) => {
+    const storage = getStorage();
+    const { operations } = storage;
+    // arrCatGroup is an array of objets grouped per categories
+    const arrCatGroup: Operation[] = operations.filter(operation => {
+        return (operation.category === name)
+    })
+    let totalExpByCat = 0;
+    let totalGainByCat = 0;
+    let totalBalanceByCat = 0;
+
+    for (const item of arrCatGroup) {
+        if (item.type === "Gasto"){
+            totalExpByCat += Number(item.amount)
+        } else if (item.type === "Ganancia"){
+            totalGainByCat += Number(item.amount)
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat
+
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat]
+}
+
 
 // Check if there's operations or not
 const changeReportImg = () => {
