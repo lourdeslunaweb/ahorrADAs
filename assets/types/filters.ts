@@ -102,14 +102,14 @@ const operationsFilter = () => {
 
     if (typeValue !== 'Todos') {
         operations = typeFilter(typeValue, operations)
-        console.log(operations)
+        // console.log(operations)
     }
 
     // BY CATEGORY
 
     if (categoryValue !== 'Todas') {
         operations = categoryFilter(categoryValue, operations)
-        console.log(operations)
+        // console.log(operations)
     }
   
     // BY DATE
@@ -122,7 +122,7 @@ const operationsFilter = () => {
     switch (sortValue) {
       case "mas-recientes":
         operations = ordernarPorFecha(operations, 'DESC');
-        console.log(operations)
+        // console.log(operations)
         break
       case "menos-recientes":
         operations = ordernarPorFecha(operations, 'ASC')
