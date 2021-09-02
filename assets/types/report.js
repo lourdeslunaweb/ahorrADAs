@@ -133,6 +133,7 @@ var createResumTable = function () {
 // *************************
 // ** TOTALS PER CATEGORY**
 // *************************
+// Obtain Totals Per Category Data
 var totalPerCategory = function (name) {
     var storage = getStorage();
     var operations = storage.operations;
@@ -168,14 +169,14 @@ var createTotalPerCategoryTable = function () {
         var colName = document.createElement("div");
         colName.className = "col-12 col-sm-3 fw-bold";
         var colNameText = document.createTextNode("" + category.name);
-        // Category Gain column
-        var colGain = document.createElement("div");
-        colGain.className = "col-4 col-sm-3";
         // Call the function totalPerCategory()
         var arrReportResults = totalPerCategory(category.name);
         var totalGainByCat = arrReportResults[0];
         var totalExpByCat = arrReportResults[1];
         var totalBalanceByCat = arrReportResults[2];
+        // Category Gain column
+        var colGain = document.createElement("div");
+        colGain.className = "col-4 col-sm-3";
         var colGainText = document.createTextNode("$+" + totalGainByCat);
         // Category Expense column
         var colExpense = document.createElement("div");
@@ -227,6 +228,7 @@ var createTotalPerMonthTable = function () {
         }
         totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] += Number(operation.amount);
     });
+    console.log(totalsPerMonth);
     for (var year in totalsPerMonth) {
         for (var month in totalsPerMonth[year]) {
             // Row for each year/ month
@@ -282,6 +284,13 @@ var createTotalPerMonthTable = function () {
             fourthColDiv.appendChild(fourthColText);
             yearRow.appendChild(fourthColDiv);
             totalPerMonthDiv.appendChild(yearRow);
+            var mayorGan = 0;
+            var mesMayGan = void 0;
+            if (showGain > mayorGan) {
+                mayorGan = showGain;
+                mesMayGan = totalsPerMonth[year][month].Ganancia;
+            }
+            console.log(mayorGan, mesMayGan);
         }
     }
 };
@@ -292,7 +301,7 @@ var createTotalPerMonthTable = function () {
 var changeReportImg = function () {
     var storage = getStorage();
     var operations = storage.operations;
-    if (operations.length > 0) {
+    if (operations.length > 3) {
         emptyReport.classList.add("d-none");
         loadedReport.classList.remove("d-none");
     }

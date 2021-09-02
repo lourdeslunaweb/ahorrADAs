@@ -136,7 +136,7 @@ const createResumTable = () => {
 // *************************
 // ** TOTALS PER CATEGORY**
 // *************************
-
+// Obtain Totals Per Category Data
 const totalPerCategory = (name: string) => {
     const storage = getStorage();
     const { operations } = storage;
@@ -170,14 +170,14 @@ const createTotalPerCategoryTable = () => {
         const colName = document.createElement("div");
         colName.className = "col-12 col-sm-3 fw-bold"
         const colNameText = document.createTextNode(`${category.name}`);
-        // Category Gain column
-        const colGain = document.createElement("div");
-        colGain.className = "col-4 col-sm-3";
         // Call the function totalPerCategory()
         const arrReportResults = totalPerCategory(category.name)
         let totalGainByCat = arrReportResults[0];
-        const totalExpByCat = arrReportResults[1];
-        const totalBalanceByCat = arrReportResults[2];
+        let totalExpByCat = arrReportResults[1];
+        let totalBalanceByCat = arrReportResults[2];
+        // Category Gain column
+        const colGain = document.createElement("div");
+        colGain.className = "col-4 col-sm-3";
         const colGainText = document.createTextNode(`$+${totalGainByCat}`);
         // Category Expense column
         const colExpense = document.createElement("div");
@@ -230,6 +230,8 @@ const createTotalPerMonthTable = () => {
         }
         totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] += Number(operation.amount);
     });
+
+    console.log(totalsPerMonth);
     for (const year in totalsPerMonth) {
         for (const month in totalsPerMonth[year]) {
             // Row for each year/ month
@@ -281,7 +283,18 @@ const createTotalPerMonthTable = () => {
             }
             fourthColDiv.appendChild(fourthColText);
             yearRow.appendChild(fourthColDiv);
-            totalPerMonthDiv.appendChild(yearRow)
+            totalPerMonthDiv.appendChild(yearRow);
+
+            let mayorGan = 0;
+            let mesMayGan;
+
+            if(showGain > mayorGan ){
+                mayorGan = showGain;
+                mesMayGan = totalsPerMonth[year][month].Ganancia
+            }
+
+console.log(mayorGan, mesMayGan);
+
         }
     }
 }
@@ -296,7 +309,7 @@ const createTotalPerMonthTable = () => {
 const changeReportImg = () => {
     const storage = getStorage();
     const { operations } = storage;
-    if (operations.length > 0) {
+    if (operations.length > 3) {
         emptyReport.classList.add("d-none");
         loadedReport.classList.remove("d-none");
     } else {
