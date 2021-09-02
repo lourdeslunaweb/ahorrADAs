@@ -5,58 +5,9 @@ const reportResumDiv = document.getElementById("report-resume-div");
 const totalPerCatDiv = document.getElementById("total-per-category");
 const totalPerMonthDiv = document.getElementById("total-per-month");
 
-
-// *********************************
-// ** Set functions to obtain data**
-// *********************************
-
-//Totals per category function
-const totalPerCategory = (name: string) => {
-    const storage = getStorage();
-    const { operations } = storage;
-    // arrCatGroup is an array of objets grouped per categories
-    const arrCatGroup: Operation[] = operations.filter(operation => {
-        return (operation.category === name)
-    })
-    let totalExpByCat = 0;
-    let totalGainByCat = 0;
-    let totalBalanceByCat = 0;
-    for (const item of arrCatGroup) {
-        if (item.type === "Gasto") {
-            totalExpByCat += Number(item.amount)
-        } else if (item.type === "Ganancia") {
-            totalGainByCat += Number(item.amount)
-        }
-    }
-    totalBalanceByCat = totalGainByCat - totalExpByCat
-    return [totalGainByCat, totalExpByCat, totalBalanceByCat]
-}
-
-// Totals per Month function
-const totalPerMonth = (name: string) => {
-    const storage = getStorage();
-    const { operations } = storage;
-    // arrCatGroup is an array of objets grouped per categories
-    const arrCatGroup: Operation[] = operations.filter(operation => {
-        return (operation.category === name)
-    })
-    let totalExpByCat = 0;
-    let totalGainByCat = 0;
-    let totalBalanceByCat = 0;
-    for (const item of arrCatGroup) {
-        if (item.type === "Gasto") {
-            totalExpByCat += Number(item.amount)
-        } else if (item.type === "Ganancia") {
-            totalGainByCat += Number(item.amount)
-        }
-    }
-    totalBalanceByCat = totalGainByCat - totalExpByCat
-    return [totalGainByCat, totalExpByCat, totalBalanceByCat]
-}
-
-// ***********************************
-// ** Set functions to create tables**
-// ***********************************
+// *******************
+// ** REPORT SUMMARY**
+// *******************
 
 // Create Resum Table
 const createResumTable = () => {
@@ -182,40 +133,65 @@ const createResumTable = () => {
     reportResumDiv.appendChild(row5);
 }
 
+// *************************
+// ** TOTALS PER CATEGORY**
+// *************************
+
+const totalPerCategory = (name: string) => {
+    const storage = getStorage();
+    const { operations } = storage;
+    // arrCatGroup is an array of objets grouped per categories
+    const arrCatGroup: Operation[] = operations.filter(operation => {
+        return (operation.category === name)
+    })
+    let totalExpByCat = 0;
+    let totalGainByCat = 0;
+    let totalBalanceByCat = 0;
+    for (const item of arrCatGroup) {
+        if (item.type === "Gasto") {
+            totalExpByCat += Number(item.amount)
+        } else if (item.type === "Ganancia") {
+            totalGainByCat += Number(item.amount)
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat]
+}
 
 // Create Totals Per Category Table
 const createTotalPerCategoryTable = () => {
     const storage = getStorage();
     const { categories } = storage;
     for (let category of categories) {
-        // Row of each category
+        // Row for each category
         const rowCat = document.createElement("div");
         rowCat.className = "row mt-3 mt-sm-1";
         // Categiry Name column
         const colName = document.createElement("div");
-        colName.className = "col-6 col-sm-3 fw-bold"
+        colName.className = "col-12 col-sm-3 fw-bold"
         const colNameText = document.createTextNode(`${category.name}`);
         // Category Gain column
         const colGain = document.createElement("div");
-        colGain.className = "col-6 col-sm-3";
+        colGain.className = "col-4 col-sm-3";
         // Call the function totalPerCategory()
         const arrReportResults = totalPerCategory(category.name)
-        const totalGainByCat = arrReportResults[0];
+        let totalGainByCat = arrReportResults[0];
         const totalExpByCat = arrReportResults[1];
         const totalBalanceByCat = arrReportResults[2];
         const colGainText = document.createTextNode(`$+${totalGainByCat}`);
         // Category Expense column
         const colExpense = document.createElement("div");
-        colExpense.className = "col-6 col-sm-3";
+        colExpense.className = "col-4 col-sm-3";
         const colExpenseText = document.createTextNode(`$-${totalExpByCat}`);
         // Category Balance colum
         const colBalance = document.createElement("div");
+        let colBalanceText;
         if (totalBalanceByCat >= 0) {
-            colBalance.className = "col-6 col-sm-3 text-success";
-            const colBalanceText = document.createTextNode(`$${totalBalanceByCat}`);
+            colBalance.className = "col-4 col-sm-3 text-success";
+            colBalanceText = document.createTextNode(`$${totalBalanceByCat}`);
         } else if (totalBalanceByCat < 0) {
-            colBalance.className = "col-6 col-sm-3 text-danger";
-            const colBalanceText = document.createTextNode(`$${totalBalanceByCat}`);
+            colBalance.className = "col-4 col-sm-3 text-danger";
+            colBalanceText = document.createTextNode(`$${totalBalanceByCat}`);
         }
         //Append child text into div
         colName.appendChild(colNameText);
@@ -232,37 +208,82 @@ const createTotalPerCategoryTable = () => {
     }
 }
 
+// ***********************
+// ** TOTALS PER MONTH  **
+// ***********************
+
 // Create Totals Per Month Table
 const createTotalPerMonthTable = () => {
     const storage = getStorage();
     const { operations } = storage;
-    let monthsList = [];
-
-
-    // for (const operation of operations) {
-    //     const options = { month: 'long' };
-    //     const datePerMonth = new Date(`${operation.date}T00:00:00`).toLocaleDateString("es-ES", options)
-    //     monthsList.push(datePerMonth)
-    // }
-
-
-
-    // const months = monthsList.reduce((acc, item) => {
-    //     if (!acc.includes(item)) {
-    //         acc.push(item);
-    //     }
-    //     return acc;
-    // }, [])
-
-
-
-
-
-    // for (const month of months) {
-
-    // }
-
-
+    let totalsPerMonth = {};
+    operations.forEach((operation) => {
+        const date = new Date(operation.date);
+        if (!totalsPerMonth[date.getFullYear()]) {
+            totalsPerMonth[date.getFullYear()] = {};
+        }
+        if (!totalsPerMonth[date.getFullYear()][date.getMonth()]) {
+            totalsPerMonth[date.getFullYear()][date.getMonth()] = {};
+        }
+        if (!totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type]) {
+            totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] = 0;
+        }
+        totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] += Number(operation.amount);
+    });
+    for (const year in totalsPerMonth) {
+        for (const month in totalsPerMonth[year]) {
+            // Row for each year/ month
+            const yearRow = document.createElement("div");
+            yearRow.className = "row mt-1";
+            // First column year and month name
+            const firstColDiv = document.createElement("div");
+            firstColDiv.className = "col-12 col-sm-3 fw-bold";
+            const firstColText = document.createTextNode(`${year}/ ${Number(month) + 1}`);
+            firstColDiv.appendChild(firstColText);
+            yearRow.appendChild(firstColDiv);
+            totalPerMonthDiv.appendChild(yearRow)
+            // // Second column total Gain
+            const secondColDiv = document.createElement("div");
+            secondColDiv.className = "col-4 col-sm-3";
+            let showGain;
+            if (totalsPerMonth[year][month].Ganancia) {
+                showGain = totalsPerMonth[year][month].Ganancia
+            } else {
+                showGain = 0
+            }
+            const secondColText = document.createTextNode(`$+${showGain}`);
+            secondColDiv.appendChild(secondColText);
+            yearRow.appendChild(secondColDiv);
+            totalPerMonthDiv.appendChild(yearRow)
+            // Third column total Expense
+            const thirdColDiv = document.createElement("div");
+            thirdColDiv.className = "col-4 col-sm-3";
+            let showExpense;
+            if (totalsPerMonth[year][month].Gasto) {
+                showExpense = totalsPerMonth[year][month].Gasto
+            } else {
+                showExpense = 0
+            }
+            const thirdColText = document.createTextNode(`$-${showExpense}`);
+            thirdColDiv.appendChild(thirdColText);
+            yearRow.appendChild(thirdColDiv);
+            totalPerMonthDiv.appendChild(yearRow)
+            // Fourth column Balance
+            const fourthColDiv = document.createElement("div");
+            let showBalance = showGain - showExpense;
+            let fourthColText;
+            if (showBalance >= 0) {
+                fourthColDiv.className = "col-4 col-sm-3 text-success";
+                fourthColText = document.createTextNode(`$${showBalance}`);
+            } else if (showBalance < 0) {
+                fourthColDiv.className = "col-4 col-sm-3 text-danger";
+                fourthColText = document.createTextNode(`$${showBalance}`);
+            }
+            fourthColDiv.appendChild(fourthColText);
+            yearRow.appendChild(fourthColDiv);
+            totalPerMonthDiv.appendChild(yearRow)
+        }
+    }
 }
 
 
