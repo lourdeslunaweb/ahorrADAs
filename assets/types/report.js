@@ -4,9 +4,209 @@ var loadedReport = document.getElementById("loaded-report-interface");
 var reportResumDiv = document.getElementById("report-resume-div");
 var totalPerCatDiv = document.getElementById("total-per-category");
 var totalPerMonthDiv = document.getElementById("total-per-month");
+// *************************
+// ** TOTALS PER CATEGORY**
+// *************************
+// Obtain Totals Per Category Data
+var totalPerCategory = function (name) {
+    var storage = getStorage();
+    var operations = storage.operations;
+    // arrCatGroup is an array of objets grouped per categories
+    var arrCatGroup = operations.filter(function (operation) {
+        return (operation.category === name);
+    });
+    var totalExpByCat = 0;
+    var totalGainByCat = 0;
+    var totalBalanceByCat = 0;
+    for (var _i = 0, arrCatGroup_1 = arrCatGroup; _i < arrCatGroup_1.length; _i++) {
+        var item = arrCatGroup_1[_i];
+        if (item.type === "Gasto") {
+            totalExpByCat += Number(item.amount);
+        }
+        else if (item.type === "Ganancia") {
+            totalGainByCat += Number(item.amount);
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat;
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
+};
+// Create Totals Per Category Table
+var createTotalPerCategoryTable = function () {
+    var storage = getStorage();
+    var categories = storage.categories;
+    for (var _i = 0, categories_1 = categories; _i < categories_1.length; _i++) {
+        var category = categories_1[_i];
+        // Row for each category
+        var rowCat = document.createElement("div");
+        rowCat.className = "row mt-3 mt-sm-1";
+        // Categiry Name column
+        var colName = document.createElement("div");
+        colName.className = "col-12 col-sm-3 fw-bold";
+        var colNameText = document.createTextNode("" + category.name);
+        // Call the function totalPerCategory()
+        var arrReportResults = totalPerCategory(category.name);
+        var totalGainByCat = arrReportResults[0];
+        var totalExpByCat = arrReportResults[1];
+        var totalBalanceByCat = arrReportResults[2];
+        // Category Gain column
+        var colGain = document.createElement("div");
+        colGain.className = "col-4 col-sm-3";
+        var colGainText = document.createTextNode("$+" + totalGainByCat);
+        // Category Expense column
+        var colExpense = document.createElement("div");
+        colExpense.className = "col-4 col-sm-3";
+        var colExpenseText = document.createTextNode("$-" + totalExpByCat);
+        // Category Balance colum
+        var colBalance = document.createElement("div");
+        var colBalanceText = void 0;
+        if (totalBalanceByCat >= 0) {
+            colBalance.className = "col-4 col-sm-3 text-success";
+            colBalanceText = document.createTextNode("$" + totalBalanceByCat);
+        }
+        else if (totalBalanceByCat < 0) {
+            colBalance.className = "col-4 col-sm-3 text-danger";
+            colBalanceText = document.createTextNode("$" + totalBalanceByCat);
+        }
+        //Append child text into div
+        colName.appendChild(colNameText);
+        colGain.appendChild(colGainText);
+        colExpense.appendChild(colExpenseText);
+        colBalance.appendChild(colBalanceText);
+        //Append child columns into row
+        rowCat.appendChild(colName);
+        rowCat.appendChild(colGain);
+        rowCat.appendChild(colExpense);
+        rowCat.appendChild(colBalance);
+        // Append child row into Total per Category Div
+        totalPerCatDiv.appendChild(rowCat);
+    }
+};
+// ***********************
+// ** TOTALS PER MONTH  **
+// ***********************
+// Totals per month object
+var totalPerMonthObj = function (objectData) {
+    var totalsPerMonth = {};
+    objectData.forEach(function (operation) {
+        var date = new Date(operation.date);
+        if (!totalsPerMonth[date.getFullYear()]) {
+            totalsPerMonth[date.getFullYear()] = {};
+        }
+        if (!totalsPerMonth[date.getFullYear()][date.getMonth()]) {
+            totalsPerMonth[date.getFullYear()][date.getMonth()] = {};
+        }
+        if (!totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type]) {
+            totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] = 0;
+        }
+        totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] += Number(operation.amount);
+    });
+    return totalsPerMonth;
+};
+// Create Totals Per Month Table
+var createTotalPerMonthTable = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    // Call totalPerMonthObj() function to obtain an object with information per year/month
+    var totalsPerMonth = totalPerMonthObj(operations);
+    // Iterate the object and its props
+    for (var year in totalsPerMonth) {
+        for (var month in totalsPerMonth[year]) {
+            // Row for each year/ month
+            var yearRow = document.createElement("div");
+            yearRow.className = "row mt-1";
+            // First column year and month name
+            var firstColDiv = document.createElement("div");
+            firstColDiv.className = "col-12 col-sm-3 fw-bold";
+            var firstColText = document.createTextNode(year + "/ " + (Number(month) + 1));
+            firstColDiv.appendChild(firstColText);
+            yearRow.appendChild(firstColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+            // // Second column total Gain
+            var secondColDiv = document.createElement("div");
+            secondColDiv.className = "col-4 col-sm-3";
+            var showGain = void 0;
+            if (totalsPerMonth[year][month].Ganancia) {
+                showGain = totalsPerMonth[year][month].Ganancia;
+            }
+            else {
+                showGain = 0;
+            }
+            var secondColText = document.createTextNode("$+" + showGain);
+            secondColDiv.appendChild(secondColText);
+            yearRow.appendChild(secondColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+            // Third column total Expense
+            var thirdColDiv = document.createElement("div");
+            thirdColDiv.className = "col-4 col-sm-3";
+            var showExpense = void 0;
+            if (totalsPerMonth[year][month].Gasto) {
+                showExpense = totalsPerMonth[year][month].Gasto;
+            }
+            else {
+                showExpense = 0;
+            }
+            var thirdColText = document.createTextNode("$-" + showExpense);
+            thirdColDiv.appendChild(thirdColText);
+            yearRow.appendChild(thirdColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+            // Fourth column Balance
+            var fourthColDiv = document.createElement("div");
+            var showBalance = showGain - showExpense;
+            var fourthColText = void 0;
+            if (showBalance >= 0) {
+                fourthColDiv.className = "col-4 col-sm-3 text-success";
+                fourthColText = document.createTextNode("$" + showBalance);
+            }
+            else if (showBalance < 0) {
+                fourthColDiv.className = "col-4 col-sm-3 text-danger";
+                fourthColText = document.createTextNode("$" + showBalance);
+            }
+            fourthColDiv.appendChild(fourthColText);
+            yearRow.appendChild(fourthColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+        }
+    }
+};
 // *******************
 // ** REPORT SUMMARY**
 // *******************
+// Totals per category object
+var totalPerCategoryObj = function (objectData) {
+    var totalsPerCategory = {};
+    objectData.forEach(function (operation) {
+        if (!totalsPerCategory[operation.category]) {
+            totalsPerCategory[operation.category] = {};
+        }
+        if (!totalsPerCategory[operation.category][operation.type]) {
+            totalsPerCategory[operation.category][operation.type] = 0;
+        }
+        totalsPerCategory[operation.category][operation.type] += Number(operation.amount);
+    });
+    return totalsPerCategory;
+};
+// Category Summary
+var categorySummary = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    var categoryData = totalPerCategoryObj(operations);
+    console.log(categoryData);
+    var higherGain = 0;
+    var gainCatName;
+    var higherExpense = 0;
+    var expenseCatName;
+    for (var category in categoryData) {
+        if (categoryData[category].Ganancia > higherGain) {
+            higherGain = categoryData[category].Ganancia;
+            gainCatName = category;
+        }
+        else if (categoryData[category].Gasto > higherExpense) {
+            higherExpense = categoryData[category].Gasto;
+            expenseCatName = category;
+        }
+    }
+    console.log(gainCatName);
+};
+categorySummary();
 // Create Resum Table
 var createResumTable = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
@@ -129,170 +329,6 @@ var createResumTable = function () {
     row5Col3.appendChild(row5Col3Text);
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
-};
-// *************************
-// ** TOTALS PER CATEGORY**
-// *************************
-// Obtain Totals Per Category Data
-var totalPerCategory = function (name) {
-    var storage = getStorage();
-    var operations = storage.operations;
-    // arrCatGroup is an array of objets grouped per categories
-    var arrCatGroup = operations.filter(function (operation) {
-        return (operation.category === name);
-    });
-    var totalExpByCat = 0;
-    var totalGainByCat = 0;
-    var totalBalanceByCat = 0;
-    for (var _i = 0, arrCatGroup_1 = arrCatGroup; _i < arrCatGroup_1.length; _i++) {
-        var item = arrCatGroup_1[_i];
-        if (item.type === "Gasto") {
-            totalExpByCat += Number(item.amount);
-        }
-        else if (item.type === "Ganancia") {
-            totalGainByCat += Number(item.amount);
-        }
-    }
-    totalBalanceByCat = totalGainByCat - totalExpByCat;
-    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
-};
-// Create Totals Per Category Table
-var createTotalPerCategoryTable = function () {
-    var storage = getStorage();
-    var categories = storage.categories;
-    for (var _i = 0, categories_1 = categories; _i < categories_1.length; _i++) {
-        var category = categories_1[_i];
-        // Row for each category
-        var rowCat = document.createElement("div");
-        rowCat.className = "row mt-3 mt-sm-1";
-        // Categiry Name column
-        var colName = document.createElement("div");
-        colName.className = "col-12 col-sm-3 fw-bold";
-        var colNameText = document.createTextNode("" + category.name);
-        // Call the function totalPerCategory()
-        var arrReportResults = totalPerCategory(category.name);
-        var totalGainByCat = arrReportResults[0];
-        var totalExpByCat = arrReportResults[1];
-        var totalBalanceByCat = arrReportResults[2];
-        // Category Gain column
-        var colGain = document.createElement("div");
-        colGain.className = "col-4 col-sm-3";
-        var colGainText = document.createTextNode("$+" + totalGainByCat);
-        // Category Expense column
-        var colExpense = document.createElement("div");
-        colExpense.className = "col-4 col-sm-3";
-        var colExpenseText = document.createTextNode("$-" + totalExpByCat);
-        // Category Balance colum
-        var colBalance = document.createElement("div");
-        var colBalanceText = void 0;
-        if (totalBalanceByCat >= 0) {
-            colBalance.className = "col-4 col-sm-3 text-success";
-            colBalanceText = document.createTextNode("$" + totalBalanceByCat);
-        }
-        else if (totalBalanceByCat < 0) {
-            colBalance.className = "col-4 col-sm-3 text-danger";
-            colBalanceText = document.createTextNode("$" + totalBalanceByCat);
-        }
-        //Append child text into div
-        colName.appendChild(colNameText);
-        colGain.appendChild(colGainText);
-        colExpense.appendChild(colExpenseText);
-        colBalance.appendChild(colBalanceText);
-        //Append child columns into row
-        rowCat.appendChild(colName);
-        rowCat.appendChild(colGain);
-        rowCat.appendChild(colExpense);
-        rowCat.appendChild(colBalance);
-        // Append child row into Total per Category Div
-        totalPerCatDiv.appendChild(rowCat);
-    }
-};
-// ***********************
-// ** TOTALS PER MONTH  **
-// ***********************
-// Create Totals Per Month Table
-var createTotalPerMonthTable = function () {
-    var storage = getStorage();
-    var operations = storage.operations;
-    var totalsPerMonth = {};
-    operations.forEach(function (operation) {
-        var date = new Date(operation.date);
-        if (!totalsPerMonth[date.getFullYear()]) {
-            totalsPerMonth[date.getFullYear()] = {};
-        }
-        if (!totalsPerMonth[date.getFullYear()][date.getMonth()]) {
-            totalsPerMonth[date.getFullYear()][date.getMonth()] = {};
-        }
-        if (!totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type]) {
-            totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] = 0;
-        }
-        totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] += Number(operation.amount);
-    });
-    console.log(totalsPerMonth);
-    for (var year in totalsPerMonth) {
-        for (var month in totalsPerMonth[year]) {
-            // Row for each year/ month
-            var yearRow = document.createElement("div");
-            yearRow.className = "row mt-1";
-            // First column year and month name
-            var firstColDiv = document.createElement("div");
-            firstColDiv.className = "col-12 col-sm-3 fw-bold";
-            var firstColText = document.createTextNode(year + "/ " + (Number(month) + 1));
-            firstColDiv.appendChild(firstColText);
-            yearRow.appendChild(firstColDiv);
-            totalPerMonthDiv.appendChild(yearRow);
-            // // Second column total Gain
-            var secondColDiv = document.createElement("div");
-            secondColDiv.className = "col-4 col-sm-3";
-            var showGain = void 0;
-            if (totalsPerMonth[year][month].Ganancia) {
-                showGain = totalsPerMonth[year][month].Ganancia;
-            }
-            else {
-                showGain = 0;
-            }
-            var secondColText = document.createTextNode("$+" + showGain);
-            secondColDiv.appendChild(secondColText);
-            yearRow.appendChild(secondColDiv);
-            totalPerMonthDiv.appendChild(yearRow);
-            // Third column total Expense
-            var thirdColDiv = document.createElement("div");
-            thirdColDiv.className = "col-4 col-sm-3";
-            var showExpense = void 0;
-            if (totalsPerMonth[year][month].Gasto) {
-                showExpense = totalsPerMonth[year][month].Gasto;
-            }
-            else {
-                showExpense = 0;
-            }
-            var thirdColText = document.createTextNode("$-" + showExpense);
-            thirdColDiv.appendChild(thirdColText);
-            yearRow.appendChild(thirdColDiv);
-            totalPerMonthDiv.appendChild(yearRow);
-            // Fourth column Balance
-            var fourthColDiv = document.createElement("div");
-            var showBalance = showGain - showExpense;
-            var fourthColText = void 0;
-            if (showBalance >= 0) {
-                fourthColDiv.className = "col-4 col-sm-3 text-success";
-                fourthColText = document.createTextNode("$" + showBalance);
-            }
-            else if (showBalance < 0) {
-                fourthColDiv.className = "col-4 col-sm-3 text-danger";
-                fourthColText = document.createTextNode("$" + showBalance);
-            }
-            fourthColDiv.appendChild(fourthColText);
-            yearRow.appendChild(fourthColDiv);
-            totalPerMonthDiv.appendChild(yearRow);
-            var mayorGan = 0;
-            var mesMayGan = void 0;
-            if (showGain > mayorGan) {
-                mayorGan = showGain;
-                mesMayGan = totalsPerMonth[year][month].Ganancia;
-            }
-            console.log(mayorGan, mesMayGan);
-        }
-    }
 };
 // **********************
 // ** Others functions **
