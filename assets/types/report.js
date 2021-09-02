@@ -4,58 +4,9 @@ var loadedReport = document.getElementById("loaded-report-interface");
 var reportResumDiv = document.getElementById("report-resume-div");
 var totalPerCatDiv = document.getElementById("total-per-category");
 var totalPerMonthDiv = document.getElementById("total-per-month");
-// *********************************
-// ** Set functions to obtain data**
-// *********************************
-//Totals per category function
-var totalPerCategory = function (name) {
-    var storage = getStorage();
-    var operations = storage.operations;
-    // arrCatGroup is an array of objets grouped per categories
-    var arrCatGroup = operations.filter(function (operation) {
-        return (operation.category === name);
-    });
-    var totalExpByCat = 0;
-    var totalGainByCat = 0;
-    var totalBalanceByCat = 0;
-    for (var _i = 0, arrCatGroup_1 = arrCatGroup; _i < arrCatGroup_1.length; _i++) {
-        var item = arrCatGroup_1[_i];
-        if (item.type === "Gasto") {
-            totalExpByCat += Number(item.amount);
-        }
-        else if (item.type === "Ganancia") {
-            totalGainByCat += Number(item.amount);
-        }
-    }
-    totalBalanceByCat = totalGainByCat - totalExpByCat;
-    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
-};
-// Totals per Month function
-var totalPerMonth = function (name) {
-    var storage = getStorage();
-    var operations = storage.operations;
-    // arrCatGroup is an array of objets grouped per categories
-    var arrCatGroup = operations.filter(function (operation) {
-        return (operation.category === name);
-    });
-    var totalExpByCat = 0;
-    var totalGainByCat = 0;
-    var totalBalanceByCat = 0;
-    for (var _i = 0, arrCatGroup_2 = arrCatGroup; _i < arrCatGroup_2.length; _i++) {
-        var item = arrCatGroup_2[_i];
-        if (item.type === "Gasto") {
-            totalExpByCat += Number(item.amount);
-        }
-        else if (item.type === "Ganancia") {
-            totalGainByCat += Number(item.amount);
-        }
-    }
-    totalBalanceByCat = totalGainByCat - totalExpByCat;
-    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
-};
-// ***********************************
-// ** Set functions to create tables**
-// ***********************************
+// *******************
+// ** REPORT SUMMARY**
+// *******************
 // Create Resum Table
 var createResumTable = function () {
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
@@ -179,22 +130,47 @@ var createResumTable = function () {
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
 };
+// *************************
+// ** TOTALS PER CATEGORY**
+// *************************
+var totalPerCategory = function (name) {
+    var storage = getStorage();
+    var operations = storage.operations;
+    // arrCatGroup is an array of objets grouped per categories
+    var arrCatGroup = operations.filter(function (operation) {
+        return (operation.category === name);
+    });
+    var totalExpByCat = 0;
+    var totalGainByCat = 0;
+    var totalBalanceByCat = 0;
+    for (var _i = 0, arrCatGroup_1 = arrCatGroup; _i < arrCatGroup_1.length; _i++) {
+        var item = arrCatGroup_1[_i];
+        if (item.type === "Gasto") {
+            totalExpByCat += Number(item.amount);
+        }
+        else if (item.type === "Ganancia") {
+            totalGainByCat += Number(item.amount);
+        }
+    }
+    totalBalanceByCat = totalGainByCat - totalExpByCat;
+    return [totalGainByCat, totalExpByCat, totalBalanceByCat];
+};
 // Create Totals Per Category Table
 var createTotalPerCategoryTable = function () {
     var storage = getStorage();
     var categories = storage.categories;
     for (var _i = 0, categories_1 = categories; _i < categories_1.length; _i++) {
         var category = categories_1[_i];
-        // Row of each category
+        // Row for each category
         var rowCat = document.createElement("div");
         rowCat.className = "row mt-3 mt-sm-1";
         // Categiry Name column
         var colName = document.createElement("div");
-        colName.className = "col-6 col-sm-3 fw-bold";
+        colName.className = "col-12 col-sm-3 fw-bold";
         var colNameText = document.createTextNode("" + category.name);
         // Category Gain column
         var colGain = document.createElement("div");
-        colGain.className = "col-6 col-sm-3";
+        colGain.className = "col-4 col-sm-3";
         // Call the function totalPerCategory()
         var arrReportResults = totalPerCategory(category.name);
         var totalGainByCat = arrReportResults[0];
@@ -203,17 +179,18 @@ var createTotalPerCategoryTable = function () {
         var colGainText = document.createTextNode("$+" + totalGainByCat);
         // Category Expense column
         var colExpense = document.createElement("div");
-        colExpense.className = "col-6 col-sm-3";
+        colExpense.className = "col-4 col-sm-3";
         var colExpenseText = document.createTextNode("$-" + totalExpByCat);
         // Category Balance colum
         var colBalance = document.createElement("div");
+        var colBalanceText = void 0;
         if (totalBalanceByCat >= 0) {
-            colBalance.className = "col-6 col-sm-3 text-success";
-            var colBalanceText = document.createTextNode("$" + totalBalanceByCat);
+            colBalance.className = "col-4 col-sm-3 text-success";
+            colBalanceText = document.createTextNode("$" + totalBalanceByCat);
         }
         else if (totalBalanceByCat < 0) {
-            colBalance.className = "col-6 col-sm-3 text-danger";
-            var colBalanceText = document.createTextNode("$" + totalBalanceByCat);
+            colBalance.className = "col-4 col-sm-3 text-danger";
+            colBalanceText = document.createTextNode("$" + totalBalanceByCat);
         }
         //Append child text into div
         colName.appendChild(colNameText);
@@ -229,24 +206,84 @@ var createTotalPerCategoryTable = function () {
         totalPerCatDiv.appendChild(rowCat);
     }
 };
+// ***********************
+// ** TOTALS PER MONTH  **
+// ***********************
 // Create Totals Per Month Table
 var createTotalPerMonthTable = function () {
     var storage = getStorage();
     var operations = storage.operations;
-    var monthsList = [];
-    // for (const operation of operations) {
-    //     const options = { month: 'long' };
-    //     const datePerMonth = new Date(`${operation.date}T00:00:00`).toLocaleDateString("es-ES", options)
-    //     monthsList.push(datePerMonth)
-    // }
-    // const months = monthsList.reduce((acc, item) => {
-    //     if (!acc.includes(item)) {
-    //         acc.push(item);
-    //     }
-    //     return acc;
-    // }, [])
-    // for (const month of months) {
-    // }
+    var totalsPerMonth = {};
+    operations.forEach(function (operation) {
+        var date = new Date(operation.date);
+        if (!totalsPerMonth[date.getFullYear()]) {
+            totalsPerMonth[date.getFullYear()] = {};
+        }
+        if (!totalsPerMonth[date.getFullYear()][date.getMonth()]) {
+            totalsPerMonth[date.getFullYear()][date.getMonth()] = {};
+        }
+        if (!totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type]) {
+            totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] = 0;
+        }
+        totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] += Number(operation.amount);
+    });
+    for (var year in totalsPerMonth) {
+        for (var month in totalsPerMonth[year]) {
+            // Row for each year/ month
+            var yearRow = document.createElement("div");
+            yearRow.className = "row mt-1";
+            // First column year and month name
+            var firstColDiv = document.createElement("div");
+            firstColDiv.className = "col-12 col-sm-3 fw-bold";
+            var firstColText = document.createTextNode(year + "/ " + (Number(month) + 1));
+            firstColDiv.appendChild(firstColText);
+            yearRow.appendChild(firstColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+            // // Second column total Gain
+            var secondColDiv = document.createElement("div");
+            secondColDiv.className = "col-4 col-sm-3";
+            var showGain = void 0;
+            if (totalsPerMonth[year][month].Ganancia) {
+                showGain = totalsPerMonth[year][month].Ganancia;
+            }
+            else {
+                showGain = 0;
+            }
+            var secondColText = document.createTextNode("$+" + showGain);
+            secondColDiv.appendChild(secondColText);
+            yearRow.appendChild(secondColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+            // Third column total Expense
+            var thirdColDiv = document.createElement("div");
+            thirdColDiv.className = "col-4 col-sm-3";
+            var showExpense = void 0;
+            if (totalsPerMonth[year][month].Gasto) {
+                showExpense = totalsPerMonth[year][month].Gasto;
+            }
+            else {
+                showExpense = 0;
+            }
+            var thirdColText = document.createTextNode("$-" + showExpense);
+            thirdColDiv.appendChild(thirdColText);
+            yearRow.appendChild(thirdColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+            // Fourth column Balance
+            var fourthColDiv = document.createElement("div");
+            var showBalance = showGain - showExpense;
+            var fourthColText = void 0;
+            if (showBalance >= 0) {
+                fourthColDiv.className = "col-4 col-sm-3 text-success";
+                fourthColText = document.createTextNode("$" + showBalance);
+            }
+            else if (showBalance < 0) {
+                fourthColDiv.className = "col-4 col-sm-3 text-danger";
+                fourthColText = document.createTextNode("$" + showBalance);
+            }
+            fourthColDiv.appendChild(fourthColText);
+            yearRow.appendChild(fourthColDiv);
+            totalPerMonthDiv.appendChild(yearRow);
+        }
+    }
 };
 // **********************
 // ** Others functions **
