@@ -7,7 +7,7 @@ var totalPerMonthDiv = document.getElementById("total-per-month");
 // *********************************
 // ** Set functions to obtain data**
 // *********************************
-//Totals per category funtcion
+//Totals per category function
 var totalPerCategory = function (name) {
     var storage = getStorage();
     var operations = storage.operations;
@@ -195,7 +195,7 @@ var createTotalPerCategoryTable = function () {
         // Category Gain column
         var colGain = document.createElement("div");
         colGain.className = "col-6 col-sm-3";
-        // Call the function reportByCategory()
+        // Call the function totalPerCategory()
         var arrReportResults = totalPerCategory(category.name);
         var totalGainByCat = arrReportResults[0];
         var totalExpByCat = arrReportResults[1];
