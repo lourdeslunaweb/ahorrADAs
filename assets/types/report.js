@@ -189,26 +189,45 @@ var categorySummary = function () {
     var storage = getStorage();
     var operations = storage.operations;
     var categoryData = totalPerCategoryObj(operations);
-    console.log(categoryData);
     var higherGain = 0;
     var gainCatName;
     var higherExpense = 0;
     var expenseCatName;
+    var higherBalance = 0;
+    var balanceCatName;
     for (var category in categoryData) {
+        if (!categoryData[category].Ganancia) {
+            categoryData[category].Ganancia = 0;
+        }
+        if (!categoryData[category].Gasto) {
+            categoryData[category].Gasto = 0;
+        }
+        var balancePerCat = categoryData[category].Ganancia - categoryData[category].Gasto;
+        if (balancePerCat > higherBalance) {
+            higherBalance = balancePerCat;
+            balanceCatName = category;
+        }
         if (categoryData[category].Ganancia > higherGain) {
             higherGain = categoryData[category].Ganancia;
             gainCatName = category;
         }
-        else if (categoryData[category].Gasto > higherExpense) {
+        if (categoryData[category].Gasto > higherExpense) {
             higherExpense = categoryData[category].Gasto;
             expenseCatName = category;
         }
     }
-    console.log(gainCatName);
+    return [higherGain, gainCatName, higherExpense, expenseCatName, higherBalance, balanceCatName];
 };
-categorySummary();
-// Create Resum Table
-var createResumTable = function () {
+// Create Resume Category Table
+var createResumCatTable = function () {
+    // Call categorySummary()
+    var arrCatResults = categorySummary();
+    var higherGain = arrCatResults[0];
+    var gainCatName = arrCatResults[1];
+    var higherExpense = arrCatResults[2];
+    var expenseCatName = arrCatResults[3];
+    var higherBalance = arrCatResults[4];
+    var balanceCatName = arrCatResults[5];
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
     var row1 = document.createElement("div");
     row1.className = "row mt-3";
@@ -222,14 +241,14 @@ var createResumTable = function () {
     // Row 1 Col 2
     var row1Col2 = document.createElement("div");
     row1Col2.className = "col-4 col-sm-3 text-success";
-    var row1Col2Text = document.createTextNode("xCatMayGanx");
+    var row1Col2Text = document.createTextNode("" + gainCatName);
     row1Col2.appendChild(row1Col2Text);
     row1.appendChild(row1Col2);
     reportResumDiv.appendChild(row1);
     // Row 1 Col 3
     var row1Col3 = document.createElement("div");
     row1Col3.className = "col-3 col-sm-3 text-success";
-    var row1Col3Text = document.createTextNode("x$$$CatMayGanx");
+    var row1Col3Text = document.createTextNode("" + higherGain);
     row1Col3.appendChild(row1Col3Text);
     row1.appendChild(row1Col3);
     reportResumDiv.appendChild(row1);
@@ -246,14 +265,14 @@ var createResumTable = function () {
     // Row 2 Col 2
     var row2Col2 = document.createElement("div");
     row2Col2.className = "col-4 col-sm-3 text-danger";
-    var row2Col2Text = document.createTextNode("xCatMayGaSTox");
+    var row2Col2Text = document.createTextNode("" + expenseCatName);
     row2Col2.appendChild(row2Col2Text);
     row2.appendChild(row2Col2);
     reportResumDiv.appendChild(row2);
     // Row 2 Col 3
     var row2Col3 = document.createElement("div");
     row2Col3.className = "col-3 col-sm-3 text-danger";
-    var row2Col3Text = document.createTextNode("xCatMayGaSTox");
+    var row2Col3Text = document.createTextNode("" + higherExpense);
     row2Col3.appendChild(row2Col3Text);
     row2.appendChild(row2Col3);
     reportResumDiv.appendChild(row2);
@@ -270,17 +289,55 @@ var createResumTable = function () {
     // Row 3 Col 2
     var row3Col2 = document.createElement("div");
     row3Col2.className = "col-4 col-sm-3";
-    var row3Col2Text = document.createTextNode("xMayBalancex");
+    var row3Col2Text = document.createTextNode("" + balanceCatName);
     row3Col2.appendChild(row3Col2Text);
     row3.appendChild(row3Col2);
     reportResumDiv.appendChild(row3);
     // Row 3 Col 3
     var row3Col3 = document.createElement("div");
     row3Col3.className = "col-3 col-sm-3";
-    var row3Col3Text = document.createTextNode("x$$MayBalancx");
+    var row3Col3Text = document.createTextNode("" + higherBalance);
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
+};
+// Month Summary
+var monthSummary = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    var totalsPerMonth = totalPerMonthObj(operations);
+    var higherGainMonth = 0;
+    var gainNameMonth;
+    var higherExpenseMonth = 0;
+    var expenseNameMonth;
+    for (var year in totalsPerMonth) {
+        for (var month in totalsPerMonth[year]) {
+            if (!totalsPerMonth[year][month].Ganancia) {
+                totalsPerMonth[year][month].Ganancia = 0;
+            }
+            if (!totalsPerMonth[year][month].Gasto) {
+                totalsPerMonth[year][month].Gasto = 0;
+            }
+            if (totalsPerMonth[year][month].Ganancia > higherGainMonth) {
+                higherGainMonth = totalsPerMonth[year][month].Ganancia;
+                gainNameMonth = year + "/ " + (Number(month) + 1);
+            }
+            if (totalsPerMonth[year][month].Gasto > higherExpenseMonth) {
+                higherExpenseMonth = totalsPerMonth[year][month].Gasto;
+                expenseNameMonth = year + "/ " + (Number(month) + 1);
+            }
+        }
+    }
+    return [higherGainMonth, gainNameMonth, higherExpenseMonth, expenseNameMonth];
+};
+// Create Resume Month Table
+var createResumMonthTable = function () {
+    // Call monthSummary()
+    var arrMonthResults = monthSummary();
+    var higherGainMonth = arrMonthResults[0];
+    var gainNameMonth = arrMonthResults[1];
+    var higherExpenseMonth = arrMonthResults[2];
+    var expenseNameMonth = arrMonthResults[3];
     // create Row 4 "Mes con mayor ganancia" and its respective columns
     var row4 = document.createElement("div");
     row4.className = "row mt-3 mt-sm-1";
@@ -294,14 +351,14 @@ var createResumTable = function () {
     // Row 4 Col 2
     var row4Col2 = document.createElement("div");
     row4Col2.className = "col-4 col-sm-3";
-    var row4Col2Text = document.createTextNode("xMesMayGanx");
+    var row4Col2Text = document.createTextNode("" + gainNameMonth);
     row4Col2.appendChild(row4Col2Text);
     row4.appendChild(row4Col2);
     reportResumDiv.appendChild(row4);
     // Row 4 Col 3
     var row4Col3 = document.createElement("div");
     row4Col3.className = "col-3 col-sm-3 text-success";
-    var row4Col3Text = document.createTextNode("x$$MesMayGanx");
+    var row4Col3Text = document.createTextNode("" + higherGainMonth);
     row4Col3.appendChild(row4Col3Text);
     row4.appendChild(row4Col3);
     reportResumDiv.appendChild(row4);
@@ -318,14 +375,14 @@ var createResumTable = function () {
     // Row 5 Col 2
     var row5Col2 = document.createElement("div");
     row5Col2.className = "col-4 col-sm-3";
-    var row5Col2Text = document.createTextNode("xMesMayGanSTx");
+    var row5Col2Text = document.createTextNode("" + expenseNameMonth);
     row5Col2.appendChild(row5Col2Text);
     row5.appendChild(row5Col2);
     reportResumDiv.appendChild(row5);
     // Row 5 Col 3
     var row5Col3 = document.createElement("div");
     row5Col3.className = "col-3 col-sm-3 text-danger";
-    var row5Col3Text = document.createTextNode("x$$MesMayGanSTx");
+    var row5Col3Text = document.createTextNode("" + higherExpenseMonth);
     row5Col3.appendChild(row5Col3Text);
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
@@ -352,6 +409,7 @@ var initReport = function () {
     changeReportImg();
     createTotalPerCategoryTable();
     createTotalPerMonthTable();
-    createResumTable();
+    createResumCatTable();
+    createResumMonthTable();
 };
 initReport();

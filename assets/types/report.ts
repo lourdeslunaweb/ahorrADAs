@@ -185,31 +185,50 @@ const totalPerCategoryObj = (objectData) => {
     return totalsPerCategory
 }
 // Category Summary
-const categorySummary = ()=>{
+const categorySummary = () => {
     const storage = getStorage();
     const { operations } = storage;
     const categoryData = totalPerCategoryObj(operations)
-    console.log(categoryData);
     let higherGain = 0;
     let gainCatName: string;
     let higherExpense = 0;
     let expenseCatName: string;
-    for (const category in categoryData ){
-        if(categoryData[category].Ganancia > higherGain){
+    let higherBalance = 0;
+    let balanceCatName: string;
+    for (const category in categoryData) {
+        if (!categoryData[category].Ganancia) {
+            categoryData[category].Ganancia = 0;
+        }
+        if (!categoryData[category].Gasto) {
+            categoryData[category].Gasto = 0;
+        }
+        const balancePerCat = categoryData[category].Ganancia - categoryData[category].Gasto
+        if (balancePerCat > higherBalance) {
+            higherBalance = balancePerCat
+            balanceCatName = category
+        }
+        if (categoryData[category].Ganancia > higherGain) {
             higherGain = categoryData[category].Ganancia
             gainCatName = category
-        } else if (categoryData[category].Gasto > higherExpense){
+        }
+        if (categoryData[category].Gasto > higherExpense) {
             higherExpense = categoryData[category].Gasto
             expenseCatName = category
         }
     }
-    console.log(gainCatName);
+    return [higherGain, gainCatName, higherExpense, expenseCatName, higherBalance, balanceCatName];
 }
-categorySummary()
 
-
-// Create Resum Table
-const createResumTable = () => {
+// Create Resume Category Table
+const createResumCatTable = () => {
+    // Call categorySummary()
+    const arrCatResults = categorySummary()
+    let higherGain = arrCatResults[0]
+    let gainCatName = arrCatResults[1]
+    let higherExpense = arrCatResults[2]
+    let expenseCatName = arrCatResults[3]
+    let higherBalance = arrCatResults[4]
+    let balanceCatName = arrCatResults[5]
     // create Row 1 "Categoría con mayor ganancia" and its respective columns
     const row1 = document.createElement("div");
     row1.className = "row mt-3";
@@ -223,14 +242,14 @@ const createResumTable = () => {
     // Row 1 Col 2
     const row1Col2 = document.createElement("div");
     row1Col2.className = "col-4 col-sm-3 text-success";
-    const row1Col2Text = document.createTextNode("xCatMayGanx");
+    const row1Col2Text = document.createTextNode(`${gainCatName}`);
     row1Col2.appendChild(row1Col2Text);
     row1.appendChild(row1Col2);
     reportResumDiv.appendChild(row1);
     // Row 1 Col 3
     const row1Col3 = document.createElement("div");
     row1Col3.className = "col-3 col-sm-3 text-success";
-    const row1Col3Text = document.createTextNode("x$$$CatMayGanx");
+    const row1Col3Text = document.createTextNode(`${higherGain}`);
     row1Col3.appendChild(row1Col3Text);
     row1.appendChild(row1Col3);
     reportResumDiv.appendChild(row1);
@@ -247,14 +266,14 @@ const createResumTable = () => {
     // Row 2 Col 2
     const row2Col2 = document.createElement("div");
     row2Col2.className = "col-4 col-sm-3 text-danger";
-    const row2Col2Text = document.createTextNode("xCatMayGaSTox");
+    const row2Col2Text = document.createTextNode(`${expenseCatName}`);
     row2Col2.appendChild(row2Col2Text);
     row2.appendChild(row2Col2);
     reportResumDiv.appendChild(row2);
     // Row 2 Col 3
     const row2Col3 = document.createElement("div");
     row2Col3.className = "col-3 col-sm-3 text-danger";
-    const row2Col3Text = document.createTextNode("xCatMayGaSTox");
+    const row2Col3Text = document.createTextNode(`${higherExpense}`);
     row2Col3.appendChild(row2Col3Text);
     row2.appendChild(row2Col3);
     reportResumDiv.appendChild(row2);
@@ -271,17 +290,58 @@ const createResumTable = () => {
     // Row 3 Col 2
     const row3Col2 = document.createElement("div");
     row3Col2.className = "col-4 col-sm-3";
-    const row3Col2Text = document.createTextNode("xMayBalancex");
+    const row3Col2Text = document.createTextNode(`${balanceCatName}`);
     row3Col2.appendChild(row3Col2Text);
     row3.appendChild(row3Col2);
     reportResumDiv.appendChild(row3);
     // Row 3 Col 3
     const row3Col3 = document.createElement("div");
     row3Col3.className = "col-3 col-sm-3";
-    const row3Col3Text = document.createTextNode("x$$MayBalancx");
+    const row3Col3Text = document.createTextNode(`${higherBalance}`);
     row3Col3.appendChild(row3Col3Text);
     row3.appendChild(row3Col3);
     reportResumDiv.appendChild(row3);
+}
+
+// Month Summary
+const monthSummary = () => {
+    const storage = getStorage();
+    const { operations } = storage;
+    const totalsPerMonth = totalPerMonthObj(operations)
+    let higherGainMonth = 0;
+    let gainNameMonth;
+    let higherExpenseMonth = 0;
+    let expenseNameMonth;
+    for (let year in totalsPerMonth) {
+        for (let month in totalsPerMonth[year]) {
+            if(!totalsPerMonth[year][month].Ganancia){
+                totalsPerMonth[year][month].Ganancia = 0
+            }
+            if(!totalsPerMonth[year][month].Gasto){
+                totalsPerMonth[year][month].Gasto = 0
+            }
+            if(totalsPerMonth[year][month].Ganancia > higherGainMonth){
+                higherGainMonth = totalsPerMonth[year][month].Ganancia
+                gainNameMonth = `${year}/ ${Number(month) + 1}`            
+            }
+            if(totalsPerMonth[year][month].Gasto > higherExpenseMonth){
+                higherExpenseMonth = totalsPerMonth[year][month].Gasto
+                expenseNameMonth = `${year}/ ${Number(month) + 1}`
+            }
+        }
+    }
+    return [higherGainMonth, gainNameMonth, higherExpenseMonth, expenseNameMonth]
+}
+
+
+// Create Resume Month Table
+const createResumMonthTable = () => {
+    // Call monthSummary()
+    const arrMonthResults = monthSummary();
+    let higherGainMonth = arrMonthResults[0];
+    let gainNameMonth = arrMonthResults[1];
+    let higherExpenseMonth = arrMonthResults[2];
+    let expenseNameMonth = arrMonthResults[3];
     // create Row 4 "Mes con mayor ganancia" and its respective columns
     const row4 = document.createElement("div");
     row4.className = "row mt-3 mt-sm-1";
@@ -295,14 +355,14 @@ const createResumTable = () => {
     // Row 4 Col 2
     const row4Col2 = document.createElement("div");
     row4Col2.className = "col-4 col-sm-3";
-    const row4Col2Text = document.createTextNode("xMesMayGanx");
+    const row4Col2Text = document.createTextNode(`${gainNameMonth}`);
     row4Col2.appendChild(row4Col2Text);
     row4.appendChild(row4Col2);
     reportResumDiv.appendChild(row4);
     // Row 4 Col 3
     const row4Col3 = document.createElement("div");
     row4Col3.className = "col-3 col-sm-3 text-success";
-    const row4Col3Text = document.createTextNode("x$$MesMayGanx");
+    const row4Col3Text = document.createTextNode(`${higherGainMonth}`);
     row4Col3.appendChild(row4Col3Text);
     row4.appendChild(row4Col3);
     reportResumDiv.appendChild(row4);
@@ -319,14 +379,14 @@ const createResumTable = () => {
     // Row 5 Col 2
     const row5Col2 = document.createElement("div");
     row5Col2.className = "col-4 col-sm-3";
-    const row5Col2Text = document.createTextNode("xMesMayGanSTx");
+    const row5Col2Text = document.createTextNode(`${expenseNameMonth}`);
     row5Col2.appendChild(row5Col2Text);
     row5.appendChild(row5Col2);
     reportResumDiv.appendChild(row5);
     // Row 5 Col 3
     const row5Col3 = document.createElement("div");
     row5Col3.className = "col-3 col-sm-3 text-danger";
-    const row5Col3Text = document.createTextNode("x$$MesMayGanSTx");
+    const row5Col3Text = document.createTextNode(`${higherExpenseMonth}`);
     row5Col3.appendChild(row5Col3Text);
     row5.appendChild(row5Col3);
     reportResumDiv.appendChild(row5);
@@ -357,6 +417,7 @@ const initReport = () => {
     changeReportImg();
     createTotalPerCategoryTable();
     createTotalPerMonthTable();
-    createResumTable();
+    createResumCatTable();
+    createResumMonthTable();
 }
 initReport()
