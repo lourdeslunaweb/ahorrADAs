@@ -36,3 +36,4 @@
 - CSS3
 - Bootstrap
 - JavaScript
+- Typescript
