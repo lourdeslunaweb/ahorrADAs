@@ -1,13 +1,83 @@
-/*****
+/***********
  *
- * FILTROS
+ * FILTERS
  *
- * ****/
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+ **********/
+var selectType = document.getElementById("type-filter");
+var selectCategory = document.getElementById("select-category");
+var selectDate = document.getElementById("filter-date");
+var selectSort = document.getElementById("select-sort");
+var typeFilter = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    var typeValue = selectType.value;
+    if (typeValue !== 'Todos') {
+        var type = operations.filter(function (operation) { return operation.type === typeValue; });
+        refreshOperationTable(type);
+    }
+    else {
+        refreshOperationTable(operations);
+    }
 };
+var categoryFilter = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    var categoryValue = selectCategory.value;
+    if (categoryValue !== 'Todas') {
+        var cat = operations.filter(function (operation) { return operation.category === categoryValue; });
+        refreshOperationTable(cat);
+    }
+    else {
+        refreshOperationTable(operations);
+    }
+};
+var dateFilter = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    var date = new Date(selectDate.value + "T00:00:00").getTime();
+    var opFilteredByDate = operations.filter(function (operation) {
+        return (new Date(operation.date + "T00:00:00").getTime() >= date);
+    });
+    refreshOperationTable(opFilteredByDate);
+};
+var sortBy = function () {
+    var storage = getStorage();
+    var operations = storage.operations;
+    switch (selectSort.value) {
+        case "mas-recientes":
+            operations = dateFilter();
+            console.log(operations);
+        //   break
+        // case "menos-recientes":
+        //   operations = ordernarPorFecha(operations, 'ASC')
+        //   break
+        // case "mayor-monto":
+        //   operations = ordernarPorMonto(operations, 'DESC')
+        //   break
+        // case "menor-monto":
+        //   operations = ordernarPorMonto(operations, 'ASC')
+        //   break
+        // case "a-z":
+        //   operations = ordernarPorDescripcion(operations, 'ASC')
+        //   break
+        // case "z-a":
+        //   operations = ordernarPorDescripcion(operations, 'DESC')
+        //   break
+        default:
+    }
+    refreshOperationTable(operations);
+};
+// const operationsFilter = () => {
+//   typeFilter()
+//   categoryFilter()
+// }
+selectType.addEventListener("change", typeFilter);
+selectCategory.addEventListener("change", categoryFilter);
+selectDate.addEventListener("change", dateFilter);
+selectSort.addEventListener("change", sortBy);
+// const typeValue = "Gasto";
+// const categoryValue = selectCategory.value;
+// const sortValue = selectSort.value;
 //   const filtrarPorMes = (mes, anio, operaciones) => {
 //     return operaciones.filter((operacion) => {
 //       const fecha = new Date(operacion.fecha)
@@ -38,10 +108,76 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 //     return operaciones.find((operacion) => operacion.id === idOperacion)
 //   }
 //-------------------------------------------------------------------------------------------
-var selectCategory = document.getElementById("select-category");
-var selectType = document.getElementById("type-filter");
-var selectSort = document.getElementById("select-sort");
-// Se puede usar la misma función que se usa en updateCatOp?
+var categoryFilter = function (categoryValue, operations) {
+    return operations.filter(function (operation) { return operation.category === categoryValue; });
+};
+// const filterDate = document.getElementById("filter-date");
+// const dateFilter = (date,operations) => {
+//     return operations.filter((operation) => {
+//         const opDate = new Date(operation.date)
+//         return opDate.getTime() >= date.getTime()
+//     })
+// }
+// const ordernarPorFecha = (operations, sortValue) => {
+//   return [...operations].sort((a, b) => {
+//     const fechaA = new Date(a.fecha)
+//     const fechaB = new Date(b.fecha)
+//     return sortValue === 'ASC'
+//       ? fechaA.getTime() - fechaB.getTime()
+//       : fechaB.getTime() - fechaA.getTime()
+//   })
+// }
+//------------------------------------------------------------------------------
+// const orden = $('#filtro-orden').value
+// BY TYPE
+// if (typeValue !== 'Todos') {
+//     typeFilter(typeValue, operations)
+//     refreshOperationTable(operations)
+//     console.log(operations)
+// }
+// BY CATEGORY
+// if (categoryValue !== 'Todas') {
+//     operations = categoryFilter(categoryValue, operations)
+//     console.log(operations)
+// }
+// BY DATE
+// operations = dateFilter(inputDate, operations);
+// console.log(operations)
+// ORDERNAR POR...
+// switch (sortValue) {
+// case "mas-recientes":
+// operations = ordernarPorFecha(operations, 'DESC');
+// console.log(operations)
+// break
+// case "menos-recientes":
+// operations = ordernarPorFecha(operations, 'ASC')
+// break
+//   case "mayor-monto":
+//     operations = ordernarPorMonto(operations, 'DESC')
+//     break
+//   case "menor-monto":
+//     operations = ordernarPorMonto(operations, 'ASC')
+//     break
+//   case "a-z":
+//     operations = ordernarPorDescripcion(operations, 'ASC')
+//     break
+//   case "z-a":
+//     operations = ordernarPorDescripcion(operations, 'DESC')
+//     break
+// default:
+// }
+// actualizarOperaciones(operations)
+// actualizarBalance(operations)
+// }
+// operationsFilter()
+// const filters = () => {
+//     selectType.addEventListener("change", operationsFilter)
+//     selectCategory.addEventListener("change", operationsFilter)
+//     // filterDate.addEventListener("change", operationsFilter)
+//     selectSort.addEventListener("change", operationsFilter)
+// }
+// filters()
+// Update categories:
 var updateCatFilter = function () {
     var storage = getStorage();
     for (var _i = 0, _a = storage.categories; _i < _a.length; _i++) {
@@ -53,81 +189,4 @@ var updateCatFilter = function () {
         selectCategory.appendChild(optionCat);
     }
 };
-// Englobar en un inicializador?
 updateCatFilter();
-var typeFilter = function (typeValue, operations) {
-    return operations.filter(function (operation) { return operation.type === typeValue; });
-};
-var categoryFilter = function (categoryValue, operations) {
-    return operations.filter(function (operation) { return operation.category === categoryValue; });
-};
-// const filterDate = document.getElementById("filter-date");
-// const dateFilter = (date,operations) => {
-//     return operations.filter((operation) => {
-//         const opDate = new Date(operation.date)
-//         return opDate.getTime() >= date.getTime()
-//     })
-// }
-var ordernarPorFecha = function (operations, sortValue) {
-    return __spreadArray([], operations).sort(function (a, b) {
-        var fechaA = new Date(a.fecha);
-        var fechaB = new Date(b.fecha);
-        return sortValue === 'ASC'
-            ? fechaA.getTime() - fechaB.getTime()
-            : fechaB.getTime() - fechaA.getTime();
-    });
-};
-//------------------------------------------------------------------------------
-var operationsFilter = function () {
-    var storage = getStorage();
-    var typeValue = selectType.value;
-    var categoryValue = selectCategory.value;
-    var sortValue = selectSort.value;
-    // const orden = $('#filtro-orden').value
-    var operations = storage.operations;
-    // BY TYPE
-    if (typeValue !== 'Todos') {
-        operations = typeFilter(typeValue, operations);
-        // console.log(operations)
-    }
-    // BY CATEGORY
-    if (categoryValue !== 'Todas') {
-        operations = categoryFilter(categoryValue, operations);
-        // console.log(operations)
-    }
-    // BY DATE
-    // operations = dateFilter(inputDate, operations);
-    // console.log(operations)
-    // ORDERNAR POR...
-    switch (sortValue) {
-        case "mas-recientes":
-            operations = ordernarPorFecha(operations, 'DESC');
-            // console.log(operations)
-            break;
-        case "menos-recientes":
-            operations = ordernarPorFecha(operations, 'ASC');
-            break;
-        //   case "mayor-monto":
-        //     operations = ordernarPorMonto(operations, 'DESC')
-        //     break
-        //   case "menor-monto":
-        //     operations = ordernarPorMonto(operations, 'ASC')
-        //     break
-        //   case "a-z":
-        //     operations = ordernarPorDescripcion(operations, 'ASC')
-        //     break
-        //   case "z-a":
-        //     operations = ordernarPorDescripcion(operations, 'DESC')
-        //     break
-        default:
-    }
-    // actualizarOperaciones(operations)
-    // actualizarBalance(operations)
-};
-var filters = function () {
-    selectType.addEventListener("change", operationsFilter);
-    selectCategory.addEventListener("change", operationsFilter);
-    // filterDate.addEventListener("change", operationsFilter)
-    selectSort.addEventListener("change", operationsFilter);
-};
-filters();

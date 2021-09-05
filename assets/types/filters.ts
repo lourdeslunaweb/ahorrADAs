@@ -1,8 +1,112 @@
-/*****
+/***********
  * 
- * FILTROS
+ * FILTERS
  *
- * ****/ 
+ **********/ 
+
+
+const selectType = document.getElementById("type-filter");
+const selectCategory = document.getElementById("select-category");
+const selectDate = document.getElementById("filter-date");
+const selectSort = document.getElementById("select-sort");
+
+const typeFilter = () => {
+  const storage = getStorage();
+  let {operations} = storage;
+  const typeValue = selectType.value;
+  if (typeValue !== 'Todos') {
+    const type = operations.filter(operation => operation.type === typeValue);
+    refreshOperationTable(type)
+  } else {
+    refreshOperationTable(operations)
+  }
+}
+
+const categoryFilter = () => {
+  const storage = getStorage();
+  let {operations} = storage;
+  const categoryValue = selectCategory.value;
+  if (categoryValue !== 'Todas') {
+    const cat = operations.filter(operation => operation.category === categoryValue);
+    refreshOperationTable(cat)
+  } else {
+    refreshOperationTable(operations)
+  }
+}
+
+const dateFilter = () => {
+  const storage = getStorage();
+  let {operations} = storage;
+  const date = new Date(`${selectDate.value}T00:00:00`).getTime();
+  const opFilteredByDate = operations.filter(operation => { 
+    return (new Date(`${operation.date}T00:00:00`).getTime() >= date)
+  })
+  refreshOperationTable(opFilteredByDate)  
+}
+
+const sortBy = () => {
+
+  let storage = getStorage();
+  let {operations} = storage;
+
+  switch (selectSort.value) {
+    case "mas-recientes":
+      operations = dateFilter()
+      console.log(operations)
+    //   break
+    // case "menos-recientes":
+    //   operations = ordernarPorFecha(operations, 'ASC')
+    //   break
+    // case "mayor-monto":
+    //   operations = ordernarPorMonto(operations, 'DESC')
+    //   break
+    // case "menor-monto":
+    //   operations = ordernarPorMonto(operations, 'ASC')
+    //   break
+    // case "a-z":
+    //   operations = ordernarPorDescripcion(operations, 'ASC')
+    //   break
+    // case "z-a":
+    //   operations = ordernarPorDescripcion(operations, 'DESC')
+    //   break
+    default:
+  }
+    
+  refreshOperationTable(operations)  
+
+}
+
+
+
+
+
+// const operationsFilter = () => {
+//   typeFilter()
+//   categoryFilter()
+// }
+
+    
+selectType.addEventListener("change", typeFilter)
+selectCategory.addEventListener("change", categoryFilter)
+selectDate.addEventListener("change", dateFilter)
+selectSort.addEventListener("change",sortBy)
+
+
+
+
+
+
+
+
+
+    // const typeValue = "Gasto";
+    // const categoryValue = selectCategory.value;
+    // const sortValue = selectSort.value;
+
+
+
+
+
 
 
 //   const filtrarPorMes = (mes, anio, operaciones) => {
@@ -42,27 +146,11 @@
 
 //-------------------------------------------------------------------------------------------
 
-const selectCategory = document.getElementById("select-category");
-const selectType = document.getElementById("type-filter");
-const selectSort = document.getElementById("select-sort");
 
-// Se puede usar la misma función que se usa en updateCatOp?
-const updateCatFilter = () =>{
-    const storage = getStorage();
-    for (let category of storage.categories){
-        const optionCat = document.createElement("option");
-        const optionCatText = document.createTextNode(`${category.name}`);
-        optionCat.setAttribute('value', `${category.name}`);
-        optionCat.appendChild(optionCatText);
-        selectCategory.appendChild(optionCat)
-    }
-}
-// Englobar en un inicializador?
-updateCatFilter()
 
-const typeFilter = (typeValue, operations) => {
-    return operations.filter(operation => operation.type === typeValue)
-}
+
+
+
 
 const categoryFilter = (categoryValue, operations) => {
     return operations.filter((operation) => operation.category === categoryValue)
@@ -77,40 +165,36 @@ const categoryFilter = (categoryValue, operations) => {
 //     })
 // }
 
-  const ordernarPorFecha = (operations, sortValue) => {
-    return [...operations].sort((a, b) => {
-      const fechaA = new Date(a.fecha)
-      const fechaB = new Date(b.fecha)
-      return sortValue === 'ASC'
-        ? fechaA.getTime() - fechaB.getTime()
-        : fechaB.getTime() - fechaA.getTime()
-    })
-  }
+  // const ordernarPorFecha = (operations, sortValue) => {
+  //   return [...operations].sort((a, b) => {
+  //     const fechaA = new Date(a.fecha)
+  //     const fechaB = new Date(b.fecha)
+  //     return sortValue === 'ASC'
+  //       ? fechaA.getTime() - fechaB.getTime()
+  //       : fechaB.getTime() - fechaA.getTime()
+  //   })
+  // }
 
 //------------------------------------------------------------------------------
 
-const operationsFilter = () => {
-    const storage = getStorage()
-    const typeValue = selectType.value;
-    const categoryValue = selectCategory.value;
-    const sortValue = selectSort.value;
+
 
     // const orden = $('#filtro-orden').value
-    let {operations} = storage;
 
     // BY TYPE
 
-    if (typeValue !== 'Todos') {
-        operations = typeFilter(typeValue, operations)
-        // console.log(operations)
-    }
+    // if (typeValue !== 'Todos') {
+    //     typeFilter(typeValue, operations)
+    //     refreshOperationTable(operations)
+    //     console.log(operations)
+    // }
 
     // BY CATEGORY
 
-    if (categoryValue !== 'Todas') {
-        operations = categoryFilter(categoryValue, operations)
-        // console.log(operations)
-    }
+    // if (categoryValue !== 'Todas') {
+    //     operations = categoryFilter(categoryValue, operations)
+    //     console.log(operations)
+    // }
   
     // BY DATE
 
@@ -119,14 +203,14 @@ const operationsFilter = () => {
 
     // ORDERNAR POR...
   
-    switch (sortValue) {
-      case "mas-recientes":
-        operations = ordernarPorFecha(operations, 'DESC');
+    // switch (sortValue) {
+      // case "mas-recientes":
+        // operations = ordernarPorFecha(operations, 'DESC');
         // console.log(operations)
-        break
-      case "menos-recientes":
-        operations = ordernarPorFecha(operations, 'ASC')
-        break
+        // break
+      // case "menos-recientes":
+        // operations = ordernarPorFecha(operations, 'ASC')
+        // break
     //   case "mayor-monto":
     //     operations = ordernarPorMonto(operations, 'DESC')
     //     break
@@ -139,21 +223,36 @@ const operationsFilter = () => {
     //   case "z-a":
     //     operations = ordernarPorDescripcion(operations, 'DESC')
     //     break
-      default:
-    }
+      // default:
+    // }
   
     // actualizarOperaciones(operations)
     // actualizarBalance(operations)
+  // }
+  // operationsFilter()
+
+// const filters = () => {
+//     selectType.addEventListener("change", operationsFilter)
+//     selectCategory.addEventListener("change", operationsFilter)
+//     // filterDate.addEventListener("change", operationsFilter)
+//     selectSort.addEventListener("change", operationsFilter)
+// }
+
+// filters()
+
+// Update categories:
+
+const updateCatFilter = () =>{
+  const storage = getStorage();
+  for (let category of storage.categories){
+      const optionCat = document.createElement("option");
+      const optionCatText = document.createTextNode(`${category.name}`);
+      optionCat.setAttribute('value', `${category.name}`);
+      optionCat.appendChild(optionCatText);
+      selectCategory.appendChild(optionCat)
   }
-
-const filters = () => {
-    selectType.addEventListener("change", operationsFilter)
-    selectCategory.addEventListener("change", operationsFilter)
-    // filterDate.addEventListener("change", operationsFilter)
-    selectSort.addEventListener("change", operationsFilter)
 }
-
-filters()
+updateCatFilter()
 
 
 
