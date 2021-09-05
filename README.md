@@ -27,7 +27,7 @@
 .Mes con mayor gasto
 .Totales (gastos, ganancias y balances) por categoría
 .Totales (gastos, ganancias y balances) por mes
-.Se deben guardar los datos en el almacenamiento local del navegador
+- Se deben guardar los datos en el almacenamiento local del navegador (Local Storage)
 
 ### 🖥️ Deployado [aquí](https://lourdeslunaweb.github.io/ahorrADAs/)
 
