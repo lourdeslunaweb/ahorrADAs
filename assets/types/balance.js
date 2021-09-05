@@ -30,11 +30,11 @@ var removeOperation = function (e) {
     initBalance();
 };
 //Create New Operation Row
-var refreshOperationTable = function () {
+var refreshOperationTable = function (operations) {
     operationRowGrid.innerHTML = " ";
-    var storage = getStorage();
-    for (var _i = 0, _a = storage.operations; _i < _a.length; _i++) {
-        var operation = _a[_i];
+    // const storage = getStorage();
+    for (var _i = 0, operations_1 = operations; _i < operations_1.length; _i++) {
+        var operation = operations_1[_i];
         // Create row div and set class
         var rowOpDiv = document.createElement("div");
         rowOpDiv.className = "row mt-5 mt-md-3";
@@ -144,9 +144,10 @@ var balanceCounter = function () {
 };
 // Initial function of balance
 var initBalance = function () {
-    getStorage();
+    var storage = getStorage();
+    var operations = storage.operations;
     changeIndexImg();
-    refreshOperationTable();
+    refreshOperationTable(operations);
     balanceCounter();
 };
 initBalance();

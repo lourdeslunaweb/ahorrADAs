@@ -22,11 +22,11 @@ const removeOperation = (e) => {
 }
 
 //Create New Operation Row
-const refreshOperationTable = () => {
+const refreshOperationTable = (operations) => {
     operationRowGrid.innerHTML = " ";
-    const storage = getStorage();
+    // const storage = getStorage();
 
-    for (let operation of storage.operations) {
+    for (let operation of operations) {
         // Create row div and set class
         const rowOpDiv = document.createElement("div");
         rowOpDiv.className = "row mt-5 mt-md-3";
@@ -136,9 +136,10 @@ const balanceCounter = () => {
 
 // Initial function of balance
 const initBalance = () => {
-    getStorage();
+    const storage = getStorage();
+    let {operations} = storage;
     changeIndexImg();
-    refreshOperationTable();
+    refreshOperationTable(operations);
     balanceCounter()
 }
 initBalance()
