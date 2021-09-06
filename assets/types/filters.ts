@@ -120,12 +120,11 @@ updateCatFilter()
 // HIDE FILTERS
 
 const hideFilter = document.getElementById("hide-filter");
-const filterSelects = document.getElementsByClassName("filter");
-hideFilter.innerText =  "Ocultar filtros"
+const filterSelects = document.getElementById("filter-selects");
+hideFilter.innerText =  "Ocultar filtros";
+hideFilter.style.cursor = "pointer";
 
 hideFilter.addEventListener("click", () => {
-  for(let select of filterSelects) {
-    select.classList.toggle("d-none");
-    select.className === "d-none" ? hideFilter.innerText =  "Ocultar filtros" : hideFilter.innerText = "Mostrar filtros";
-  }
+  filterSelects.classList.toggle("d-none");
+  filterSelects.className === "d-none" ? hideFilter.innerText =  "Ocultar filtros" : hideFilter.innerText = "Mostrar filtros";
 })

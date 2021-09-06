@@ -113,12 +113,10 @@ var updateCatFilter = function () {
 updateCatFilter();
 // HIDE FILTERS
 var hideFilter = document.getElementById("hide-filter");
-var filterSelects = document.getElementsByClassName("filter");
+var filterSelects = document.getElementById("filter-selects");
 hideFilter.innerText = "Ocultar filtros";
+hideFilter.style.cursor = "pointer";
 hideFilter.addEventListener("click", function () {
-    for (var _i = 0, filterSelects_1 = filterSelects; _i < filterSelects_1.length; _i++) {
-        var select = filterSelects_1[_i];
-        select.classList.toggle("d-none");
-        select.className === "d-none" ? hideFilter.innerText = "Ocultar filtros" : hideFilter.innerText = "Mostrar filtros";
-    }
+    filterSelects.classList.toggle("d-none");
+    filterSelects.className === "d-none" ? hideFilter.innerText = "Ocultar filtros" : hideFilter.innerText = "Mostrar filtros";
 });
