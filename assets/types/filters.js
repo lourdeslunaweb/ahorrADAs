@@ -44,28 +44,31 @@ var sortBy = function () {
     var storage = getStorage();
     var operations = storage.operations;
     switch (selectSort.value) {
-        case "mas-recientes":
-            operations = dateFilter();
-            console.log(operations);
-        //   break
-        // case "menos-recientes":
-        //   operations = ordernarPorFecha(operations, 'ASC')
-        //   break
-        // case "mayor-monto":
-        //   operations = ordernarPorMonto(operations, 'DESC')
-        //   break
-        // case "menor-monto":
-        //   operations = ordernarPorMonto(operations, 'ASC')
-        //   break
-        // case "a-z":
-        //   operations = ordernarPorDescripcion(operations, 'ASC')
-        //   break
-        // case "z-a":
-        //   operations = ordernarPorDescripcion(operations, 'DESC')
-        //   break
+        case "mas-reciente":
+            var moreRecent = operations.sort(function (a, b) { return new Date(b.date + "T00:00:00").getTime() - new Date(a.date + "T00:00:00").getTime(); });
+            refreshOperationTable(moreRecent);
+            break;
+        case "menos-reciente":
+            var lessRecent = operations.sort(function (a, b) { return new Date(a.date + "T00:00:00").getTime() - new Date(b.date + "T00:00:00").getTime(); });
+            refreshOperationTable(lessRecent);
+            break;
+        case "mayor-monto":
+            var greatAmount = operations.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
+            refreshOperationTable(greatAmount);
+            break;
+        case "menor-monto":
+            var lowerAmount = operations.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
+            refreshOperationTable(lowerAmount);
+            break;
+        case "a-z":
+            console.log("A - Z");
+            break;
+        case "z-a":
+            console.log("z -a ");
+            break;
         default:
+            refreshOperationTable(operations);
     }
-    refreshOperationTable(operations);
 };
 // const operationsFilter = () => {
 //   typeFilter()
@@ -108,9 +111,9 @@ selectSort.addEventListener("change", sortBy);
 //     return operaciones.find((operacion) => operacion.id === idOperacion)
 //   }
 //-------------------------------------------------------------------------------------------
-var categoryFilter = function (categoryValue, operations) {
-    return operations.filter(function (operation) { return operation.category === categoryValue; });
-};
+// const categoryFilter = (categoryValue, operations) => {
+//     return operations.filter((operation) => operation.category === categoryValue)
+// }
 // const filterDate = document.getElementById("filter-date");
 // const dateFilter = (date,operations) => {
 //     return operations.filter((operation) => {
