@@ -3,6 +3,11 @@
  * FILTERS
  *
  **********/
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 var selectType = document.getElementById("type-filter");
 var selectCategory = document.getElementById("select-category");
 var selectDate = document.getElementById("filter-date");
@@ -31,25 +36,38 @@ var categoryFilter = function () {
         refreshOperationTable(operations);
     }
 };
-var dateFilter = function () {
+var dateFilter = function (e) {
     var storage = getStorage();
     var operations = storage.operations;
-    var date = new Date(selectDate.value + "T00:00:00").getTime();
+    var date = new Date(e.target.value + "T00:00:00").getTime();
+    var storageDate;
     var opFilteredByDate = operations.filter(function (operation) {
-        return (new Date(operation.date + "T00:00:00").getTime() >= date);
+        storageDate = new Date(operation.date + "T00:00:00").getTime();
+        return (storageDate >= date);
     });
     refreshOperationTable(opFilteredByDate);
+};
+var ordernarPorDescripcion = function (operaciones, orden) {
+    return __spreadArray([], operaciones).sort(function (a, b) {
+        var dateA = new Date(e.target.value + "T00:00:00").getTime();
+        var fechaB = new Date(b);
+        console.log(fechaA.getTime(), fechaB.getTime());
+        return orden === 'a-z'
+            ? fechaA.getTime() < fechaB.getTime()
+            : fechaA.getTime() > fechaB.getTime();
+    });
 };
 var sortBy = function () {
     var storage = getStorage();
     var operations = storage.operations;
-    switch (selectSort.value) {
-        case "mas-recientes":
-            operations = dateFilter();
-            console.log(operations);
+    var selectSortValue = selectSort.value;
+    switch (selectSortValue) {
+        // case "mas-recientes":
+        //   dateFilter(e)
         //   break
         // case "menos-recientes":
-        //   operations = ordernarPorFecha(operations, 'ASC')
+        //   const menosReciente = 
+        //   dateFilter(e)
         //   break
         // case "mayor-monto":
         //   operations = ordernarPorMonto(operations, 'DESC')
@@ -57,27 +75,22 @@ var sortBy = function () {
         // case "menor-monto":
         //   operations = ordernarPorMonto(operations, 'ASC')
         //   break
-        // case "a-z":
-        //   operations = ordernarPorDescripcion(operations, 'ASC')
-        //   break
-        // case "z-a":
-        //   operations = ordernarPorDescripcion(operations, 'DESC')
-        //   break
+        case "a-z":
+            operations = ordernarPorDescripcion(operations, selectSortValue);
+            // console.log("a-z")
+            break;
+        case "z-a":
+            operations = ordernarPorDescripcion(operations, selectSortValue);
+            // console.log("z-a")
+            break;
         default:
     }
     refreshOperationTable(operations);
 };
-// const operationsFilter = () => {
-//   typeFilter()
-//   categoryFilter()
-// }
 selectType.addEventListener("change", typeFilter);
 selectCategory.addEventListener("change", categoryFilter);
 selectDate.addEventListener("change", dateFilter);
 selectSort.addEventListener("change", sortBy);
-// const typeValue = "Gasto";
-// const categoryValue = selectCategory.value;
-// const sortValue = selectSort.value;
 //   const filtrarPorMes = (mes, anio, operaciones) => {
 //     return operaciones.filter((operacion) => {
 //       const fecha = new Date(operacion.fecha)
@@ -89,15 +102,15 @@ selectSort.addEventListener("change", sortBy);
 //       return orden === 'ASC' ? a.monto - b.monto : b.monto - a.monto
 //     })
 //   }
-//   const ordernarPorDescripcion = (operaciones, orden) => {
-//     return [...operaciones].sort((a, b) => {
-//       const fechaA = new Date(a)
-//       const fechaB = new Date(b)
-//       return orden === 'ASC'
-//         ? fechaA.getTime() < fechaB.getTime()
-//         : fechaA.getTime() > fechaB.getTime()
-//     })
-//   }
+// const ordernarPorDescripcion = (operaciones, orden) => {
+//   return [...operaciones].sort((a, b) => {
+//     const fechaA = new Date(a)
+//     const fechaB = new Date(b)
+//     return orden === 'ASC'
+//       ? fechaA.getTime() < fechaB.getTime()
+//       : fechaA.getTime() > fechaB.getTime()
+//   })
+// }
 //   const obtenerDatos = () => {
 //     return JSON.parse(localStorage.getItem('datos'))
 //   }
