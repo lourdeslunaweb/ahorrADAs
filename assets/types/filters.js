@@ -47,7 +47,6 @@ var dateFilter = function (e) {
 var sortBy = function () {
     var storage = getStorage();
     var operations = storage.operations;
-    var description = storage.operations.description;
     switch (selectSort.value) {
         case "mas-reciente":
             var moreRecent = operations.sort(function (a, b) { return new Date(b.date + "T00:00:00").getTime() - new Date(a.date + "T00:00:00").getTime(); });
@@ -112,3 +111,14 @@ var updateCatFilter = function () {
     }
 };
 updateCatFilter();
+// HIDE FILTERS
+var hideFilter = document.getElementById("hide-filter");
+var filterSelects = document.getElementsByClassName("filter");
+hideFilter.innerText = "Ocultar filtros";
+hideFilter.addEventListener("click", function () {
+    for (var _i = 0, filterSelects_1 = filterSelects; _i < filterSelects_1.length; _i++) {
+        var select = filterSelects_1[_i];
+        select.classList.toggle("d-none");
+        select.className === "d-none" ? hideFilter.innerText = "Ocultar filtros" : hideFilter.innerText = "Mostrar filtros";
+    }
+});

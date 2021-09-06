@@ -55,7 +55,7 @@ const dateFilter = (e) => {
 const sortBy = () => {
   let storage = getStorage();
   let { operations } = storage;
-  let {operations:{description}} = storage;
+
   switch (selectSort.value) {
     case "mas-reciente":
       const moreRecent = operations.sort((a, b) => new Date(`${b.date}T00:00:00`).getTime() - new Date(`${a.date}T00:00:00`).getTime());
@@ -115,3 +115,17 @@ const updateCatFilter = () => {
   }
 }
 updateCatFilter()
+
+
+// HIDE FILTERS
+
+const hideFilter = document.getElementById("hide-filter");
+const filterSelects = document.getElementsByClassName("filter");
+hideFilter.innerText =  "Ocultar filtros"
+
+hideFilter.addEventListener("click", () => {
+  for(let select of filterSelects) {
+    select.classList.toggle("d-none");
+    select.className === "d-none" ? hideFilter.innerText =  "Ocultar filtros" : hideFilter.innerText = "Mostrar filtros";
+  }
+})

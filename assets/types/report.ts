@@ -87,6 +87,7 @@ const createTotalPerCategoryTable = () => {
 // Totals per month object
 const totalPerMonthObj = (objectData) => {
     let totalsPerMonth = {};
+
     objectData.forEach((operation) => {
         const date = new Date(operation.date);
         if (!totalsPerMonth[date.getFullYear()]) {
@@ -99,8 +100,8 @@ const totalPerMonthObj = (objectData) => {
             totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] = 0;
         }
         totalsPerMonth[date.getFullYear()][date.getMonth()][operation.type] += Number(operation.amount);
-
     });
+
     return totalsPerMonth
 }
 
