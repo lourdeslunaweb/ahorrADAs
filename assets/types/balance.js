@@ -26,7 +26,7 @@ var removeOperation = function (e) {
     var operations = storage.operations;
     var operationsUpdate = operations.filter(function (operation) { return idOperation !== operation.id; });
     localStorage.setItem('to-storage', JSON.stringify(__assign(__assign({}, storage), { operations: operationsUpdate })));
-    refreshOperationTable();
+    refreshOperationTable(operationsUpdate);
     initBalance();
 };
 //Create New Operation Row

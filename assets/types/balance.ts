@@ -17,7 +17,7 @@ const removeOperation = (e) => {
     const { operations } = storage;
     const operationsUpdate = operations.filter(operation => idOperation !== operation.id);
     localStorage.setItem('to-storage', JSON.stringify({ ...storage, operations: operationsUpdate }));
-    refreshOperationTable();
+    refreshOperationTable(operationsUpdate);
     initBalance();
 }
 

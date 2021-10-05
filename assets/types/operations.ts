@@ -31,6 +31,8 @@ const upDateCatOps = () =>{
 // Create new operation
 newOpForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    const probando = e.target;
+    console.log("el clg de probando es:", probando);
     const storage = getStorage();
     newOperation.description = newOpDescription.value;
     newOperation.amount = newOpAmount.value;
